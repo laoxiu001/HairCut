@@ -1,17 +1,33 @@
+管理员类：
 用户登陆登陆：login.html
-	基本的登陆、退出、密码修改功能
+	基本的登陆、退出
+管理员密码修改：change.html
+	密码修改功能
+
+
+
+客户类：
 客户信息管理：customer.html
 	客户信息的增改查
-员工类型管理：employeeType.html
-	员工类型的增删改查
-员工管理：employeeManage.html
-	员工信息的增删改查
-服务项目管理：serviceItem.html
-	服务项目的增删改查
 客户充值：pay.html
 	客户充值功能实现
 客户服务结算功能：service.html
 	客户享受服务后的服务结算、打印
+
+
+员工类：
+员工类型管理：employeeType.html
+	员工类型的增删改查
+员工管理：employeeManage.html
+	员工信息的增删改查
+
+
+服务类：
+服务项目管理：serviceItem.html
+	服务项目的增删改查
+
+
+统计类：
 统计分析工资结算：salary.html
 	应付工资结算
 统计分析统计分析页面：statistics.html
