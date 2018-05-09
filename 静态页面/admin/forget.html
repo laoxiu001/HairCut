@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>发型工作室-登陆界面</title>
+    <title>发型工作室-忘记密码</title>
     <!-- Tell the browser to be responsive to screen width -->
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- Font Awesome -->
@@ -38,21 +38,30 @@
     <!-- /.login-logo -->
     <div class="card">
         <div class="card-body login-card-body">
-            <p class="login-box-msg">系统登陆页面</p>
+            <p class="login-box-msg">密码修改</p>
 
             <form action="../../index2.html" method="post">
                 <div class="form-group has-feedback">
                     <span class="fa fa-phone form-control-feedback"></span>
                     <input type="email" class="form-control" placeholder="手机号码">
+                    <br><a class="getCode" href="#">获取验证码</a>
+                </div>
+                <div class="form-group has-feedback">
+                    <span class="fa fa-envelope form-control-feedback"></span>
+                    <input type="email" class="form-control" placeholder="验证码">
                 </div>
                 <div class="form-group has-feedback">
                     <span class="fa fa-lock form-control-feedback"></span>
-                    <input type="password" class="form-control" placeholder="登陆密码">
+                    <input type="password" class="form-control" placeholder="新密码">
+                </div>
+                <div class="form-group has-feedback">
+                    <span class="fa fa-check form-control-feedback"></span>
+                    <input type="password" class="form-control" placeholder="确认密码">
                 </div>
                 <div class="row">
                     <!-- /.col -->
                     <div class="col-12">
-                        <button type="submit" class="btn btn-primary btn-block btn-flat">登陆后台</button>
+                        <button type="submit" class="btn btn-primary btn-block btn-flat">修改密码</button>
                     </div>
                     <!-- /.col -->
                 </div>
@@ -62,7 +71,7 @@
                 <!-- /.social-auth-links -->
 
                 <p class="mb-1">
-                    <a href="forget.html">忘记密码？点我找回</a>
+                    <a href="login.html">已有账号？点我登陆</a>
                 </p>
             </div>
             <!-- /.login-card-body -->

@@ -7,11 +7,25 @@
 
 
 2、
-图片量不大情况下，图片存储在数据库和存储文件的选择
+图片存储：文件+路径存储数据库
 
 
 
 
 
 3、
-加权系数处理办法
+加权系数：付款金额=基础价格*加权系数
+
+
+
+4、
+店长可生成账号
+
+
+5、客户账户=卡号
+
+
+6、报错：
+Refused to apply style from 'http://localhost:3000/assets/styles/custom-style.css' because its MIME type ('text/html') is not a supported stylesheet MIME type, and strict MIME checking is enabled.
+
+解决：将自己写的CSS放到外部引入CSS同一目录下
