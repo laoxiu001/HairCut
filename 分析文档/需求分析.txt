@@ -25,14 +25,16 @@
 
 
 服务类：
-服务项目管理：serviceItem.html
+服务项目管理页面：serviceItem.html
 	服务项目的增删改查
 
 
 统计类：
-统计工资结算：salary.html
+统计工资结算页面：salary.html
 	应付工资结算
-统计盈收：statistics.html
+服务记录页面：serviceDetail.html
+	对应员工的具体服务记录
+统计盈收页面：statistics.html
 	统计工作室盈收
 
 

@@ -29,3 +29,32 @@
 Refused to apply style from 'http://localhost:3000/assets/styles/custom-style.css' because its MIME type ('text/html') is not a supported stylesheet MIME type, and strict MIME checking is enabled.
 
 解决：将自己写的CSS放到外部引入CSS同一目录下
+
+
+7、
+员工信息按照在职和离职进行分离展示
+
+
+
+8、
+bottstrap中<i>标签同时为斜体以及图标标签
+使用按钮时尽量将文字写到i标签外，防止出现斜体
+
+
+
+9、
+列表显示编号不用主键，直接按顺序显示1，2，3，4，5........
+
+10、手机端列表显示不下，处理方法：
+①手机端隐藏多余列
+②手机端使用滚动条，要先把table放到一个div中，控制overflow属性为scroll：
+
+<div style="overflow:scroll;">  
+    ...  
+</div>  
+
+table设置最小长度：
+
+<table class="table" style="min-width:1500px;">  
+    ...  
+</table>  
