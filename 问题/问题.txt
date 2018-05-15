@@ -58,3 +58,18 @@ table设置最小长度：
 <table class="table" style="min-width:1500px;">  
     ...  
 </table>  
+
+
+11、Echart图标插件自适应问题：
+在setOption之后：
+
+myChart1.setOption(option); 
+myChart2.setOption(option); 
+myChart3.setOption(option); 
+
+//设置对应图表自适应移动端
+    window.addEventListener("resize", function () {
+        myChart1.resize();
+        myChart2.resize();
+	myChart3.resize()
+    });
