@@ -216,13 +216,39 @@
 
                         <!-- 客户头像、余额信息 -->
                         <div class="callout callout-info">
-                            <h5><i class="fa fa-user-circle"></i> 充值账号：<a style="color: #00c0ef">admin</a></h5>
-                            <p>当前余额：59.00 ￥</p>
+                            <h5><i class="fa fa-user-circle"></i> 充值：</h5>
                             <form role="form">
                                 <div class="card-body">
-                                    <div class="form-group">
-                                        <label>充值金额：</label>
-                                        <input type="email" class="form" placeholder="请输入大于1的整数">
+                                    <div class="row">
+                                        <div class="col-xs-12 col-sm-6">
+                                            <div class="form-group">
+                                                <label>当前管理员账号：</label>
+                                                <input type="email" class="form-control" placeholder="admin" readonly>
+                                            </div>
+                                        </div>
+                                        <div class="col-xs-12 col-sm-6">
+                                            <div class="form-group">
+                                                <label>客户账户：</label>
+                                                <input type="email" class="form-control" placeholder="请输入要充值的账号">
+                                            </div>
+                                        </div>
+                                        <div class="col-xs-12 col-sm-6">
+                                            <div class="form-group">
+                                                <label>充值类型</label>
+                                                <select class="form-control">
+                                                    <option value="现金充值">现金充值</option>
+                                                    <option value="微信转账">微信转账</option>
+                                                    <option value="支付宝转账">支付宝转账</option>
+                                                    <option value="QQ转账">微信转账</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-xs-12 col-sm-6">
+                                            <div class="form-group">
+                                                <label>充值金额：</label>
+                                                <input type="email" class="form-control" placeholder="请输入大于1的整数">
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                                 <!-- /.card-body -->
@@ -252,19 +278,19 @@
                                             <td>1</td>
                                             <td>15826244588</td>
                                             <td>现金充值</td>
-                                            <td>￥59.00</td>
+                                            <td>59.00</td>
                                             <td>2015-01-05</td></tr>
                                         <tr>
                                             <td>2</td>
                                             <td>16488526488</td>
                                             <td>微信转账</td>
-                                            <td>￥155.00</td>
+                                            <td>155.00</td>
                                             <td>2016-15-05</td></tr>
                                         <tr>
                                             <td>3</td>
                                             <td>156498853265</td>
                                             <td>支付宝转账</td>
-                                            <td>￥99.00</td>
+                                            <td>99.00</td>
                                             <td>1017-05-11</td></tr>
                                         </tbody>
                                     </table>

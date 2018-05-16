@@ -39,6 +39,7 @@
 统计盈收页面：statistics.html
 	统计工作室盈收
 
-
+工作室支出项目统计：totalExpenses.html
+	工作室杂项支出费用
 
 
