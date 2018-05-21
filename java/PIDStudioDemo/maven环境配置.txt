@@ -1,0 +1,5 @@
+将目录路径配置到
+M2_HOME
+MAVEN_HOME
+中
+再在path配置%MAVEN_HOME%/bin

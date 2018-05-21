@@ -73,3 +73,7 @@ myChart3.setOption(option);
         myChart2.resize();
 	myChart3.resize()
     });
+
+
+
+12、JS代码bug处理：检查对象名是否打错，F12查看具体报错

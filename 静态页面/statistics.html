@@ -59,7 +59,7 @@
                         <i class="fa fa-sign-out"></i> 用户注销
                     </a>
                     <div class="dropdown-divider"></div>
-                    <a href="#" class="dropdown-item">
+                    <a href="#" class="dropdown-item" data-toggle="modal" data-target="#changePassword">
                         <i class="fa fa-address-card"></i> 修改密码
                     </a>
                 </div>
@@ -70,6 +70,54 @@
             </li>
         </ul>
     </nav>
+
+    <!-- 修改密码遮罩层（模态框） -->
+    <div class="modal fade" id="changePassword" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="card card-primary">
+                    <div class="card-header">
+                        <h3 class="card-title">修改密码</h3>
+                    </div>
+                    <!-- /.card-header -->
+                    <!-- form start -->
+                    <form class="form-horizontal" onsubmit="return changePassword()">
+                        <table>
+                            <div class="card-body">
+                                <div class="form-group">
+                                    <label for="" class="">旧密码</label>
+
+                                    <div class="col-sm-10">
+                                        <input type="password" class="form-control" id="password" placeholder="请输入当前密码">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="" class="">新密码</label>
+
+                                    <div class="col-sm-10">
+                                        <input type="password" class="form-control" id="newPassword_1" placeholder="请输入新密码">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="" class="">确认密码</label>
+
+                                    <div class="col-sm-10">
+                                        <input type="password" class="form-control" id="newPassword_2" placeholder="请确认新密码">
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- /.card-body -->
+                            <div class="modal-footer">
+                                <span style="color: red;" id="span_password"></span>
+                                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                                <button type="submit" id="change" class="btn btn-primary">提交更改</button>
+                            </div>
+                        </table>
+                    </form>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal -->
+    </div>
     <!-- 头部 -->
 
     <!-- 侧边栏 -->
@@ -170,6 +218,14 @@
                             <i class="nav-icon fa fa-usd"></i>
                             <p>
                                 统计盈收
+                            </p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="totalExpenses.html" class="nav-link">
+                            <i class="nav-icon fa fa-usd"></i>
+                            <p>
+                                支出项目统计
                             </p>
                         </a>
                     </li>
@@ -296,6 +352,27 @@
 <!-- Echarts -->
 <script src="util/echart/echarts.min.js"></script>
 <script type="text/javascript">
+
+    //修改密码表单验证
+    function changePassword() {
+        var oldPassword = document.getElementById('password').value;
+        var newPassword_1 = document.getElementById('newPassword_1').value;
+        var newPassword_2 = document.getElementById('newPassword_2').value;
+        if (oldPassword == ""){
+            document.getElementById("span_password").innerHTML='请输入当前密码';
+            return false;
+        }else if (newPassword_1 == ""){
+            document.getElementById("span_password").innerHTML='请输入新密码';
+            return false;
+        }else if (newPassword_2 == ""){
+            document.getElementById("span_password").innerHTML='请输入确认密码';
+            return false;
+        }else if (newPassword_1 != newPassword_2){
+            document.getElementById("span_password").innerHTML='新密码和确认密码不一致';
+            return false;
+        }
+        return true;
+    }
 
     // 根据所选择的年份，统计本年的总收入变化和总支出变化（柱状图）
     var myCharta = echarts.init(document.getElementById('a'));

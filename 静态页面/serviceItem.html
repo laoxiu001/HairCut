@@ -60,7 +60,7 @@
                         <i class="fa fa-sign-out"></i> 用户注销
                     </a>
                     <div class="dropdown-divider"></div>
-                    <a href="#" class="dropdown-item">
+                    <a href="#" class="dropdown-item" data-toggle="modal" data-target="#changePassword">
                         <i class="fa fa-address-card"></i> 修改密码
                     </a>
                 </div>
@@ -71,6 +71,54 @@
             </li>
         </ul>
     </nav>
+
+    <!-- 修改密码遮罩层（模态框） -->
+    <div class="modal fade" id="changePassword" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="card card-primary">
+                    <div class="card-header">
+                        <h3 class="card-title">修改密码</h3>
+                    </div>
+                    <!-- /.card-header -->
+                    <!-- form start -->
+                    <form class="form-horizontal" onsubmit="return changePassword()">
+                        <table>
+                            <div class="card-body">
+                                <div class="form-group">
+                                    <label for="" class="">旧密码</label>
+
+                                    <div class="col-sm-10">
+                                        <input type="password" class="form-control" id="password" placeholder="请输入当前密码">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="" class="">新密码</label>
+
+                                    <div class="col-sm-10">
+                                        <input type="password" class="form-control" id="newPassword_1" placeholder="请输入新密码">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="" class="">确认密码</label>
+
+                                    <div class="col-sm-10">
+                                        <input type="password" class="form-control" id="newPassword_2" placeholder="请确认新密码">
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- /.card-body -->
+                            <div class="modal-footer">
+                                <span style="color: red;" id="span_password"></span>
+                                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                                <button type="submit" id="change" class="btn btn-primary">提交更改</button>
+                            </div>
+                        </table>
+                    </form>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal -->
+    </div>
     <!-- 头部 -->
 
     <!-- 侧边栏 -->
@@ -174,6 +222,14 @@
                             </p>
                         </a>
                     </li>
+                    <li class="nav-item">
+                        <a href="totalExpenses.html" class="nav-link">
+                            <i class="nav-icon fa fa-usd"></i>
+                            <p>
+                                支出项目统计
+                            </p>
+                        </a>
+                    </li>
                 </ul>
             </nav>
             <!-- /.sidebar-menu -->
@@ -218,7 +274,7 @@
                                     <div class="table-responsive">
                                         <table style="min-width: 500px" id="form1" class="table table-hover">
                                             <caption>
-                                                <button class="btn btn-info">添加服务项目</button>
+                                                <button class="btn btn-info" data-toggle="modal" data-target="#edit" onclick="lick(this, this.id)">添加服务项目</button>
                                             </caption>
                                             <thead>
                                             <tr>
@@ -227,6 +283,7 @@
                                                 <th>服务项目价格</th>
                                                 <th>提供服务员工类型</th>
                                                 <th>是否可用</th>
+                                                <th style="display: none;">简介</th>
                                                 <th>操作</th></tr>
                                             </thead>
                                             <tbody>
@@ -234,20 +291,22 @@
                                                 <td>1</td>
                                                 <td>洗头</td>
                                                 <td>15</td>
-                                                <td>洗发技师、发型师</td>
+                                                <td>洗发技师,发型师</td>
                                                 <td style="color: green;">可用</td>
+                                                <td style="display: none;">洗剪吹三件套洗剪吹三件套洗剪吹三件套洗剪吹三件套</td>
                                                 <td>
-                                                    <button class="btn btn-warning btn-sm"><i class="fa fa-pencil"></i>编辑</button>
+                                                    <button class="btn btn-warning btn-sm" data-toggle="modal" data-target="#edit" onclick="lick(this, this.id)"><i class="fa fa-pencil"></i>编辑</button>
                                                     <button class="btn btn-danger btn-sm"><i class="fa fa-trash"></i>停用</button>
                                                 </td></tr>
                                             <tr>
                                                 <td>2</td>
                                                 <td>理发</td>
                                                 <td>30</td>
-                                                <td>发型师、高级发型师</td>
+                                                <td>发型师,高级发型师</td>
                                                 <td style="color: green;">可用</td>
+                                                <td style="display: none;">洗剪吹三件套洗剪吹三件套洗剪吹三件套洗剪吹三件套</td>
                                                 <td>
-                                                    <button class="btn btn-warning btn-sm"><i class="fa fa-pencil"></i>编辑</button>
+                                                    <button class="btn btn-warning btn-sm" data-toggle="modal" data-target="#edit" onclick="lick(this, this.id)"><i class="fa fa-pencil"></i>编辑</button>
                                                     <button class="btn btn-danger btn-sm"><i class="fa fa-trash"></i>停用</button>
                                                 </td></tr>
                                             <tr>
@@ -256,8 +315,9 @@
                                                 <td>200</td>
                                                 <td>专家发型师</td>
                                                 <td style="color: green;">可用</td>
+                                                <td style="display: none;">洗剪吹三件套洗剪吹三件套洗剪吹三件套洗剪吹三件套</td>
                                                 <td>
-                                                    <button class="btn btn-warning btn-sm"><i class="fa fa-pencil"></i>编辑</button>
+                                                    <button class="btn btn-warning btn-sm" data-toggle="modal" data-target="#edit" onclick="lick(this, this.id)"><i class="fa fa-pencil"></i>编辑</button>
                                                     <button class="btn btn-danger btn-sm"><i class="fa fa-trash"></i>停用</button>
                                                 </td></tr>
                                             </tbody>
@@ -268,7 +328,7 @@
                                     <div class="table-responsive">
                                         <table style="min-width: 500px" id="form2" class="table table-hover">
                                             <caption>
-                                                <button class="btn btn-info">添加服务项目</button>
+                                                <button class="btn btn-info" data-toggle="modal" data-target="#edit" onclick="lick(this, this.id)">添加服务项目</button>
                                             </caption>
                                             <thead>
                                             <tr>
@@ -276,7 +336,8 @@
                                                 <th>服务项目名称</th>
                                                 <th>服务项目价格</th>
                                                 <th>提供服务员工类型</th>
-                                                <th>服务项目简介</th>
+                                                <th>是否可用</th>
+                                                <th style="display: none;">简介</th>
                                                 <th>操作</th></tr>
                                             </thead>
                                             <tbody>
@@ -284,20 +345,22 @@
                                                 <td>1</td>
                                                 <td>洗头</td>
                                                 <td>15</td>
-                                                <td>洗发技师、发型师</td>
+                                                <td>洗发技师,发型师</td>
                                                 <td style="color: red;">不可用</td>
+                                                <td style="display: none;">洗剪吹三件套洗剪吹三件套洗剪吹三件套洗剪吹三件3套</td>
                                                 <td>
-                                                    <button class="btn btn-warning btn-sm"><i class="fa fa-pencil"></i>编辑</button>
+                                                    <button class="btn btn-warning btn-sm" data-toggle="modal" data-target="#edit" onclick="lick(this, this.id)"><i class="fa fa-pencil"></i>编辑</button>
                                                     <button class="btn btn-success btn-sm"><i class="fa fa-trash"></i>启用</button>
                                                 </td></tr>
                                             <tr>
                                                 <td>2</td>
                                                 <td>理发</td>
                                                 <td>30</td>
-                                                <td>发型师、高级发型师</td>
+                                                <td>发型师,高级发型师</td>
                                                 <td style="color: red;">不可用</td>
+                                                <td style="display: none;">洗剪吹三件套洗剪吹三件套洗剪吹三件套洗剪吹2三件套</td>
                                                 <td>
-                                                    <button class="btn btn-warning btn-sm"><i class="fa fa-pencil"></i>编辑</button>
+                                                    <button class="btn btn-warning btn-sm" data-toggle="modal" data-target="#edit" onclick="lick(this, this.id)"><i class="fa fa-pencil"></i>编辑</button>
                                                     <button class="btn btn-success btn-sm"><i class="fa fa-trash"></i>启用</button>
                                                 </td></tr>
                                             <tr>
@@ -306,8 +369,9 @@
                                                 <td>200</td>
                                                 <td>专家发型师</td>
                                                 <td style="color: red;">不可用</td>
+                                                <td style="display: none;">洗剪吹三件套洗剪吹三件套洗剪吹三件套洗剪1吹三件套</td>
                                                 <td>
-                                                    <button class="btn btn-warning btn-sm"><i class="fa fa-pencil"></i>编辑</button>
+                                                    <button class="btn btn-warning btn-sm" data-toggle="modal" data-target="#edit" onclick="lick(this, this.id)"><i class="fa fa-pencil"></i>编辑</button>
                                                     <button class="btn btn-success btn-sm"><i class="fa fa-trash"></i>启用</button>
                                                 </td></tr>
                                             </tbody>
@@ -325,6 +389,85 @@
             <!-- /.row -->
         </section>
         <!-- /.content -->
+    </div>
+    <!-- 编辑员工类型（模态框） -->
+    <div class="modal fade" id="edit" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="card card-info">
+                    <div class="card-header">
+                        <h3 class="card-title">修改服务项目</h3>
+                    </div>
+                    <!-- /.card-header -->
+                    <!-- form start -->
+                    <form class="form-horizontal" onsubmit="return edit()">
+                        <div class="card-body">
+                            <div class="form-group">
+                                <label for="" class="">服务项目名称</label>
+
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control" id="name" value="">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="" class="">服务项目价格</label>
+
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control" id="pay" value="">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="" class="">服务项目简介</label>
+
+                                <div class="col-sm-10">
+                                    <textarea class="form-control" rows="3" placeholder="" id="content"></textarea>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label>可提供服务员工类型</label>
+
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="洗发技师" name="type">
+                                    <label class="form-check-label">洗发技师</label>
+                                </div>
+
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="发型师" name="type">
+                                    <label class="form-check-label">发型师</label>
+                                </div>
+
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="高级发型师" name="type">
+                                    <label class="form-check-label">高级发型师</label>
+                                </div>
+
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="专家发型师" name="type">
+                                    <label class="form-check-label">专家发型师</label>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label>是否可用</label>
+
+                                <div class="col-sm-10">
+                                    <select class="form-control" id="status">
+                                        <option value="">请选择项目状态</option>
+                                        <option value="可用">可用</option>
+                                        <option value="不可用">不可用</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- /.card-body -->
+                        <div class="modal-footer">
+                            <span style="color: red;" id="span_edit"></span>
+                            <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                            <button type="submit" class="btn btn-primary">提交更改</button>
+                        </div>
+                    </form>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal -->
     </div>
     <!-- 主体内容 -->
 
@@ -391,6 +534,92 @@
             "autoWidth": false
         });
     });
+    //修改密码表单验证
+    function changePassword() {
+        var oldPassword = document.getElementById('password').value;
+        var newPassword_1 = document.getElementById('newPassword_1').value;
+        var newPassword_2 = document.getElementById('newPassword_2').value;
+        if (oldPassword == ""){
+            document.getElementById("span_password").innerHTML='请输入当前密码';
+            return false;
+        }else if (newPassword_1 == ""){
+            document.getElementById("span_password").innerHTML='请输入新密码';
+            return false;
+        }else if (newPassword_2 == ""){
+            document.getElementById("span_password").innerHTML='请输入确认密码';
+            return false;
+        }else if (newPassword_1 != newPassword_2){
+            document.getElementById("span_password").innerHTML='新密码和确认密码不一致';
+            return false;
+        }
+        return true;
+    }
+    //修改服务项目表单验证
+    function edit() {
+        var name = document.getElementById('name').value;
+        var pay = document.getElementById('pay').value;
+        var content = document.getElementById('content').value;
+
+        var status = document.getElementById('status');//下拉框值
+        var index=status.selectedIndex ;             // selectedIndex代表的是你所选中项的index
+        var status_value = status.options[index].value;
+
+        if (name == ""){
+            document.getElementById("span_edit").innerHTML='请输入服务项目名称';
+            return false;
+        }else if (pay == ""){
+            document.getElementById("span_edit").innerHTML='请输入服务项目价格';
+            return false;
+        }else if (content == ""){
+            document.getElementById("span_edit").innerHTML='请输入服务项目简介';
+            return false;
+        }else if (status_value == ""){
+            document.getElementById("span_edit").innerHTML='请选择是否可用';
+            return false;
+        }else{
+            var flag = false
+            //多选框确认
+            $('input:checkbox').each(function() {
+                if ($(this).get(0).checked) {
+                    flag = true;
+                }
+            });
+            document.getElementById("span_edit").innerHTML='请至少选择一个员工类型';
+            return flag;
+        }
+    }
+    function lick(obj, id){
+        var td_content = $(obj).parents("tr").children("td");  //获取当前行中的所有td值
+
+        var name = td_content.eq(1).text(); //获取当前行第二个td的值
+        var pay = td_content.eq(2).text(); //获取当前行第二个td的值
+        var type = td_content.eq(3).text(); //获取当前行第二个td的值
+        var status = td_content.eq(4).text(); //获取当前行第二个td的值
+        var content = td_content.eq(5).text(); //获取当前行第二个td的值
+
+        document.getElementById('name').value = name;
+        document.getElementById('pay').value = pay;
+        document.getElementById('content').value = content;
+        document.getElementById('status').value = status;
+
+        //取消多选框选择
+        $("input:checkbox").removeAttr("checked");
+        //字符串分割
+        type = type.split(",");
+        //遍历字符串分割数组
+        for(i=0;i<type.length;i++){
+            var typeValue =type[i];
+            $("input:checkbox[value='"+typeValue+"']").attr("checked","checked");
+        }
+
+/*        多选框取值
+        var type=document.getElementsByName("type");
+        for(var i=0;i<type.length;i++){
+            if(type[i].checked){
+                //alert(type[i].value+","+type[i].nextSibling.nodeValue);
+            }
+        }*/
+    }
 </script>
 </body>
 </html>

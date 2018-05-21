@@ -1,0 +1,19 @@
+package com.pidstudiodemo.dao;
+
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+
+import com.pidstudiodemo.model.PayList;
+
+/**
+ * 充值记录Dao
+ * **/
+public interface PayListDao {
+	//查询充值清单
+	public Page<PayList> queryPayList(Pageable pageable);
+	//充值
+	public void insertPayList(PayList paylist);
+	//统计充值的总条数
+	public int PayList();
+
+}

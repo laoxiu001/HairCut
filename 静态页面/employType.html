@@ -61,7 +61,7 @@
                         <i class="fa fa-sign-out"></i> 用户注销
                     </a>
                     <div class="dropdown-divider"></div>
-                    <a href="#" class="dropdown-item">
+                    <a href="#" class="dropdown-item" data-toggle="modal" data-target="#changePassword">
                         <i class="fa fa-address-card"></i> 修改密码
                     </a>
                 </div>
@@ -72,6 +72,54 @@
             </li>
         </ul>
     </nav>
+
+    <!-- 修改密码遮罩层（模态框） -->
+    <div class="modal fade" id="changePassword" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="card card-primary">
+                    <div class="card-header">
+                        <h3 class="card-title">修改密码</h3>
+                    </div>
+                    <!-- /.card-header -->
+                    <!-- form start -->
+                    <form class="form-horizontal" onsubmit="return changePassword()">
+                        <table>
+                            <div class="card-body">
+                                <div class="form-group">
+                                    <label for="" class="">旧密码</label>
+
+                                    <div class="col-sm-10">
+                                        <input type="password" class="form-control" id="password" placeholder="请输入当前密码">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="" class="">新密码</label>
+
+                                    <div class="col-sm-10">
+                                        <input type="password" class="form-control" id="newPassword_1" placeholder="请输入新密码">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="" class="">确认密码</label>
+
+                                    <div class="col-sm-10">
+                                        <input type="password" class="form-control" id="newPassword_2" placeholder="请确认新密码">
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- /.card-body -->
+                            <div class="modal-footer">
+                                <span style="color: red;" id="span_password"></span>
+                                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                                <button type="submit" id="change" class="btn btn-primary">提交更改</button>
+                            </div>
+                        </table>
+                    </form>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal -->
+    </div>
     <!-- 头部 -->
 
     <!-- 侧边栏 -->
@@ -177,6 +225,14 @@
                             </p>
                         </a>
                     </li>
+                    <li class="nav-item">
+                        <a href="totalExpenses.html" class="nav-link">
+                            <i class="nav-icon fa fa-usd"></i>
+                            <p>
+                                支出项目统计
+                            </p>
+                        </a>
+                    </li>
                 </ul>
             </nav>
             <!-- /.sidebar-menu -->
@@ -215,7 +271,7 @@
                                     <table style="min-width: 500px" id="form" class="table table-hover">
                                         <caption>
                                             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                            <button class="btn btn-info">添加员工类型</button>
+                                            <button class="btn btn-info" data-toggle="modal" data-target="#edit">添加员工类型</button>
                                         </caption>
                                         <thead>
                                         <tr>
@@ -235,7 +291,7 @@
                                             <td>0.2</td>
                                             <td>1</td>
                                             <td>
-                                                <button class="btn btn-warning btn-sm"><i class="fa fa-pencil"></i>编辑
+                                                <button class="btn btn-warning btn-sm" data-toggle="modal" data-target="#edit" onclick="lick(this, this.id)"><i class="fa fa-pencil"></i>编辑
                                                 </button>
                                                 <button class="btn btn-danger btn-sm"><i class="fa fa-trash"></i>删除</button>
                                             </td>
@@ -247,7 +303,7 @@
                                             <td>0.25</td>
                                             <td>1</td>
                                             <td>
-                                                <button class="btn btn-warning btn-sm"><i class="fa fa-pencil"></i>编辑
+                                                <button class="btn btn-warning btn-sm" data-toggle="modal" data-target="#edit" onclick="lick(this, this.id)"><i class="fa fa-pencil"></i>编辑
                                                 </button>
                                                 <button class="btn btn-danger btn-sm"><i class="fa fa-trash"></i>删除</button>
                                             </td>
@@ -259,7 +315,7 @@
                                             <td>0.4</td>
                                             <td>1.5</td>
                                             <td>
-                                                <button class="btn btn-warning btn-sm"><i class="fa fa-pencil"></i>编辑
+                                                <button class="btn btn-warning btn-sm" data-toggle="modal" data-target="#edit" onclick="lick(this, this.id)"><i class="fa fa-pencil"></i>编辑
                                                 </button>
                                                 <button class="btn btn-danger btn-sm"><i class="fa fa-trash"></i>删除</button>
                                             </td>
@@ -271,7 +327,7 @@
                                             <td>0.5</td>
                                             <td>2</td>
                                             <td>
-                                                <button class="btn btn-warning btn-sm"><i class="fa fa-pencil"></i>编辑
+                                                <button class="btn btn-warning btn-sm" data-toggle="modal" data-target="#edit" onclick="lick(this, this.id)"><i class="fa fa-pencil"></i>编辑
                                                 </button>
                                                 <button class="btn btn-danger btn-sm"><i class="fa fa-trash"></i>删除</button>
                                             </td>
@@ -283,7 +339,7 @@
                                             <td>0.8</td>
                                             <td>1.5</td>
                                             <td>
-                                                <button class="btn btn-warning btn-sm"><i class="fa fa-pencil"></i>编辑
+                                                <button class="btn btn-warning btn-sm" data-toggle="modal" data-target="#edit" onclick="lick(this, this.id)"><i class="fa fa-pencil"></i>编辑
                                                 </button>
                                                 <button class="btn btn-danger btn-sm"><i class="fa fa-trash"></i>删除</button>
                                             </td>
@@ -298,6 +354,59 @@
                 </div>
             </div>
         </section>
+    </div>
+
+    <!-- 编辑员工类型（模态框） -->
+    <div class="modal fade" id="edit" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="card card-info">
+                    <div class="card-header">
+                        <h3 class="card-title">修改员工类型</h3>
+                    </div>
+                    <!-- /.card-header -->
+                    <!-- form start -->
+                    <form class="form-horizontal" onsubmit="return edit()">
+                        <div class="card-body">
+                            <div class="form-group">
+                                <label>员工类型</label>
+
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control" id="type" value="">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="" class="">基本工资</label>
+
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control" id="salary" value="">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="" class="">提成比例</label>
+
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control" id="commissionRate" value="">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="" class="">加权系数</label>
+
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control" id="WeightingFactor" value="">
+                                </div>
+                            </div>
+                        </div>
+                        <!-- /.card-body -->
+                        <div class="modal-footer">
+                            <span style="color: red;" id="span_edit"></span>
+                            <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                            <button type="submit" class="btn btn-primary">提交更改</button>
+                        </div>
+                    </form>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal -->
     </div>
     <!-- 主体内容 -->
 
@@ -365,6 +474,61 @@
             "autoWidth": false
         });
     });
+    //修改密码表单验证
+    function changePassword() {
+        var oldPassword = document.getElementById('password').value;
+        var newPassword_1 = document.getElementById('newPassword_1').value;
+        var newPassword_2 = document.getElementById('newPassword_2').value;
+        if (oldPassword == ""){
+            document.getElementById("span_password").innerHTML='请输入当前密码';
+            return false;
+        }else if (newPassword_1 == ""){
+            document.getElementById("span_password").innerHTML='请输入新密码';
+            return false;
+        }else if (newPassword_2 == ""){
+            document.getElementById("span_password").innerHTML='请输入确认密码';
+            return false;
+        }else if (newPassword_1 != newPassword_2){
+            document.getElementById("span_password").innerHTML='新密码和确认密码不一致';
+            return false;
+        }
+        return true;
+    }
+    //修改员工类型表单验证
+    function edit() {
+        var type = document.getElementById('type').value;
+        var salary = document.getElementById('salary').value;
+        var commissionRate = document.getElementById('commissionRate').value;
+        var WeightingFactor = document.getElementById('WeightingFactor').value;
+
+        if (type == ""){
+            document.getElementById("span_edit").innerHTML='请输入员工类型';
+            return false;
+        }else if (salary == ""){
+            document.getElementById("span_edit").innerHTML='请输入基本工资';
+            return false;
+        }else if (commissionRate == ""){
+            document.getElementById("span_edit").innerHTML='请输入提成比例';
+            return false;
+        }else if (WeightingFactor == ""){
+            document.getElementById("span_edit").innerHTML='请输入加权系数';
+            return false;
+        }
+        return true;
+    }
+    function lick(obj, id){
+        var td_content = $(obj).parents("tr").children("td");  //获取当前行中的所有td值
+
+        var type = td_content.eq(1).text(); //获取当前行第二个td的值
+        var salary = td_content.eq(2).text(); //获取当前行第二个td的值
+        var commissionRate = td_content.eq(3).text(); //获取当前行第二个td的值
+        var WeightingFactor = td_content.eq(4).text(); //获取当前行第二个td的值
+
+        document.getElementById('type').value = type;
+        document.getElementById('salary').value = salary;
+        document.getElementById('commissionRate').value = commissionRate;
+        document.getElementById('WeightingFactor').value = WeightingFactor;
+    }
 </script>
 </body>
 </html>

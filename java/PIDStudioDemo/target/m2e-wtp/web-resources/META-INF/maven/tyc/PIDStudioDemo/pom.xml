@@ -1,0 +1,167 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>tyc</groupId>
+  <artifactId>PIDStudioDemo</artifactId>
+  <packaging>war</packaging>
+ <version>0.0.1-SNAPSHOT</version>
+  <name>SpringBootDemo1 Maven Webapp</name>
+  <url>http://maven.apache.org</url>
+
+    <dependencyManagement>
+    <dependencies>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-dependencies</artifactId>
+            <version>1.5.6.RELEASE</version>
+            <type>pom</type>
+            <scope>import</scope>
+        </dependency>
+    </dependencies>
+</dependencyManagement>
+   <dependencies>
+<!-- 添加 tomcat 的支持 -->  
+<!-- <dependency>  
+    <groupId>org.springframework.boot</groupId>  
+    <artifactId>spring-boot-starter-tomcat</artifactId>  
+    <scope>provided</scope>  
+</dependency>   -->
+<!-- 跳转jsp页面必备jar包 -->
+<!--  <dependency>
+     <groupId>org.apache.tomcat.embed</groupId>
+     <artifactId>tomcat-embed-jasper</artifactId>
+     <scope>provided</scope>
+ </dependency> -->
+ <!--  -->
+<dependency>
+   <groupId>aliyun-message-sdk-core</groupId>
+   <artifactId>aliyun-message-sdk-core</artifactId>
+   <version>3.2.3</version>
+   <scope>system</scope>
+   <systemPath>${project.basedir}/src/main/resources/lib/aliyun-java-sdk-core-3.2.2.jar</systemPath>
+</dependency>
+<dependency>
+   <groupId>aliyun-message-sdk-mns</groupId>
+   <artifactId>aliyun-message-sdk-mns</artifactId>
+   <version>1.1.8</version>
+   <scope>system</scope>
+   <systemPath>${project.basedir}/src/main/resources/lib/aliyun-sdk-mns-1.1.8.jar</systemPath>
+</dependency>
+<dependency>
+   <groupId>aliyun-java-sdk-dysmsapi</groupId>
+   <artifactId>aliyun-java-sdk-dysmsapi</artifactId>
+   <version>1.0.0</version>
+   <scope>system</scope>
+   <systemPath>${project.basedir}/src/main/resources/lib/aliyun-java-sdk-dysmsapi-1.0.0.jar</systemPath>
+</dependency>
+
+<!--添加 JSTL 支持   --> 
+<dependency>  
+    <groupId>javax.servlet</groupId>  
+    <artifactId>jstl</artifactId>  
+</dependency>
+          <!-- spring boot web支持 -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+
+        <!-- thmleaf模板依赖. -->
+         <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-thymeleaf</artifactId>
+        </dependency>
+        <!--启用不严格检查html-->
+		<dependency>
+   			<groupId>net.sourceforge.nekohtml</groupId>
+    		  <artifactId>nekohtml</artifactId>
+  			  <version>1.9.22</version>
+		</dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency> 
+		<!-- MYSQL -->
+		<dependency>
+   			<groupId>mysql</groupId>
+   			<artifactId>mysql-connector-java</artifactId>
+		</dependency>
+		<!-- Spring Boot JPA -->
+		<dependency>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-data-jpa</artifactId>
+    </dependency>
+    <!-- webjars-locator-->
+<!--webjars-locator 包的作用是省略 webjar 的版本。比如对于请求 
+http://localhost:8080/webjars/jquery/3.1.0/jquery.js省略版本号 3.2.1 
+直接使用http://localhost:8080/webjars/jquery/jquery.js也可访问。-->
+<dependency>
+    <groupId>org.webjars</groupId>
+    <artifactId>webjars-locator</artifactId>
+    <version>${webjars-locator}</version>
+</dependency>
+
+<!-- bootstrap -->
+<dependency>
+    <groupId>org.webjars</groupId>
+    <artifactId>bootstrap</artifactId>
+    <version>${bootstrap}</version>
+</dependency>
+
+<!-- jquery -->
+<dependency>
+    <groupId>org.webjars</groupId>
+    <artifactId>jquery</artifactId>
+    <version>${jquery}</version>
+</dependency>
+    <dependency>
+        <groupId>org.hibernate</groupId>
+        <artifactId>hibernate-core</artifactId>
+        </dependency>
+      <dependency>  
+    <groupId>org.apache.poi</groupId>  
+    <artifactId>poi</artifactId>  
+    <version>3.15</version>  
+</dependency>  
+<dependency>  
+    <groupId>org.apache.poi</groupId>  
+    <artifactId>poi-ooxml-schemas</artifactId>  
+    <version>3.15</version>  
+</dependency>  
+<dependency>  
+    <groupId>org.apache.poi</groupId>  
+    <artifactId>poi-ooxml</artifactId>  
+    <version>3.15</version>
+</dependency>  
+   </dependencies>
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        <java.version>1.8</java.version>
+            <webjars-locator>0.32-1</webjars-locator>
+    <bootstrap>4.0.0</bootstrap>
+    <jquery>3.3.1</jquery>
+    </properties>
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+        </plugins>
+            <finalName>PIDSyudioDemo</finalName>
+    </build>
+    <repositories>
+        <repository>
+            <id>spring-releases</id>
+            <url>https://repo.spring.io/libs-release</url>
+        </repository>
+    </repositories>
+    <pluginRepositories>
+        <pluginRepository>
+            <id>spring-releases</id>
+            <url>https://repo.spring.io/libs-release</url>
+        </pluginRepository>  
+    </pluginRepositories>
+</project>

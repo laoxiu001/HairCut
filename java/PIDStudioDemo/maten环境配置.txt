@@ -1,0 +1,10 @@
+M2_HOME
+MAVEN_HOME变量
+配置地址为maven根目录路径
+
+
+path变量配置%MAVEN_HOME%\bin
+
+
+
+配置完成后，cmd窗口关闭重开一下！！！
