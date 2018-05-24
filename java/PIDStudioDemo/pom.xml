@@ -10,6 +10,7 @@
 
     <dependencyManagement>
     <dependencies>
+
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-dependencies</artifactId>
@@ -101,7 +102,11 @@ http://localhost:8080/webjars/jquery/3.1.0/jquery.js省略版本号 3.2.1
     <artifactId>webjars-locator</artifactId>
     <version>${webjars-locator}</version>
 </dependency>
-
+    <dependency>
+    <groupId>org.apache.maven.plugins</groupId>
+    <artifactId>maven-resources-plugin</artifactId>
+    <version>2.4.3</version>
+</dependency>
 <!-- bootstrap -->
 <dependency>
     <groupId>org.webjars</groupId>
@@ -143,6 +148,7 @@ http://localhost:8080/webjars/jquery/3.1.0/jquery.js省略版本号 3.2.1
     <bootstrap>4.0.0</bootstrap>
     <jquery>3.3.1</jquery>
     </properties>
+
     <build>
         <plugins>
             <plugin>
