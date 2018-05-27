@@ -23,7 +23,7 @@
 员工信息管理：employeeManage.html
 	员工信息的增改查
 员工详情页面：employeeDetails.html
-	员工详情的展示、员工信息的添加
+	员工详情的展示、员工信息的添加、修改
 
 
 服务类：
