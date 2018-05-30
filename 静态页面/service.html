@@ -267,45 +267,60 @@
                             </div>
                             <!-- /.card-header -->
                             <!-- form start -->
-                            <form role="form">
+                            <form class="form-horizontal" onsubmit="return service()">
                                 <div class="card-body">
                                     <div class="row">
                                         <div class="col-xs-12 col-sm-6">
                                             <div class="form-group">
-                                                <label for="exampleInputEmail1">员工工号</label>
-                                                <input type="email" class="form-control" id="exampleInputEmail1" placeholder="请输入员工工号">
-                                            </div>
-                                        </div>
-                                        <div class="col-xs-12 col-sm-6">
-                                            <div class="form-group">
                                                 <label for="exampleInputPassword1">客户账户</label>
-                                                <input type="password" class="form-control" id="exampleInputPassword1" placeholder="请输入客户账户">
+                                                <input type="text" class="form-control" id="username" placeholder="请输入客户账户">
                                             </div>
                                         </div>
                                         <div class="col-12">
-                                            <div class="form-check">
-                                                <label class="checkbox-inline">服务项目选择：</label><br>
-                                                <label class="checkbox-inline">
-                                                    <input type="checkbox" value="option1"> 洗头(基础价格15￥)
-                                                </label>
-                                                <label class="checkbox-inline">
-                                                    <input type="checkbox" value="option1"> 理发(基础价格30￥)
-                                                </label>
-                                                <label class="checkbox-inline">
-                                                    <input type="checkbox" value="option1"> 头部按摩(基础价格10￥)
-                                                </label>
-                                                <label class="checkbox-inline">
-                                                    <input type="checkbox" value="option1"> 染发(基础价格200￥)
-                                                </label>
-                                                <label class="checkbox-inline">
-                                                    <input type="checkbox" value="option1"> 烫发(基础价格300￥)
-                                                </label>
+                                            <div class="form-group form-inline">
+                                                <label class="checkbox-inline">服务项目选择：</label>
+                                                <div class="row">
+                                                    <div class="col-xs-12 col-sm-6">
+                                                        <div class="form-inline ">
+                                                            <input class="form-check-input" type="checkbox" value="洗发技师" name="type">
+                                                            <label class="form-check-label">洗头(基础价格15￥)</label>
+                                                            <input type="text" class="form-control" name="employee[]" placeholder="请输入员工工号">
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-xs-12 col-sm-6">
+                                                        <div class="form-inline">
+                                                            <input class="form-check-input" type="checkbox" value="洗发技师" name="type">
+                                                            <label class="form-check-label">理发(基础价格30￥)</label>
+                                                            <input type="text" class="form-control" name="employee[]" placeholder="请输入员工工号">
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-xs-12 col-sm-6">
+                                                        <div class="form-inline">
+                                                            <input class="form-check-input" type="checkbox" value="洗发技师" name="type">
+                                                            <label class="form-check-label">头部按摩(基础价格10￥)</label>
+                                                            <input type="text" class="form-control" name="employee[]" placeholder="请输入员工工号">
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-xs-12 col-sm-6">
+                                                        <div class="form-inline">
+                                                            <input class="form-check-input" type="checkbox" value="洗发技师" name="type">
+                                                            <label class="form-check-label">染发(基础价格200￥)</label>
+                                                            <input type="text" class="form-control" name="employee[]" placeholder="请输入员工工号">
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-xs-12 col-sm-6">
+                                                        <div class="form-inline">
+                                                            <input class="form-check-input" type="checkbox" value="洗发技师" name="type">
+                                                            <label class="form-check-label">烫发(基础价格300￥)</label>
+                                                            <input type="text" class="form-control" name="employee[]" placeholder="请输入员工工号">
+                                                        </div>
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                                 <!-- /.card-body -->
-
                                 <div class="card-footer">
                                     <button type="submit" class="btn btn-info">提交结算</button>
                                 </div>
@@ -449,6 +464,10 @@
             return false;
         }
         return true;
+    }
+    //修改客户信息表单验证
+    function service() {
+        return false;
     }
 </script>
 </body>

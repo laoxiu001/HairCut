@@ -77,3 +77,7 @@ myChart3.setOption(option);
 
 
 12、JS代码bug处理：检查对象名是否打错，F12查看具体报错
+
+
+
+13、表单提交问题：form标签下是否有table标签

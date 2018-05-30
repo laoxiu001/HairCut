@@ -439,6 +439,17 @@
 <!-- AdminLTE for demo purposes -->
 <script src="util/AdminLTE/dist/js/demo.js"></script>
 <script type="text/javascript">
+    //表单排序功能
+    $(function () {
+        $('#form').DataTable({
+            "paging": false,
+            "lengthChange": false,
+            "searching": false,
+            "ordering": true,
+            "info": false,
+            "autoWidth": false
+        });
+    });
     //修改密码表单验证
     function changePassword() {
         var oldPassword = document.getElementById('password').value;
