@@ -1,0 +1,558 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta charset="utf-8" />
+    <title>发型工作室-员工信息管理</title>
+
+    <meta name="description" content="Dynamic tables and grids using jqGrid plugin" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+
+    <!-- bootstrap & fontawesome -->
+    <link rel="stylesheet" href="util/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="util/font-awesome/4.5.0/css/font-awesome.min.css" />
+
+    <!-- page specific plugin styles -->
+    <link rel="stylesheet" href="util/css/jquery-ui.min.css" />
+    <link rel="stylesheet" href="util/css/bootstrap-datepicker3.min.css" />
+    <link rel="stylesheet" href="util/css/ui.jqgrid.min.css" />
+
+    <!-- text fonts -->
+    <link rel="stylesheet" href="util/css/fonts.googleapis.com.css" />
+
+    <!-- ace styles -->
+    <link rel="stylesheet" href="util/css/ace.min.css" class="ace-main-stylesheet" id="main-ace-style" />
+
+    <!--[if lte IE 9]>
+    <link rel="stylesheet" href="util/css/ace-part2.min.css" class="ace-main-stylesheet" />
+    <![endif]-->
+    <link rel="stylesheet" href="util/css/ace-skins.min.css" />
+    <link rel="stylesheet" href="util/css/ace-rtl.min.css" />
+
+    <!--[if lte IE 9]>
+    <link rel="stylesheet" href="util/css/ace-ie.min.css" />
+    <![endif]-->
+
+    <!-- inline styles related to this page -->
+
+    <!-- ace settings handler -->
+    <script src="util/js/ace-extra.min.js"></script>
+
+    <!-- HTML5shiv and Respond.js for IE8 to support HTML5 elements and media queries -->
+
+    <!--[if lte IE 8]>
+    <script src="util/js/html5shiv.min.js"></script>
+    <script src="util/js/respond.min.js"></script>
+    <![endif]-->
+</head>
+
+<body class="no-skin">
+
+<!-- 头部 -->
+<div id="navbar" class="navbar navbar-default ace-save-state">
+    <div class="navbar-container ace-save-state" id="navbar-container">
+        <button type="button" class="navbar-toggle menu-toggler pull-left" id="menu-toggler" data-target="#sidebar">
+            <span class="sr-only">侧边栏</span>
+
+            <span class="icon-bar"></span>
+
+            <span class="icon-bar"></span>
+
+            <span class="icon-bar"></span>
+        </button>
+
+        <div class="navbar-header pull-left">
+            <a href="admin/login.html" class="navbar-brand">
+                <small>
+                    <i class="fa fa-leaf"></i>
+                    发型工作室
+                </small>
+            </a>
+        </div>
+
+        <div class="navbar-buttons navbar-header pull-right" role="navigation">
+            <ul class="nav ace-nav">
+
+                <li class="light-blue dropdown-modal">
+                    <a data-toggle="dropdown" href="#" class="dropdown-toggle">
+                        <img class="nav-user-photo" src="img/avatars/user.jpg" alt="Jason's Photo" />
+                        <span class="user-info">
+									<small>欢迎您</small>
+									Admin
+								</span>
+
+                        <i class="ace-icon fa fa-caret-down"></i>
+                    </a>
+
+                    <ul class="user-menu dropdown-menu-right dropdown-menu dropdown-yellow dropdown-caret dropdown-close">
+                        <li>
+                            <a href="#" data-toggle="modal" data-target="#changePassword">
+                                <i class="ace-icon fa fa-cog"></i>
+                                修改密码
+                            </a>
+                        </li>
+
+                        <li class="divider"></li>
+
+                        <li>
+                            <a href="#">
+                                <i class="ace-icon fa fa-power-off"></i>
+                                注销
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </div><!-- /.navbar-container -->
+</div>
+
+<!-- 修改密码遮罩层（模态框） -->
+<div class="modal fade" id="changePassword" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog" style="width: 400px;">
+        <div class="modal-content">
+            <div class="card card-primary">
+                <div class="widget-header">
+                    <h3 class="card-title">修改密码</h3>
+                </div>
+                <!-- /.card-header -->
+                <!-- form start -->
+                <form class="form-horizontal" onsubmit="return changePassword()">
+                    <table>
+                        <div class="widget-main">
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label no-padding-right">旧密码</label>
+
+                                <div class="col-sm-8">
+                                    <input type="password" class="form-control" id="password" placeholder="请输入当前密码">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label no-padding-right">新密码</label>
+
+                                <div class="col-sm-8">
+                                    <input type="password" class="form-control" id="newPassword_1" placeholder="请输入新密码">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label no-padding-right">确认密码</label>
+
+                                <div class="col-sm-8">
+                                    <input type="password" class="form-control" id="newPassword_2" placeholder="请确认新密码">
+                                </div>
+                            </div>
+                        </div>
+                        <!-- /.card-body -->
+                        <div class="modal-footer">
+                            <span style="color: red;" id="span_password"></span>
+                            <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                            <button type="submit" id="change" class="btn btn-primary">提交更改</button>
+                        </div>
+                    </table>
+                </form>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal -->
+</div>
+<!-- 头部 -->
+
+<div class="main-container ace-save-state" id="main-container">
+    <script type="text/javascript">
+        try{ace.settings.loadState('main-container')}catch(e){}
+    </script>
+
+    <!-- 侧边栏 -->
+    <div id="sidebar" class="sidebar responsive ace-save-state">
+        <script type="text/javascript">
+            try{ace.settings.loadState('sidebar')}catch(e){}
+        </script>
+
+        <div class="sidebar-shortcuts" id="sidebar-shortcuts">
+            <div class="sidebar-shortcuts-large" id="sidebar-shortcuts-large">
+                <img src="img/avatars/user.jpg" alt="" />
+                <span style="font-size: 18px;">AdminAdmin</span>
+            </div>
+
+            <div class="sidebar-shortcuts-mini" id="sidebar-shortcuts-mini">
+                <span class="btn btn-success"></span>
+
+                <span class="btn btn-info"></span>
+
+                <span class="btn btn-warning"></span>
+
+                <span class="btn btn-danger"></span>
+            </div>
+        </div><!-- /.sidebar-shortcuts -->
+
+        <ul class="nav nav-list">
+            <li class="">
+                <a href="customer.html">
+                    <i class="menu-icon fa fa-user"></i>
+                    <span class="menu-text"> 客户信息管理 </span>
+                </a>
+
+                <b class="arrow"></b>
+            </li>
+
+            <li class="">
+                <a href="pay.html">
+                    <i class="menu-icon fa fa-credit-card"></i>
+                    <span class="menu-text"> 客户充值 </span>
+                </a>
+
+                <b class="arrow"></b>
+            </li>
+
+            <li class="">
+                <a href="service.html">
+                    <i class="menu-icon fa fa-bars"></i>
+                    <span class="menu-text"> 客户服务结算 </span>
+                </a>
+
+                <b class="arrow"></b>
+            </li>
+
+            <li class="">
+                <a href="#" class="dropdown-toggle">
+                    <i class="menu-icon fa fa-users"></i>
+                    <span class="menu-text">
+								员工管理
+							</span>
+
+                    <b class="arrow fa fa-angle-down"></b>
+                </a>
+
+                <b class="arrow"></b>
+
+                <ul class="submenu">
+                    <li class="">
+                        <a href="employType.html">
+                            <i class="menu-icon fa fa-caret-right"></i>
+
+                            员工类型管理
+                        </a>
+
+                        <b class="arrow"></b>
+
+                    </li>
+
+                    <li class="">
+                        <a href="employeeManage.html">
+                            <i class="menu-icon fa fa-caret-right"></i>
+                            员工信息管理
+                        </a>
+
+                        <b class="arrow"></b>
+                    </li>
+                </ul>
+            </li>
+
+            <li class="">
+                <a href="serviceItem.html">
+                    <i class="menu-icon fa fa-print"></i>
+                    <span class="menu-text"> 服务项目管理 </span>
+                </a>
+
+                <b class="arrow"></b>
+            </li>
+
+            <li class="">
+                <a href="#" class="dropdown-toggle">
+                    <i class="menu-icon fa fa-briefcase"></i>
+                    <span class="menu-text">
+								统计功能
+							</span>
+
+                    <b class="arrow fa fa-angle-down"></b>
+                </a>
+
+                <b class="arrow"></b>
+
+                <ul class="submenu">
+                    <li class="">
+                        <a href="salary.html">
+                            <i class="menu-icon fa fa-caret-right"></i>
+
+                            统计工资结算
+                        </a>
+
+                        <b class="arrow"></b>
+
+                    </li>
+
+                    <li class="">
+                        <a href="statistics.html">
+                            <i class="menu-icon fa fa-caret-right"></i>
+                            统计盈收
+                        </a>
+
+                        <b class="arrow"></b>
+                    </li>
+
+                    <li class="">
+                        <a href="totalExpenses.html">
+                            <i class="menu-icon fa fa-caret-right"></i>
+                            支出项目统计
+                        </a>
+
+                        <b class="arrow"></b>
+                    </li>
+                </ul>
+            </li>
+        </ul><!-- /.nav-list -->
+
+        <div class="sidebar-toggle sidebar-collapse" id="sidebar-collapse">
+            <i id="sidebar-toggle-icon" class="ace-icon fa fa-angle-double-left ace-save-state" data-icon1="ace-icon fa fa-angle-double-left" data-icon2="ace-icon fa fa-angle-double-right"></i>
+        </div>
+    </div>
+    <!-- 侧边栏 -->
+
+    <!-- 主体内容 -->
+    <div class="main-content">
+        <div class="main-content-inner">
+            <div class="breadcrumbs ace-save-state" id="breadcrumbs">
+                <ul class="breadcrumb">
+                    <li>
+                        <i class="ace-icon fa fa-home home-icon"></i>
+                        <a href="admin/login.html">主页</a>
+                    </li>
+                    <li class="active">员工信息管理管理</li>
+                </ul><!-- /.breadcrumb -->
+            </div>
+
+            <div class="page-content">
+                <div class="page-header">
+                    <div class="container-fluid">
+                        <div class="row mb-2">
+                            <div class="col-sm-6">
+                                <h1>员工信息管理页面</h1>
+                            </div>
+                        </div>
+                    </div>
+                </div><!-- /.page-header -->
+
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div class="card">
+                            <div class="card-header d-flex p-0">
+                                <ul class="nav nav-tabs" id="recent-tab">
+                                    <li class="active">
+                                        <a data-toggle="tab" href="#on" aria-expanded="true">在职员工</a>
+                                    </li>
+                                    <li class="">
+                                        <a data-toggle="tab" href="#off" aria-expanded="false">离职员工</a>
+                                    </li>
+                                </ul>
+                            </div><!-- /.card-header -->
+                            <div class="widget-body">
+                                <div class="tab-content">
+                                    <div class="tab-pane active" id="on">
+                                        <div class="table-responsive">
+                                            <table style="min-width: 500px" id="form1" class="table table-hover">
+                                                <caption>
+                                                    <button class="btn btn-info">添加员工</button>
+                                                </caption>
+                                                <thead>
+                                                <tr>
+                                                    <th>编号</th>
+                                                    <th>员工工号</th>
+                                                    <th>员工手机号</th>
+                                                    <th>员工类型</th>
+                                                    <th>员工姓名</th>
+                                                    <th>在职状态</th>
+                                                    <th>操作</th></tr>
+                                                </thead>
+                                                <tbody>
+                                                <tr>
+                                                    <td>1</td>
+                                                    <td>62284824886541125</td>
+                                                    <td>15723648799</td>
+                                                    <td>洗发技师</td>
+                                                    <td>芬必得</td>
+                                                    <td style="color: green;">在职</td>
+                                                    <td>
+                                                        <button class="btn btn-primary btn-sm" onclick="javascript:window.location.href='employeeDetails.html'"><i class="fa fa-eye"></i>查看</button>
+                                                    </td></tr>
+                                                <tr>
+                                                    <td>2</td>
+                                                    <td>62284165448541125</td>
+                                                    <td>15723648799</td>
+                                                    <td>发型师</td>
+                                                    <td>锦黄霖</td>
+                                                    <td style="color: green;">在职</td>
+                                                    <td>
+                                                        <button class="btn btn-primary btn-sm" onclick="javascript:window.location.href='employeeDetails.html'"><i class="fa fa-eye"></i>查看</button>
+                                                    </td></tr>
+                                                <tr>
+                                                    <td>3</td>
+                                                    <td>62184624886541125</td>
+                                                    <td>15723648799</td>
+                                                    <td>高级发型师</td>
+                                                    <td>北石佛</td>
+                                                    <td style="color: green;">在职</td>
+                                                    <td>
+                                                        <button class="btn btn-primary btn-sm" onclick="javascript:window.location.href='employeeDetails.html'"><i class="fa fa-eye"></i>查看</button>
+                                                    </td></tr>
+                                                <tr>
+                                                    <td>4</td>
+                                                    <td>62184624886541125</td>
+                                                    <td>15723648799</td>
+                                                    <td>店长</td>
+                                                    <td>杨丞琳</td>
+                                                    <td style="color: green;">在职</td>
+                                                    <td>
+                                                        <button class="btn btn-primary btn-sm" onclick="javascript:window.location.href='employeeDetails.html'"><i class="fa fa-eye"></i>查看</button>
+                                                    </td></tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                    <!-- /.tab-pane -->
+                                    <div class="tab-pane" id="off">
+                                        <div class="table-responsive">
+                                            <table style="min-width: 500px" id="form2" class="table table-hover">
+                                                <caption>
+                                                    <button class="btn btn-info">添加员工</button>
+                                                </caption>
+                                                <thead>
+                                                <tr>
+                                                    <th>编号</th>
+                                                    <th>员工工号</th>
+                                                    <th>员工手机号</th>
+                                                    <th>员工类型</th>
+                                                    <th>员工姓名</th>
+                                                    <th>在职状态</th>
+                                                    <th>操作</th></tr>
+                                                </thead>
+                                                <tbody>
+                                                <tr>
+                                                    <td>1</td>
+                                                    <td>62284824886541125</td>
+                                                    <td>15723648799</td>
+                                                    <td>洗发技师</td>
+                                                    <td>芬必得</td>
+                                                    <td style="color: red;">离职</td>
+                                                    <td>
+                                                        <button class="btn btn-primary btn-sm" onclick="javascript:window.location.href='employeeDetails.html'"><i class="fa fa-eye"></i>查看</button>
+                                                    </td></tr>
+                                                <tr>
+                                                    <td>2</td>
+                                                    <td>62284165448541125</td>
+                                                    <td>15723648799</td>
+                                                    <td>发型师</td>
+                                                    <td>锦黄霖</td>
+                                                    <td style="color: red;">离职</td>
+                                                    <td>
+                                                        <button class="btn btn-primary btn-sm" onclick="javascript:window.location.href='employeeDetails.html'"><i class="fa fa-eye"></i>查看</button>
+                                                    </td></tr>
+                                                <tr>
+                                                    <td>3</td>
+                                                    <td>62184624886541125</td>
+                                                    <td>15723648799</td>
+                                                    <td>高级发型师</td>
+                                                    <td>北石佛</td>
+                                                    <td style="color: red;">离职</td>
+                                                    <td>
+                                                        <button class="btn btn-primary btn-sm" onclick="javascript:window.location.href='employeeDetails.html'"><i class="fa fa-eye"></i>查看</button>
+                                                    </td></tr>
+                                                <tr>
+                                                    <td>4</td>
+                                                    <td>62184624886541125</td>
+                                                    <td>15723648799</td>
+                                                    <td>店长</td>
+                                                    <td>杨丞琳</td>
+                                                    <td style="color: red;">离职</td>
+                                                    <td>
+                                                        <button class="btn btn-primary btn-sm" onclick="javascript:window.location.href='employeeDetails.html'"><i class="fa fa-eye"></i>查看</button>
+                                                    </td></tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- /.tab-content -->
+                            </div><!-- /.card-body -->
+                            <div class="card-footer clearfix">
+                                <ul class="pagination pagination-sm m-0 float-right">
+                                    <li class="page-item"><a class="page-link" href="#">第一页</a></li>
+                                    <li class="page-item"><a class="page-link" href="#">上一页</a></li>
+                                    <li class="page-item"><a class="page-link" style="cursor:default">2 / 9</a></li>
+                                    <li class="page-item"><a class="page-link" href="#">下一页</a></li>
+                                    <li class="page-item"><a class="page-link" href="#">末页</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 主体内容 -->
+
+    <!-- 底部版权信息 -->
+    <div class="footer">
+        <div class="footer-inner">
+            <div class="footer-content">
+						<span class="bigger-120">
+							<span class="blue bolder">发型工作室</span>
+							管理系统 &copy; 2018-06-04
+						</span>
+            </div>
+        </div>
+    </div>
+    <!-- 底部版权信息 -->
+
+    <a href="#" id="btn-scroll-up" class="btn-scroll-up btn btn-sm btn-inverse">
+        <i class="ace-icon fa fa-angle-double-up icon-only bigger-110"></i>
+    </a>
+</div><!-- /.main-container -->
+
+<!-- basic scripts -->
+
+<!--[if !IE]> -->
+<script src="util/js/jquery-2.1.4.min.js"></script>
+
+<!-- <![endif]-->
+
+<!--[if IE]>
+<script src="util/js/jquery-1.11.3.min.js"></script>
+<![endif]-->
+<script type="text/javascript">
+    if('ontouchstart' in document.documentElement) document.write("<script src='util/js/jquery.mobile.custom.min.js'>"+"<"+"/script>");
+</script>
+<script src="util/js/bootstrap.min.js"></script>
+
+<!-- page specific plugin scripts -->
+<script src="util/js/bootstrap-datepicker.min.js"></script>
+<script src="util/js/jquery.jqGrid.min.js"></script>
+<script src="util/js/grid.locale-en.js"></script>
+
+<!-- ace scripts -->
+<script src="util/js/ace-elements.min.js"></script>
+<script src="util/js/ace.min.js"></script>
+
+<script>
+    //修改密码表单验证
+    function changePassword() {
+        var oldPassword = document.getElementById('password').value;
+        var newPassword_1 = document.getElementById('newPassword_1').value;
+        var newPassword_2 = document.getElementById('newPassword_2').value;
+        if (oldPassword == ""){
+            document.getElementById("span_password").innerHTML='请输入当前密码';
+            return false;
+        }else if (newPassword_1 == ""){
+            document.getElementById("span_password").innerHTML='请输入新密码';
+            return false;
+        }else if (newPassword_2 == ""){
+            document.getElementById("span_password").innerHTML='请输入确认密码';
+            return false;
+        }else if (newPassword_1 != newPassword_2){
+            document.getElementById("span_password").innerHTML='新密码和确认密码不一致';
+            return false;
+        }
+        return true;
+    }
+</script>
+</body>
+</html>
