@@ -211,7 +211,7 @@
                             </div>
                             <!-- /.card-header -->
                             <!-- form start -->
-                            <form role="form">
+                            <form role="form" onsubmit="return edit()">
                                 <div class="card-body">
                                     <div class="row">
                                         <div class="col-xs-12 col-md-4">
@@ -226,32 +226,32 @@
                                                             <label class="custom-file-label" for="exampleInputFile">选择文件</label>
                                                         </div>
                                                     </div>
-                                            </div>
+                                                </div>
                                         </div>
                                         <div class="col-xs-12 col-md-8">
                                             <div class="row">
                                                 <div class="col-md-4">
                                                     <div class="form-group">
                                                         <label for="">员工工号</label>
-                                                        <input class="form-control" value="62284658" readonly>
+                                                        <input class="form-control" value="62284658" readonly id="id">
                                                     </div>
                                                 </div>
                                                 <div class="col-xs-12 col-md-4">
                                                     <div class="form-group">
                                                         <label for="">员工手机号</label>
-                                                        <input class="form-control" value="15726444865">
+                                                        <input class="form-control" value="15726444865" id="phone">
                                                     </div>
                                                 </div>
                                                 <div class="col-xs-12 col-md-4">
                                                     <div class="form-group">
                                                         <label for="">员工姓名</label>
-                                                        <input class="form-control" value="张继科">
+                                                        <input class="form-control" value="张继科" id="name">
                                                     </div>
                                                 </div>
                                                 <div class="col-xs-12 col-md-4">
                                                     <div class="form-group">
                                                         <label>员工类型</label>
-                                                        <select id="typeSelect" class="form-control select2 select2-hidden-accessible"tabindex="-1" aria-hidden="true">
+                                                        <select id="typeSelect" class="form-control select2 select2-hidden-accessible"tabindex="-1" aria-hidden="true" id="type">
                                                             <option selected="selected" value="">--员工类型--</option>
                                                             <option value="洗发技师">洗发技师</option>
                                                             <option value="发型师">发型师</option>
@@ -285,7 +285,7 @@
                                                     <div class="form-group">
                                                         <label>是否在职</label>
                                                         <select class="form-control select2 select2-hidden-accessible"tabindex="-1" aria-hidden="true">
-                                                            <option selected="selected" value="">--在职状况--</option>
+                                                            <option selected="selected" value="" id="off">--在职状况--</option>
                                                             <option value="在职">在职</option>
                                                             <option value="离职">离职</option>
                                                         </select>
@@ -381,6 +381,32 @@
             target.style.display="none";
         }
     });
+    //修改员工详情表单验证
+    function edit() {
+        var id = document.getElementById('id').value;
+        var phone = document.getElementById('phone').value;
+        var type = document.getElementById('type').value;
+        var off = document.getElementById('off').value;
+
+        var status = document.getElementById('status');//下拉框值
+        var index=status.selectedIndex ;             // selectedIndex代表的是你所选中项的index
+        var status_value = status.options[index].value;
+
+        if (id == ""){
+            document.getElementById("span_edit").innerHTML='请输入员工工号';
+            return false;
+        }else if (phone == ""){
+            document.getElementById("span_edit").innerHTML='请输入员工手机号';
+            return false;
+        }else if (type == ""){
+            document.getElementById("span_edit").innerHTML='请选择员工类型';
+            return false;
+        }else if (off == ""){
+            document.getElementById("span_edit").innerHTML='请选择在职情况';
+            return false;
+        }
+        return true;
+    }
 </script>
 </body>
 </html>
