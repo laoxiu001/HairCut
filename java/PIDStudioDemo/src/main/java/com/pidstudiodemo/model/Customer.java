@@ -43,9 +43,18 @@ private double balance;//余额
 @Column(name = "status",columnDefinition="varchar(128) default '激活' COMMENT '客户状态'",nullable=false)
 private String status;//客户状态
 //mappedBy指多方的外键字段对应成员变量(类变量)，cascade配置相关对象的级联关系，fetch指定加载策略（急加载还是懒加载）
-@OneToMany( mappedBy="customer",cascade=CascadeType.ALL, fetch = FetchType.EAGER)
+@OneToMany( mappedBy="customer",cascade=CascadeType.ALL, fetch = FetchType.LAZY)
 private Set<PayList> setPayList = new HashSet<PayList>();//一对多：关联查询查询Record
 
+@OneToMany( mappedBy="customer",cascade=CascadeType.ALL, fetch = FetchType.LAZY)
+private Set<Record> setRecord = new HashSet<Record>();//一对多：关联查询查询Record
+
+public Set<Record> getSetRecord() {
+	return setRecord;
+}
+public void setSetRecord(Set<Record> setRecord) {
+	this.setRecord = setRecord;
+}
 public Set<PayList> getSetPayList() {
 	return setPayList;
 }

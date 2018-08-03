@@ -50,7 +50,7 @@
         <ul class="navbar-nav ml-auto">
             <!-- Notifications Dropdown Menu -->
             <li class="nav-item dropdown">
-                <a class="nav-link" data-toggle="dropdown" href="#">
+                <a class="nav-link" data-toggle="dropdown" href="#" >
                     <i class="fa fa-user"></i>
                 </a>
                 <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
@@ -60,17 +60,67 @@
                         <i class="fa fa-sign-out"></i> 用户注销
                     </a>
                     <div class="dropdown-divider"></div>
-                    <a href="/logion/changePassword" class="dropdown-item">
-                        <i class="fa fa-address-card"></i> 修改密码
-                    </a>
-                </div>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" data-widget="control-sidebar" data-slide="true" href="#"><i
-                        class="fa fa-th-large"></i></a>
-            </li>
-        </ul>
-    </nav>
+						<a href="#" class="dropdown-item" data-toggle="modal"
+							data-target="#changePassword"> <i class="fa fa-address-card"></i>
+							修改密码
+						</a>
+					</div></li>
+				<li class="nav-item"><a class="nav-link"
+					data-widget="control-sidebar" data-slide="true" href="#"><i
+						class="fa fa-th-large"></i></a></li>
+			</ul>
+		</nav>
+		<!-- 修改密码遮罩层（模态框） -->
+		<div class="modal fade" id="changePassword" tabindex="-1" role="dialog"
+			aria-labelledby="myModalLabel" aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="card card-primary">
+						<div class="card-header">
+							<h3 class="card-title">修改密码</h3>
+						</div>
+						<!-- /.card-header -->
+						<!-- form start -->
+						<form class="form-horizontal" action="/login/changePassword" method="post" onsubmit="return changePassword()">
+							<div class="card-body">
+								<div class="form-group">
+									<label for="inputPassword_old">旧密码</label>
+
+									<div class="col-sm-10">
+										<input type="password" class="form-control"
+											id="password" name="password" placeholder="请输入当前密码">
+									</div>
+								</div>
+								<div class="form-group">
+									<label for="inputPassword_new">新密码</label>
+
+									<div class="col-sm-10">
+										<input type="password" class="form-control"
+											id="newPassword_1" name="newPassword_1" placeholder="请输入新密码">
+									</div>
+								</div>
+								<div class="form-group">
+									<label for="inputPassword_conf" >确认密码</label>
+
+									<div class="col-sm-10">
+										<input type="password" class="form-control"
+											id="newPassword_2" name="newPassword_2" placeholder="请确认新密码">
+									</div>
+								</div>
+							</div>
+							<!-- /.card-body -->
+							<div class="modal-footer">
+								<button type="button" class="btn btn-default"
+									data-dismiss="modal">关闭</button>
+								<button type="submit" class="btn btn-primary">提交更改</button>
+							</div>
+						</form>
+					</div>
+				</div>
+				<!-- /.modal-content -->
+			</div>
+			<!-- /.modal -->
+		</div>
     <!-- 头部 -->
 
     <!-- 侧边栏 -->
@@ -119,14 +169,14 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="/payList/" class="nav-link">
+                        <a href="/record/" class="nav-link">
                             <i class="nav-icon fa fa-bars"></i>
                             <p>
                                 客户服务结算
                             </p>
                         </a>
                     </li>
-                    <li class="/record/">员工</li>
+                    <li class="nav-header">员工</li>
                     <li class="nav-item has-treeview menu-open">
                         <a href="#" class="nav-link active">
                             <i class="nav-icon fa fa-users"></i>
@@ -161,7 +211,7 @@
                     </li>
                     <li class="nav-header">统计</li>
                     <li class="nav-item">
-                        <a href="salary.html" class="nav-link">
+                        <a href="/count/salary" class="nav-link">
                             <i class="nav-icon fa fa-calendar"></i>
                             <p>
                                 统计工资结算
@@ -169,10 +219,18 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="statistics.html" class="nav-link">
+                        <a href="/count/statistics" class="nav-link">
                             <i class="nav-icon fa fa-usd"></i>
                             <p>
                                 统计盈收
+                            </p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="/expense/" class="nav-link ">
+                            <i class="nav-icon fa fa-usd"></i>
+                            <p>
+                                支出项目统计
                             </p>
                         </a>
                     </li>
@@ -210,13 +268,14 @@
                         <div class="card">
                             <!-- /.card-header -->
                             <div class="card-body">
-                                <div class="table-responsive">
+                                <div class="table-responsive"><span th:text="${remind}" style="color:red;"></span>
+                                <input id="user" type="text" class="form-control">
                                     <table style="min-width: 500px" id="form" class="table table-hover">
                                         <caption>
                                             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                            <button class="btn btn-info">添加员工类型</button>
+                                            <button class="btn btn-info" data-toggle="modal" data-target="#edit"  onclick="lick(this, this.id)">添加员工类型</button>
+
                                         </caption>
-                                        <form>
                                         <thead>
                                         <tr>
                                             <th>员工类型编号</th>
@@ -227,23 +286,32 @@
                                             <th>操作</th>
                                         </tr>
                                         </thead>
-                                        <tbody>
+                                        <tbody id="myTable">
                                         <tr th:each="etl : ${employeeTypeList}">
-                                            <td th:text="${etl.id}"> 1</td>
+                                        <td></td>
+                                            <td class="id" th:text="${etl.id}">1</td>
                                             <td th:text="${etl.name}">洗发技师</td>
-                                            <td th:text="${etl.commissionRate}">2000</td>
                                             <td th:text="${etl.basicSalary}">0.2</td>
+                                            <td th:text="${etl.commissionRate}">2000</td>
                                             <td th:text="${etl.WeightingFactor}">1</td>
                                             <td>
-                                                <button class="btn btn-warning btn-sm"><i class="fa fa-pencil"></i>编辑
+                                                <button class="btn btn-warning btn-sm" data-toggle="modal" data-target="#edit"  onclick="lick(this, this.id)"><i class="fa fa-pencil"></i>编辑
                                                 </button>
-                                                <button class="btn btn-danger btn-sm"><i class="fa fa-trash"></i>删除</button>
+                                                <a class="btn btn-danger btn-sm" style="color:white;'" th:href="@{'/employeeType/deleteEmployeeType?id='+${etl.id}}"><i class="fa fa-trash"></i>删除</a>
                                             </td>
                                         </tr>
                                         </tbody>
                                     </table>
-                                   </form>
                                 </div>
+                                <div class="card-footer clearfix" id ="myButton">
+                            <ul class="pagination pagination-sm m-0 float-right">
+                                <li class="page-item"><a class="page-link" th:href="@{'/employeeType/?page=0'}">第一页</a></li>
+                                <li class="page-item"><a class="page-link" th:if="${page}>0" th:href="@{'/employeeType/page='+${page-1}}">上一页</a></li>
+                                <li class="page-item"><a class="page-link" style="cursor:default"><span th:text="${page+1}"></span> / <span th:text="${maxPage+1}"></span></a></li>
+                                <li class="page-item"><a class="page-link" th:if="${page}<${maxPage}"  th:href="@{'/employeeType/?page='+${page+1}}">下一页</a></li>
+                                <li class="page-item"><a class="page-link" th:href="@{'/employeeType/?page='+${maxPage}}">末页</a></li>
+                            </ul>
+                        </div>
                             </div>
                             <!-- /.card-body -->
                         </div>
@@ -251,6 +319,63 @@
                 </div>
             </div>
         </section>
+    </div>
+    <!-- 编辑员工类型（模态框） -->
+    <div class="modal fade" id="edit" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="card card-info">
+                    <div class="card-header">
+                        <h3 class="card-title">修改员工类型</h3>
+                    </div>
+                    <!-- /.card-header -->
+                    <!-- form start -->
+                    <form class="form-horizontal" onsubmit="return edit()" action="/employeeType/updateEmployeeType" method="post">
+                        <div class="card-body">
+                        <div  class="form-group id">
+                                <label>员工id</label>
+                                <div  class="col-sm-10">
+                                    <input type="text" class="form-control" id="id" name="id" value="">
+                                </div>
+                          </div>
+                            <div class="form-group">
+                                <label>员工类型</label>
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control" id="type" name="name" value="">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="" class="">基本工资</label>
+
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control" id="basicSalary" name="basicSalary" value="">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="" class="">提成比例</label>
+
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control" id="commissionRate" name="commissionRate" value="">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="" class="">加权系数</label>
+
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control" id="weightingFactor" name="weightingFactor" value="">
+                                </div>
+                            </div>
+                        </div>
+                        <!-- /.card-body -->
+                        <div class="modal-footer">
+                            <span style="color: red;" id="span_edit"></span>
+                            <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                            <button type="submit" class="btn btn-primary">提交更改</button>
+                        </div>
+                    </form>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal -->
     </div>
     <!-- 主体内容 -->
 
@@ -308,16 +433,135 @@
 <!-- AdminLTE for demo purposes -->
 <script src="../../util/AdminLTE/dist/js/demo.js"></script>
 <script>
-    $(function () {
+function PageNext(a){//定义了2个参数a,b
+	var len = $('table tr').length;
+	var page = len * a;
+    for(var i = 1;i<len;i++){
+        $('table tr:eq('+i+') td:first').text(i+page);
+    }
+}
+$(function () {
+	var tableHtml = $("#myTable").html();
+	var buttonHtml = $("#myButton").html();
+	$('#user').keyup(function() {  
+       	$("#myTable").html("");
+        var conditions=$(this).val();  
+        if(conditions!=''){  
+            $.ajax({  
+                type: "post",  
+                url: "/employeeType/query",  
+                data:{conditions:conditions},  
+                dataType: "json",  
+                error: function(request) {  
+                    alert("Connection error:"+request.error);  
+                },  
+                success: function(data) {  
+                	var myHtml = "";
+                	var myhtmltd = "";
+                	for(var i = 0;i<data.length;i++){
+                   		myhtmltd ="<td></td><td class='id'>"+data[i].id+"</td><td>"+
+                   		data[i].name+"</td><td>"+
+                   		data[i].basicSalary+"</td><td>"+
+                   		data[i].commissionRate+"</td><td>"+
+                   		data[i].WeightingFactor+"</td>"+
+                   		"<td><button class='btn btn-warning btn-sm' data-toggle='modal' data-target='#edit'  onclick='lick(this, this.id)'><i class='fa fa-pencil'></i>编辑</button><a class='btn btn-danger btn-sm' style='color:white;'' th:href='@{'/employeeType/deleteEmployeeType?id='+${etl.id}}'><i class='fa fa-trash'></i>删除</a></td>";
+                    	 myHtml=myHtml+"<tr>"+myhtmltd+"</tr>";
+                    	  //循环数据追加到 myHtml
+                    	}
+                    	myHtml=myHtml;
+                    	 $("#myTable").html(myHtml);
+                    	 $("#myButton").html("");
+                    	 nameId();
+                }  
+            });   
+        }else{  
+        $("#myTable").html(tableHtml);
+       	$("#myButton").html(buttonHtml);
+       	nameId();
+        }  
+        
+    });  
+	 //$('table tr:not(:first)').remove();
+    var len = $('table tr').length;
+    for(var i = 1;i<len;i++){
+        $('table tr:eq('+i+') td:first').text(i);
+    }
+	$(".id").hide();
         $('#form').DataTable({
-            "paging": true,
+            "paging": false,
             "lengthChange": false,
             "searching": false,
             "ordering": true,
-            "info": true,
+            "info": false,
             "autoWidth": false
         });
     });
+    //修改密码表单验证
+    function changePassword() {
+        var oldPassword = document.getElementById('password').value;
+        var newPassword_1 = document.getElementById('newPassword_1').value;
+        var newPassword_2 = document.getElementById('newPassword_2').value;
+        if (oldPassword == ""){
+            document.getElementById("span_password").innerHTML='请输入当前密码';
+            return false;
+        }else if (newPassword_1 == ""){
+            document.getElementById("span_password").innerHTML='请输入新密码';
+            return false;
+        }else if (newPassword_2 == ""){
+            document.getElementById("span_password").innerHTML='请输入确认密码';
+            return false;
+        }else if (newPassword_1 != newPassword_2){
+            document.getElementById("span_password").innerHTML='新密码和确认密码不一致';
+            return false;
+        }
+        return true;
+    }
+    //修改员工类型表单验证
+    function edit() {
+        var type = document.getElementById('type').value;
+        var salary = document.getElementById('salary').value;
+        var commissionRate = document.getElementById('commissionRate').value;
+        var WeightingFactor = document.getElementById('WeightingFactor').value;
+
+        if (type == ""){
+            document.getElementById("span_edit").innerHTML='请输入员工类型';
+            return false;
+        }else if (salary == ""){
+            document.getElementById("span_edit").innerHTML='请输入基本工资';
+            return false;
+        }else if (commissionRate == ""){
+            document.getElementById("span_edit").innerHTML='请输入提成比例';
+            return false;
+        }else if (WeightingFactor == ""){
+            document.getElementById("span_edit").innerHTML='请输入加权系数';
+            return false;
+        }
+        return true;
+    }
+    function lick(obj, id){
+    	
+        var td_content = $(obj).parents("tr").children("td");  //获取当前行中的所有td值
+        
+        var id = td_content.eq(1).text();
+        var type = td_content.eq(2).text(); //获取当前行第二个td的值
+        var salary = td_content.eq(3).text(); //获取当前行第二个td的值
+        var commissionRate = td_content.eq(4).text(); //获取当前行第二个td的值
+        var WeightingFactor = td_content.eq(5).text(); //获取当前行第二个td的值
+        if(id==""){id = 0;}
+        document.getElementById('id').value = id;
+        document.getElementById('type').value = type;
+        document.getElementById('basicSalary').value = salary;
+        document.getElementById('commissionRate').value = commissionRate;
+        document.getElementById('weightingFactor').value = WeightingFactor;
+    }
+    function nameId() {
+		 //$('table tr:not(:first)').remove();
+	    var len = $('table tr').length;
+	    for(var i = 1;i<len;i++){
+	        $('table tr:eq('+i+') td:first').text(i);
+	    }
+		$(".id").hide();
+  }
 </script>
 </body>
 </html>

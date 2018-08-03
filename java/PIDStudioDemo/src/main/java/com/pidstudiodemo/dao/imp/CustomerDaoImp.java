@@ -1,5 +1,7 @@
 package com.pidstudiodemo.dao.imp;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -8,6 +10,7 @@ import org.springframework.stereotype.Repository;
 import com.pidstudiodemo.common.jpa.CustomerRepositoey;
 import com.pidstudiodemo.dao.CustomerDao;
 import com.pidstudiodemo.model.Customer;
+import com.pidstudiodemo.model.EmployeeManage;
 @Repository(value="customerDao")
 public class CustomerDaoImp implements CustomerDao {
 	@Autowired
@@ -20,7 +23,8 @@ public class CustomerDaoImp implements CustomerDao {
 	//条件查询
 	public Customer quserCUserName(String userName) {
 		// TODO Auto-generated method stub
-		return customerRepositoey.findByUserName(userName);
+		String phone = userName;
+		return customerRepositoey.findByUserNameOrPhone(userName,phone);
 	}
 	//修改用户记录
 	public void updateCustomer(Customer customer) {
@@ -35,6 +39,14 @@ public class CustomerDaoImp implements CustomerDao {
 	public int countCustomer() {
 		// TODO Auto-generated method stub
 		return (int) customerRepositoey.count();
+	}
+	public List<Customer> queryConditions(String conditions) {
+		// TODO Auto-generated method stub
+		return customerRepositoey.queryConditions(conditions);
+	}
+	public Customer quserId(int id) {
+		// TODO Auto-generated method stub
+		return customerRepositoey.findById(id);
 	}
 
 }

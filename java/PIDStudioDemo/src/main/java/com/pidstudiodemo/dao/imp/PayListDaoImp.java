@@ -1,5 +1,7 @@
 package com.pidstudiodemo.dao.imp;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -19,7 +21,6 @@ public class PayListDaoImp implements PayListDao {
 		return pagePayList;
 	}
 	//添加
-	@Transactional
 	public void insertPayList(PayList paylist) {
 		// TODO Auto-generated method stub
 		payListRepositoey.save(paylist);
@@ -28,6 +29,14 @@ public class PayListDaoImp implements PayListDao {
 	public int PayList() {
 		// TODO Auto-generated method stub
 		return (int)payListRepositoey.count();
+	}
+	public List<PayList> queryConditions(String conditions) {
+		// TODO Auto-generated method stub
+		return payListRepositoey.queryConditions(conditions);
+	}
+	public List<com.pidstudiodemo.model.PayList> queryUsername(String username) {
+		// TODO Auto-generated method stub
+		return payListRepositoey.findByUserName(username);
 	}
 
 }

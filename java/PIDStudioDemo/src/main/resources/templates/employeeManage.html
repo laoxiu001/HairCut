@@ -59,18 +59,68 @@
                     <a href="/login/cancellation" class="dropdown-item">
                         <i class="fa fa-sign-out"></i> 用户注销
                     </a>
-                    <div class="dropdown-divider"></div>
-                    <a href="/logion/changePassword" class="dropdown-item">
-                        <i class="fa fa-address-card"></i> 修改密码
-                    </a>
-                </div>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" data-widget="control-sidebar" data-slide="true" href="#"><i
-                        class="fa fa-th-large"></i></a>
-            </li>
-        </ul>
-    </nav>
+                  <div class="dropdown-divider"></div>
+						<a href="#" class="dropdown-item" data-toggle="modal"
+							data-target="#changePassword"> <i class="fa fa-address-card"></i>
+							修改密码
+						</a>
+					</div></li>
+				<li class="nav-item"><a class="nav-link"
+					data-widget="control-sidebar" data-slide="true" href="#"><i
+						class="fa fa-th-large"></i></a></li>
+			</ul>
+		</nav>
+		<!-- 修改密码遮罩层（模态框） -->
+		<div class="modal fade" id="changePassword" tabindex="-1" role="dialog"
+			aria-labelledby="myModalLabel" aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="card card-primary">
+						<div class="card-header">
+							<h3 class="card-title">修改密码</h3>
+						</div>
+						<!-- /.card-header -->
+						<!-- form start -->
+						<form class="form-horizontal" action="/login/changePassword" method="post" onsubmit="return changePassword()">
+							<div class="card-body">
+								<div class="form-group">
+									<label for="inputPassword_old">旧密码</label>
+
+									<div class="col-sm-10">
+										<input type="password" class="form-control"
+											id="password" name="password" placeholder="请输入当前密码">
+									</div>
+								</div>
+								<div class="form-group">
+									<label for="inputPassword_new">新密码</label>
+
+									<div class="col-sm-10">
+										<input type="password" class="form-control"
+											id="newPassword_1" name="newPassword_1" placeholder="请输入新密码">
+									</div>
+								</div>
+								<div class="form-group">
+									<label for="inputPassword_conf" >确认密码</label>
+
+									<div class="col-sm-10">
+										<input type="password" class="form-control"
+											id="newPassword_2" name="newPassword_2" placeholder="请确认新密码">
+									</div>
+								</div>
+							</div>
+							<!-- /.card-body -->
+							<div class="modal-footer">
+								<button type="button" class="btn btn-default"
+									data-dismiss="modal">关闭</button>
+								<button type="submit" class="btn btn-primary">提交更改</button>
+							</div>
+						</form>
+					</div>
+				</div>
+				<!-- /.modal-content -->
+			</div>
+			<!-- /.modal -->
+		</div>
     <!-- 头部 -->
 
     <!-- 侧边栏 -->
@@ -118,15 +168,15 @@
                             </p>
                         </a>
                     </li>
-                    <li class="nav-item">
-                        <a href="/payList/" class="nav-link">
+                   <li class="nav-item">
+                        <a href="/record/" class="nav-link">
                             <i class="nav-icon fa fa-bars"></i>
                             <p>
                                 客户服务结算
                             </p>
                         </a>
                     </li>
-                    <li class="/record/">员工</li>
+                    <li class="nav-header">员工</li>
                     <li class="nav-item has-treeview menu-open">
                         <a href="#" class="nav-link active">
                             <i class="nav-icon fa fa-users"></i>
@@ -161,7 +211,7 @@
                     </li>
                     <li class="nav-header">统计</li>
                     <li class="nav-item">
-                        <a href="salary.html" class="nav-link">
+                        <a href="/count/salary" class="nav-link">
                             <i class="nav-icon fa fa-calendar"></i>
                             <p>
                                 统计工资结算
@@ -169,10 +219,18 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="statistics.html" class="nav-link">
+                        <a href="/count/statistics" class="nav-link">
                             <i class="nav-icon fa fa-usd"></i>
                             <p>
                                 统计盈收
+                            </p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="/expense/" class="nav-link ">
+                            <i class="nav-icon fa fa-usd"></i>
+                            <p>
+                                支出项目统计
                             </p>
                         </a>
                     </li>
@@ -210,6 +268,7 @@
                     <div class="col-12">
                         <div class="card">
                             <div class="card-header d-flex p-0">
+                            <span style="margin-top: 18px; margin-left: 10px; color:red;" th:text="${remind}" ></span>
                                 <ul class="nav nav-pills ml-auto p-2">
                                     <li class="nav-item"><a class="nav-link active show" href="#on" data-toggle="tab">在职员工</a></li>
                                     <li class="nav-item"><a class="nav-link" href="#off" data-toggle="tab">离职员工</a></li>
@@ -221,9 +280,10 @@
                                         <div class="table-responsive">
                                             <table style="min-width: 500px" id="form1" class="table table-hover">
                                                 <caption>
-                                                    <button class="btn btn-info">添加员工</button>
+                                                     <a class="btn btn-info" href="/employeeManage/insertEmployeeDetails">添加员工</a>
                                                 </caption>
                                                 <thead>
+                                                <input id="user" type="text" class="form-control">
                                                 <tr>
                                                     <th>编号</th>
                                                     <th>员工工号</th>
@@ -233,57 +293,37 @@
                                                     <th>在职状态</th>
                                                     <th>操作</th></tr>
                                                 </thead>
-                                                <tbody>
-                                                <tr>
-                                                    <td>1</td>
-                                                    <td>62284824886541125</td>
-                                                    <td>15723648799</td>
-                                                    <td>洗发技师</td>
-                                                    <td>芬必得</td>
-                                                    <td style="color: green;">在职</td>
+                                                <tbody id="myTable">
+                                                <tr th:each="elo : ${employeeListOn}">
+                                                    <td th:text="${elo.id}">1</td>
+                                                    <td th:text="${elo.number}">62284824886541125</td>
+                                                    <td th:text="${elo.phone}">15723648799</td>
+                                                    <td th:text="${elo.employeeType.name}">洗发技师</td>
+                                                    <td th:text="${elo.name}">芬必得</td>
+                                                    <td style="color: green;" th:text="${elo.status}">在职</td>
                                                     <td>
-                                                        <button class="btn btn-primary btn-sm"><i class="fa fa-eye"></i>查看</button>
-                                                    </td></tr>
-                                                <tr>
-                                                    <td>2</td>
-                                                    <td>62284165448541125</td>
-                                                    <td>15723648799</td>
-                                                    <td>发型师</td>
-                                                    <td>锦黄霖</td>
-                                                    <td style="color: green;">在职</td>
-                                                    <td>
-                                                        <button class="btn btn-primary btn-sm"><i class="fa fa-eye"></i>查看</button>
-                                                    </td></tr>
-                                                <tr>
-                                                    <td>3</td>
-                                                    <td>62184624886541125</td>
-                                                    <td>15723648799</td>
-                                                    <td>高级发型师</td>
-                                                    <td>北石佛</td>
-                                                    <td style="color: green;">在职</td>
-                                                    <td>
-                                                        <button class="btn btn-primary btn-sm"><i class="fa fa-eye"></i>查看</button>
-                                                    </td></tr>
-                                                <tr>
-                                                    <td>4</td>
-                                                    <td>62184624886541125</td>
-                                                    <td>15723648799</td>
-                                                    <td>店长</td>
-                                                    <td>杨丞琳</td>
-                                                    <td style="color: green;">在职</td>
-                                                    <td>
-                                                        <button class="btn btn-primary btn-sm"><i class="fa fa-eye"></i>查看</button>
-                                                    </td></tr>
+                                                        <a class="btn btn-primary btn-sm" style="color:white;" th:href="@{'/employeeManage/employeeDetails?id='+${elo.id}}"><i></i>查看</a>
+                                                    </td>
+                                                    </tr>
                                                 </tbody>
                                             </table>
                                         </div>
+                             <div class="card-footer clearfix" id ="myButtonTwo">
+                            <ul class="pagination pagination-sm m-0 float-right">
+                                <li class="page-item"><a class="page-link" th:href="@{'/employeeManage/?page=0'}">第一页</a></li>
+                                <li class="page-item"><a class="page-link" th:if="${page}>0" th:href="@{'/employeeManage/?page='+${page-1}}">上一页</a></li>
+                                <li class="page-item"><a class="page-link" style="cursor:default"><span th:text="${page+1}"></span> / <span th:text="${maxPageOn+1}"></span></a></li>
+                                <li class="page-item"><a class="page-link" th:if="${page}<${maxPageOn}"  th:href="@{'/employeeManage/?page='+${page+1}}">下一页</a></li>
+                                <li class="page-item"><a class="page-link" th:href="@{'/employeeManage/?page='+${maxPageOn}}">末页</a></li>
+                            </ul>
+                        </div>
                                     </div>
                                     <!-- /.tab-pane -->
                                     <div class="tab-pane" id="off">
-                                        <div class="table-responsive">
+                                        <div class="table-responsive"><input id="username" type="text" class="form-control">
                                             <table style="min-width: 500px" id="form2" class="table table-hover">
                                                 <caption>
-                                                    <button class="btn btn-info">添加员工</button>
+                                                    <a class="btn btn-info" href="/employeeManage/insertEmployeeDetails">添加员工</a>
                                                 </caption>
                                                 <thead>
                                                 <tr>
@@ -295,53 +335,21 @@
                                                     <th>在职状态</th>
                                                     <th>操作</th></tr>
                                                 </thead>
-                                                <tbody>
-                                                <tr>
-                                                    <td>1</td>
-                                                    <td>62284824886541125</td>
-                                                    <td>15723648799</td>
-                                                    <td>洗发技师</td>
-                                                    <td>芬必得</td>
-                                                    <td style="color: red;">离职</td>
-                                                    <td>
-                                                        <button class="btn btn-primary btn-sm"><i class="fa fa-eye"></i>查看</button>
-                                                    </td></tr>
-                                                <tr>
-                                                    <td>2</td>
-                                                    <td>62284165448541125</td>
-                                                    <td>15723648799</td>
-                                                    <td>发型师</td>
-                                                    <td>锦黄霖</td>
-                                                    <td style="color: red;">离职</td>
-                                                    <td>
-                                                        <button class="btn btn-primary btn-sm"><i class="fa fa-eye"></i>查看</button>
-                                                    </td></tr>
-                                                <tr>
-                                                    <td>3</td>
-                                                    <td>62184624886541125</td>
-                                                    <td>15723648799</td>
-                                                    <td>高级发型师</td>
-                                                    <td>北石佛</td>
-                                                    <td style="color: red;">离职</td>
-                                                    <td>
-                                                        <button class="btn btn-primary btn-sm"><i class="fa fa-eye"></i>查看</button>
-                                                    </td></tr>
-                                                <tr>
-                                                    <td>4</td>
-                                                    <td>62184624886541125</td>
-                                                    <td>15723648799</td>
-                                                    <td>店长</td>
-                                                    <td>杨丞琳</td>
-                                                    <td style="color: red;">离职</td>
-                                                    <td>
-                                                        <button class="btn btn-primary btn-sm"><i class="fa fa-eye"></i>查看</button>
-                                                    </td></tr>
+                                                <tbody id="mytable">
                                                 </tbody>
                                             </table>
                                         </div>
+                             <div class="card-footer clearfix" id="myButton">
+                           <!--  <ul class='pagination pagination-sm m-0 float-right'>
+                                <li class='page-item'><a class='page-link' th:href='@{'/employeeManage/?pageFalse=0'}'>第一页</a></li>
+                                <li class='page-item'><a class='page-link' th:if='${pageFalse}>0' th:href='@{'/employeeManage/?pageFalse='+${pageFalse-1}}'>上一页</a></li>
+                                <li class='page-item'><a class='page-link' style='cursor:default'><span th:text='${pageFalse+1}'></span> / <span th:text='${maxPageOff+1}'></span></a></li>
+                                <li class='page-item'><a class='page-link' th:if='${pageFalse}<${maxPageOff}'  th:href='@{'/employeeManage/?pageFalse='+${pageFalse+1}}'>下一页</a></li>
+                                <li class='page-item'><a class='page-link' th:href='@{'/employeeManage/?pageFalse='+${maxPageOff}}'>末页</a></li>
+                            </ul> -->
+                        </div>
                                     </div>
                                 </div>
-                                <!-- /.tab-content -->
                             </div><!-- /.card-body -->
                         </div>
                     </div>
@@ -404,24 +412,264 @@
 <!-- AdminLTE for demo purposes -->
 <script src="../util/AdminLTE/dist/js/demo.js"></script>
 <script>
+
     $(function () {
         $('#form1').DataTable({
-            "paging": true,
+            "paging": false,
             "lengthChange": false,
             "searching": false,
             "ordering": true,
-            "info": true,
+            "info": false,
             "autoWidth": false
         });
         $('#form2').DataTable({
-            "paging": true,
+            "paging": false,
             "lengthChange": false,
             "searching": false,
             "ordering": true,
-            "info": true,
+            "info": false,
             "autoWidth": false
         });
     });
+    //修改密码表单验证
+    function changePassword() {
+        var oldPassword = document.getElementById('password').value;
+        var newPassword_1 = document.getElementById('newPassword_1').value;
+        var newPassword_2 = document.getElementById('newPassword_2').value;
+        if (oldPassword == ""){
+            document.getElementById("span_password").innerHTML='请输入当前密码';
+            return false;
+        }else if (newPassword_1 == ""){
+            document.getElementById("span_password").innerHTML='请输入新密码';
+            return false;
+        }else if (newPassword_2 == ""){
+            document.getElementById("span_password").innerHTML='请输入确认密码';
+            return false;
+        }else if (newPassword_1 != newPassword_2){
+            document.getElementById("span_password").innerHTML='新密码和确认密码不一致';
+            return false;
+        }
+        return true;
+    }
+    /* ajax分页 */
+    var s = 0;
+    var maxPage = 1;
+    var conditions;
+    var conditionsTwo;
+	var tableHtml = $("#myTable").html();
+	var buttonHtml = $("#myButtonTwo").html();
+    $(function(){
+    	//模糊查询
+    	$('#username').keyup(function() {  
+            conditions=$(this).val();
+            var myData = {
+            		conditions:conditions,
+            		status:"离职",
+            }
+            query(myData);
+            });
+    	$('#user').keyup(function() {  
+            conditionsTwo=$(this).val();
+            var myData1= {
+            		conditions:conditionsTwo,
+            		status:"在职",
+            }
+            queryTwo(myData1);
+            });
+        function query(myData) {
+            if(conditions!=''){  
+                $.ajax({  
+                    type: "post",  
+                    url: "/employeeManage/conditions",  
+                    data:myData, 
+                    dataType: "json",  
+                    error: function(request) {  
+                        alert("Connection error:"+request.error);  
+                    },  
+                    success: function(data) {  
+                    	var myHtml = "";
+                    	var myhtmltd = "";
+                    	for(var i = 0;i<data.length;i++){
+                       		myhtmltd ="<td></td><td class='id'>"+data[i].id+"</td><td>"+
+                       		data[i].number+"</td><td>"+
+                       		data[i].phone+"</td><td>"+
+                       		data[i].type+"</td><td>"+
+                       		data[i].name+"</td><td style='color:red;'>"+
+                       		"离职</td><td><a class='btn btn-primary btn-sm'"+"style='color:white;'"+"href=/employeeManage/employeeDetails?id="+data[i].id+"><i class="+"fa fa-eye"+"></i>查看</a></td>";
+                        	 myHtml=myHtml+"<tr>"+myhtmltd+"</tr>";
+                        	  //循环数据追加到 myHtml
+                        	}
+                        	myHtml=myHtml;
+                        	 $("#mytable").html(myHtml);
+                        	 $("#myButton").html("");
+                             nameId();
+                    }  
+                });   
+            }else{  
+               s = 0 ;
+               btn();
+               name();
+            }  
+        } 
+     //初始化加载页面
+    var userData = {
+        	    page:s,
+        	    size:10,
+        	    status:"离职",
+        	}
+    $.ajax({
+    	cache: true,  
+        type : "post",
+        url : "/employeeManage/ssss",//不能用ajax命名
+        data :userData,
+        async: true,  
+        error: function(request) {  
+            alert("Connection error:"+request.error);  
+        },  
+        success : function(results){
+        	var data = $.parseJSON(results); 
+        	var myHtml = "";
+        	var myhtmltd = "";
+        	var myhtmltype = "<tr><th>编号</th><th>员工工号</th><th>员工手机号</th><th>员工类型</th><th>员工姓名</th><th>在职状态</th><th>操作</th></tr>";
+        	maxPage = data[data.length-1].maxPage;
+        	for(var i = 0;i<data.length-1;i++){
+       		myhtmltd ="<td></td><td class='id'>"+data[i].id+"</td><td>"+
+       		data[i].number+"</td><td>"+
+       		data[i].phone+"</td><td>"+
+       		data[i].type+"</td><td>"+
+       		data[i].name+"</td><td style='color:red;'>"+data[i].status+
+       		"</td><td><a class='btn btn-primary btn-sm'"+"style='color:white;'"+"href=/employeeManage/employeeDetails?id="+data[i].id+"><i class="+"fa fa-eye"+"></i>查看</a></td>";
+        	 myHtml=myHtml+"<tr>"+myhtmltd+"</tr>";
+        	  //循环数据追加到 myHtml
+        	}
+        	myHtml=myHtml;
+        	 $("#mytable").html(myHtml);
+        	 nameId();
+        	 btn();
+            }
+		});
+    })
+    function queryTwo(myData1) {
+       	$("#myTable").html("");
+            if(conditionsTwo!=''){  
+                $.ajax({  
+                    type: "post",  
+                    url: "/employeeManage/conditions",  
+                    data:myData1, 
+                    dataType: "json",  
+                    error: function(request) {  
+                        alert("Connection error:"+request.error);  
+                    },  
+                    success: function(data) {  
+                    	var myHtml = "";
+                    	var myhtmltd = "";
+                    	for(var i = 0;i<data.length;i++){
+                       		myhtmltd ="<td></td><td class='id'>"+data[i].id+"</td><td>"+
+                       		data[i].number+"</td><td>"+
+                       		data[i].phone+"</td><td>"+
+                       		data[i].type+"</td><td>"+
+                       		data[i].name+"</td><td style='color:green;'>"+
+                       		"在职</td><td><a class='btn btn-primary btn-sm'"+"style='color:white;'"+"href=/employeeManage/employeeDetails?id="+data[i].id+"><i class="+"fa fa-eye"+"></i>查看</a></td>";
+                        	 myHtml=myHtml+"<tr>"+myhtmltd+"</tr>";
+                        	  //循环数据追加到 myHtml
+                        	}
+                        	myHtml=myHtml;
+                        	 $("#myTable").html(myHtml);
+                        	 $("#myButtonTwo").html("");
+                             nameId();
+                    }  
+                });   
+            }else{  
+            	$("#myTable").html(tableHtml);
+               	$("#myButtonTwo").html(buttonHtml);
+               	nameId();
+            }  
+        } 
+    //分页按钮
+    function btn(){
+    	var myButtonOn = "<ul class='pagination pagination-sm m-0 float-right'>"+
+        "<li class='page-item'><a class='page-link' onclick='first()'>第一页</a></li>"+
+        "<li class='page-item'><a class='page-link' th:if='"+s+">0' onclick='onPage()'>上一页</a></li>"+
+        "<li class='page-item'><a class='page-link' style='cursor:default'><span id='page' ></span>/"+(maxPage+1)+" <span></span></a></li>"+
+        "<li class='page-item'><a class='page-link' th:if='"+s+"<"+maxPage+"' onclick='nextPage()'>下一页</a></li>"+
+        "<li class='page-item'><a class='page-link' onclick='last()'>末页</a></li>"
+        "</ul>";
+	$("#myButton").html(myButtonOn);
+    $("#page").text((s+1));
+    }
+        document.getElementById("btn").onclick = function() {
+        	nextPage();
+        }
+        
+    	function first() {
+			s = 0;
+			name();
+		}
+    	function last(){
+    		s = maxPage;
+    		name();
+    	}
+        function onPage(){
+        	if(s<=0){
+        		s = 0;
+        	}else{
+        		s=s-1;
+        	}
+        	name();
+        }
+        function nextPage(){
+      	   if(0<=s<maxPage){
+     		  s = s +1;  
+     	   }else{
+     	   		s = maxPage;
+     	   }
+      	   name();
+        }
+     function name() {
+            var userData = {
+            	    page:s,
+            	    size:10,
+            	    status:"离职",
+            	}
+        $.ajax({
+        	cache: true,  
+            type : "post",
+            url : "/employeeManage/ssss",//不能用ajax命名
+            data :userData,
+            async: true,  
+            error: function(request) {  
+                alert("Connection error:"+request.error);  
+            },  
+            success : function(results){
+            	var data = $.parseJSON(results); 
+            	var myHtml = "";
+            	var myhtmltd = "";
+            	var myhtmltype = "<tr><th>编号</th><th>员工工号</th><th>员工手机号</th><th>员工类型</th><th>员工姓名</th><th>在职状态</th><th>操作</th></tr>";
+            	maxPage = data[data.length-1].maxPage;
+            	for(var i = 0;i<data.length-1;i++){
+           		myhtmltd ="<td></td><td class='id'>"+data[i].id+"</td><td>"+
+           		data[i].number+"</td><td>"+
+           		data[i].phone+"</td><td>"+
+           		data[i].type+"</td><td>"+
+           		data[i].name+"</td><td style='color:red;'>"+
+           		"离职</td><td><a class='btn btn-primary btn-sm'"+"style='color:white;'"+"href=/employeeManage/employeeDetails?id="+data[i].id+"><i class="+"fa fa-eye"+"></i>查看</a></td>";
+            	 myHtml=myHtml+"<tr>"+myhtmltd+"</tr>";
+            	  //循环数据追加到 myHtml
+            	}
+            	 $("#mytable").html(myHtml);
+            	 $("#page").text((s+1));
+            	 nameId();
+                }
+                    });
+    		}
+       function nameId() {
+    		 //$('table tr:not(:first)').remove();
+    	    var len = $('table tr').length;
+    	    for(var i = 1;i<len;i++){
+    	        $('table tr:eq('+i+') td:first').text(i);
+    	    }
+    		$(".id").hide();
+       }
 </script>
 </body>
 </html>

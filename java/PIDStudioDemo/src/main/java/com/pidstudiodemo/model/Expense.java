@@ -11,6 +11,10 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+
+import org.springframework.format.annotation.DateTimeFormat;
 @Entity
 @Table(name="Expense")
 public class Expense implements Serializable{
@@ -25,6 +29,8 @@ public class Expense implements Serializable{
 	@Column(name="name",columnDefinition="varchar(128)  default null COMMENT '支出项目名'")
 	private String name;//支出项目名称
 	@Column(name="date",columnDefinition="timestamp NULL default CURRENT_TIMESTAMP COMMENT '支出时间'",nullable=false)
+	@DateTimeFormat(pattern="yyyy-MM-dd")//传入后台的时间格式为yyyy-MM-dd
+	@Temporal(TemporalType.DATE)//改变传入前端的日期类型为yyyy-MM-dd
 	private Date date;//支出时间
 	@Column(name="remark",columnDefinition="varchar(128)  default null COMMENT '备注'")
 	private String remark;//备注

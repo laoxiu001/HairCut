@@ -1,5 +1,7 @@
 package com.pidstudiodemo.dao.imp;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -26,5 +28,15 @@ public class ExpenseDaoImp implements ExpenseDao {
 	public void inserExpense(Expense expense) {
 		// TODO Auto-generated method stub
 		expenseRepositoey.save(expense);
+	}
+
+	public double querySumMoney() {
+		// TODO Auto-generated method stub
+		return expenseRepositoey.querySumMoney();
+	}
+
+	public List<Expense> queryConditions(String conditions) {
+		// TODO Auto-generated method stub
+		return expenseRepositoey.queryConditions(conditions);
 	}
 }

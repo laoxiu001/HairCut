@@ -1,5 +1,9 @@
 package com.pidstudiodemo.service.imp;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
+import javax.persistence.TableGenerator;
 import javax.servlet.http.HttpSession;
 import javax.transaction.Transactional;
 
@@ -7,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
+
 
 
 
@@ -38,6 +43,7 @@ private AliyunMessageUtil aliyunMessageUtil;
 			if(StringUtils.hasText(password)){
 		if(loginDao.login(number, password)!= null){
 			result = "登录成功";
+			System.out.println(result);
 		}
 	   else{
 		   result="密码错误或账号不存在";
@@ -54,14 +60,14 @@ private AliyunMessageUtil aliyunMessageUtil;
 	public String loginJudge(String result) {
 		// TODO Auto-generated method stub
 		if(result.equals("登录成功")){
-			return "redirect:/employeeType/";
+			return "redirect:/customer/";
 		}else{
 		return "login";
 				}
 	}
 	@Transactional
 	public String changePassword(String number, String password,
-			String newPassword_1, String newPassword_2) {
+			String newPassword_1, String newPassword_2,HttpSession session) {
 		// TODO Auto-generated method stub
 		//返回的结果
 		String result;
@@ -83,8 +89,10 @@ private AliyunMessageUtil aliyunMessageUtil;
 			}else{
 				result="旧密码不能为空";
 			}
+		session.setAttribute("remind", result);
 		return result;
 	}
+	@Transactional
 	public String sMSVC(String code,String smg,String phoneNumber,String newPassword_1, String newPassword_2) {
 		// TODO Auto-generated method stub
 		//提示语句
@@ -92,7 +100,7 @@ private AliyunMessageUtil aliyunMessageUtil;
 			if(result.equals(code)){
 				if(newPassword_1 !=null && newPassword_2 !=null){
 					if(newPassword_1.equals(newPassword_2)){
-					loginDao.changePassword(phoneNumber,newPassword_1);
+					loginDao.forgotPassword(phoneNumber,newPassword_1);
 					result ="密码修改成功";
 					return result;
 				}else{
@@ -110,15 +118,32 @@ private AliyunMessageUtil aliyunMessageUtil;
 	}
 	//送验证码
 	public String sendMsg(String phoneNumber,HttpSession session) {
+		System.out.println("进入sendMsg");
 		// TODO Auto-generated method stub
 		String code = null;
 		String 	result;
 		try {
 			EmployeeManage em;
-			em =loginDao.queryNumber(phoneNumber);
+			em =loginDao.queryPhoneNumber(phoneNumber);
+			//判断phoneNumber session是否存在，和是否和以前的手机号相等
+			if(session.getAttribute("phoneNumber")==null && session.getAttribute("phoneNumber")!=phoneNumber){
+				Long  a = data();
+				String name = phoneNumber+"";
+				session.setAttribute(name, a);
+			}else{
+				String name = phoneNumber+"";
+				Long  a = data();
+				Long  b = (Long) session.getAttribute(name);
+				if(a-b<=60){
+					return "发送请求过于平凡请耐心等待";
+				}
+			}
 			//判断验证的手机号是否为店长绑定的手机
-			if(em.getEmployeeType().getId()==5){
-				code=aliyunMessageUtil.sendMsg(phoneNumber);	
+			if(em.getEmployeeType().getName().equals("店长") && em.getStatus().equals("在职")){
+				code=aliyunMessageUtil.sendMsg(phoneNumber);
+				session.setAttribute("phoneNumber", phoneNumber);
+			}else{
+				code = "你的手机号是否已绑定";
 			}
 		} 
 		catch (Exception e) {
@@ -141,15 +166,22 @@ private AliyunMessageUtil aliyunMessageUtil;
 		session.invalidate();  
 		return "退出登录成功";
 	}
-	public String forgotPasswordResult(String result) {
+	public String forgotPasswordResult(String result,HttpSession session) {
 		// TODO Auto-generated method stub
 		if(result=="密码修改成功"){
-			return "redirect:/login/loginAction";
+			cancellation(session);
+			return "login";
 		}else{
-			return "forget";
+			return "redirect:/customer/";
 		}
 		
 	}
-		
+	//获取当前时间	
+	private Long data(){
+		Date date = new Date();
+		SimpleDateFormat s = new SimpleDateFormat("yyyyMMddHHmmss");
+		Long  a = Long.parseLong(s.format(date));
+		return a;
+	}
 
 }

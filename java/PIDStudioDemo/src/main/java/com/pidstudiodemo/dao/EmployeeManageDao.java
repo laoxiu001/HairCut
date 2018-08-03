@@ -21,5 +21,11 @@ public interface EmployeeManageDao {
 	public int countEmployee();
 	//员工编号查询当条记录
 	public EmployeeManage queryNumber(String number);
+	//员工分开查询
+	public int countEmployee(String stasus);
+	//多字段模糊查询
+	public List<EmployeeManage> queryConditions(String conditions, String status);
+	//根据员工类型查询员工
+	public List<EmployeeManage> queryEmployeeId(int id);
 
 }

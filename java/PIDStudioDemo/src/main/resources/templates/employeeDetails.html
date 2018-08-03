@@ -59,17 +59,67 @@
                         <i class="fa fa-sign-out"></i> 用户注销
                     </a>
                     <div class="dropdown-divider"></div>
-                    <a href="/logion/changePassword" class="dropdown-item">
-                        <i class="fa fa-address-card"></i> 修改密码
-                    </a>
-                </div>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" data-widget="control-sidebar" data-slide="true" href="#"><i
-                        class="fa fa-th-large"></i></a>
-            </li>
-        </ul>
-    </nav>
+						<a href="#" class="dropdown-item" data-toggle="modal"
+							data-target="#changePassword"> <i class="fa fa-address-card"></i>
+							修改密码
+						</a>
+					</div></li>
+				<li class="nav-item"><a class="nav-link"
+					data-widget="control-sidebar" data-slide="true" href="#"><i
+						class="fa fa-th-large"></i></a></li>
+			</ul>
+		</nav>
+		<!-- 修改密码遮罩层（模态框） -->
+		<div class="modal fade" id="changePassword" tabindex="-1" role="dialog"
+			aria-labelledby="myModalLabel" aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="card card-primary">
+						<div class="card-header">
+							<h3 class="card-title">修改密码</h3>
+						</div>
+						<!-- /.card-header -->
+						<!-- form start -->
+						<form class="form-horizontal" action="/login/changePassword" method="post" onsubmit="return changePassword()">
+							<div class="card-body">
+								<div class="form-group">
+									<label for="inputPassword_old">旧密码</label>
+
+									<div class="col-sm-10">
+										<input type="password" class="form-control"
+											id="password" name="password" placeholder="请输入当前密码">
+									</div>
+								</div>
+								<div class="form-group">
+									<label for="inputPassword_new">新密码</label>
+
+									<div class="col-sm-10">
+										<input type="password" class="form-control"
+											id="newPassword_1" name="newPassword_1" placeholder="请输入新密码">
+									</div>
+								</div>
+								<div class="form-group">
+									<label for="inputPassword_conf" >确认密码</label>
+
+									<div class="col-sm-10">
+										<input type="password" class="form-control"
+											id="newPassword_2" name="newPassword_2" placeholder="请确认新密码">
+									</div>
+								</div>
+							</div>
+							<!-- /.card-body -->
+							<div class="modal-footer">
+								<button type="button" class="btn btn-default"
+									data-dismiss="modal">关闭</button>
+								<button type="submit" class="btn btn-primary">提交更改</button>
+							</div>
+						</form>
+					</div>
+				</div>
+				<!-- /.modal-content -->
+			</div>
+			<!-- /.modal -->
+		</div>
     <!-- 头部 -->
 
     <!-- 侧边栏 -->
@@ -118,14 +168,14 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="/payList/" class="nav-link">
+                        <a href="/record/" class="nav-link">
                             <i class="nav-icon fa fa-bars"></i>
                             <p>
                                 客户服务结算
                             </p>
                         </a>
                     </li>
-                    <li class="/record/">员工</li>
+                    <li class="nav-header">员工</li>
                     <li class="nav-item has-treeview menu-open">
                         <a href="#" class="nav-link active">
                             <i class="nav-icon fa fa-users"></i>
@@ -160,7 +210,7 @@
                     </li>
                     <li class="nav-header">统计</li>
                     <li class="nav-item">
-                        <a href="salary.html" class="nav-link">
+                        <a href="/count/salary" class="nav-link">
                             <i class="nav-icon fa fa-calendar"></i>
                             <p>
                                 统计工资结算
@@ -168,10 +218,18 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="statistics.html" class="nav-link">
+                        <a href="/count/statistics" class="nav-link">
                             <i class="nav-icon fa fa-usd"></i>
                             <p>
                                 统计盈收
+                            </p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="/expense/" class="nav-link ">
+                            <i class="nav-icon fa fa-usd"></i>
+                            <p>
+                                支出项目统计
                             </p>
                         </a>
                     </li>
@@ -212,22 +270,19 @@
                             </div>
                             <!-- /.card-header -->
                             <!-- form start -->
-                            <form role="form">
+                            <form role="form" id="employeeManage" th:each="l : ${listem}" action="/employeeManage/insertEmployeeManage" method="post" enctype="multipart/form-data">
                                 <div class="card-body">
                                     <div class="row">
                                         <div class="col-xs-12 col-md-4">
                                                 <div class="form-group">
                                                     <label for="exampleInputFile">用户头像</label>
                                                     <div>
-                                                        <img src="../util/AdminLTE/dist/img/user2-160x160.jpg" alt="photo">
+                                                        <img th:src="${l.photo}" alt="photo" style="width:200px;height:250px;margin-left:20px;margin-bottom:10px;">
                                                     </div>
                                                     <div class="input-group">
                                                         <div class="custom-file">
-                                                            <input type="file" class="custom-file-input" id="exampleInputFile">
+                                                            <input type="file" class="custom-file-input" id="exampleInputFile" name="file">
                                                             <label class="custom-file-label" for="exampleInputFile">选择文件</label>
-                                                        </div>
-                                                        <div class="input-group-append">
-                                                            <span class="input-group-text" id="">上传</span>
                                                         </div>
                                                     </div>
                                             </div>
@@ -237,50 +292,46 @@
                                                 <div class="col-md-4">
                                                     <div class="form-group">
                                                         <label for="">员工工号</label>
-                                                        <input class="form-control" value="62284658" readonly>
+                                                        <input class="form-control" name="number" th:value="${l.number}" readonly>
                                                     </div>
                                                 </div>
+                                                <input class="id" type="text" th:value="${l.id}" name ="id">
                                                 <div class="col-xs-12 col-md-4">
                                                     <div class="form-group">
                                                         <label for="">员工手机号</label>
-                                                        <input class="form-control" value="15726444865">
+                                                        <input class="form-control" name="phone" th:value="${l.phone}">
                                                     </div>
                                                 </div>
                                                 <div class="col-xs-12 col-md-4">
                                                     <div class="form-group">
                                                         <label for="">员工姓名</label>
-                                                        <input class="form-control" value="张继科">
+                                                        <input class="form-control" name="name" th:value="${l.name}">
                                                     </div>
                                                 </div>
                                                 <div class="col-xs-12 col-md-4">
                                                     <div class="form-group">
                                                         <label>员工类型</label>
-                                                        <select id="typeSelect" class="form-control select2 select2-hidden-accessible"tabindex="-1" aria-hidden="true">
-                                                            <option selected="selected" value="">--员工类型--</option>
-                                                            <option value="洗发技师">洗发技师</option>
-                                                            <option value="发型师">发型师</option>
-                                                            <option value="高级发型师">高级发型师</option>
-                                                            <option value="专家发型师">专家发型师</option>
-                                                            <option value="店长">店长</option>
+                                                        <select id="typeSelect" name="typeId" class="form-control select2 select2-hidden-accessible" tabindex="-1" aria-hidden="true">
+                                                            <option  selected="selected" th:value="${l.typeId}">(当前)<span th:text="${l.employeeType.name}"></span></option>
+                                                            <option  th:each=" lst : ${listet}"  th:value="${lst.id}" th:text="${lst.name}">洗发技师</option>
                                                             </select>
                                                     </div>
                                                 </div>
                                                 <div class="col-xs-12 col-md-4" id="password">
-                                                    <div class="form-group">
+                                                    <div class="form-group ">
                                                         <label for="exampleInputPassword1">密码</label>
-                                                        <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+                                                        <input type="password" name="password" th:value="${l.password}" class="form-control" id="exampleInputPassword1" placeholder="Password" readonly>
                                                     </div>
                                                 </div>
                                                 <div class="col-xs-12 col-md-4">
                                                     <div class="form-group">
                                                         <label for="exampleInputPassword1">性别</label>
                                                         <div class="form-check">
-                                                            </select>
-                                                            <input name="sex" class="form-check-input" type="radio" value="男" checked="checked">
+                                                            <input name="sex" id="sex1" th:class="${l.sex}" type="radio" value="男">
                                                             <label class="form-check-label">男</label>
                                                         </div>
                                                         <div class="form-check">
-                                                            <input name="sex" class="form-check-input" type="radio" value="女">
+                                                            <input name="sex" id="sex2" th:class="${l.sex}" type="radio" value="女">
                                                             <label class="form-check-label">女</label>
                                                         </div>
                                                     </div>
@@ -288,8 +339,8 @@
                                                 <div class="col-xs-12 col-md-4">
                                                     <div class="form-group">
                                                         <label>是否在职</label>
-                                                        <select class="form-control select2 select2-hidden-accessible"tabindex="-1" aria-hidden="true">
-                                                            <option selected="selected" value="">--在职状况--</option>
+                                                        <select name="status" class="form-control select2 select2-hidden-accessible" tabindex="-1" aria-hidden="true">
+                                                            <option selected="selected" th:value="${l.status}">(当前)<span th:text="${l.status}"></span></option>
                                                             <option value="在职">在职</option>
                                                             <option value="离职">离职</option>
                                                         </select>
@@ -298,6 +349,7 @@
                                             </div>
                                         </div>
                                     </div>
+                                    
                                 </div>
                                 <!-- /.card-body -->
 
@@ -366,6 +418,15 @@
 <!-- AdminLTE for demo purposes -->
 <script src="../util/AdminLTE/dist/js/demo.js"></script>
 <script>
+$(function () {
+$(".id").hide();
+if($("#sex1").prop("className")==document.getElementById('sex1').value){
+	$("#sex1").attr("checked","checked");
+}
+if($("#sex2").prop("className")==document.getElementById('sex2').value){
+	$("#sex2").attr("checked","checked");
+}
+});
     function showPassword() {
         var tid = $("#password").find("option:selected").text();
         target=document.getElementById('password');//通过id获取密码框div对象

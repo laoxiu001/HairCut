@@ -36,8 +36,10 @@ public class EmployeeType implements Serializable {
 	private double commissionRate;//提成比例
 	@Column(name = "WeightingFactor",columnDefinition="double default 0 COMMENT '加权系数'",nullable=false)
 	private double WeightingFactor;//加权系数
+	@Column(name ="status",columnDefinition="int default 1 COMMENT '状态'",nullable=false)
+	private int status;
 	//mappedBy指多方的外键字段对应成员变量(类变量)，cascade配置相关对象的级联关系，fetch指定加载策略（急加载还是懒加载）
-	@OneToMany( mappedBy="employeeType",cascade=CascadeType.ALL , fetch = FetchType.EAGER)
+	@OneToMany( mappedBy="employeeType",cascade={CascadeType.ALL,CascadeType.REMOVE} , fetch = FetchType.LAZY)
 	private Set<EmployeeManage> setEmployeeManage = new HashSet<EmployeeManage>();//一对多：关联查询查询setEmployeeManage
 	public Set<EmployeeManage> getSetEmployeeManage() {
 		return setEmployeeManage;
@@ -68,6 +70,13 @@ public class EmployeeType implements Serializable {
 	}
 	public void setCommissionRate(double commissionRate) {
 		this.commissionRate = commissionRate;
+	}
+	
+	public int getStatus() {
+		return status;
+	}
+	public void setStatus(int status) {
+		this.status = status;
 	}
 	public double getWeightingFactor() {
 		return WeightingFactor;

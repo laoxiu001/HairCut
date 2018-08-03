@@ -13,19 +13,20 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-dependencies</artifactId>
-            <version>1.5.6.RELEASE</version>
+            <version>1.5.9.RELEASE</version>
             <type>pom</type>
             <scope>import</scope>
         </dependency>
     </dependencies>
 </dependencyManagement>
+
    <dependencies>
-<!-- 添加 tomcat 的支持 -->  
+
 <!-- <dependency>  
     <groupId>org.springframework.boot</groupId>  
     <artifactId>spring-boot-starter-tomcat</artifactId>  
     <scope>provided</scope>  
-</dependency>   -->
+</dependency> -->
 <!-- 跳转jsp页面必备jar包 -->
 <!--  <dependency>
      <groupId>org.apache.tomcat.embed</groupId>
@@ -128,7 +129,13 @@ http://localhost:8080/webjars/jquery/3.1.0/jquery.js省略版本号 3.2.1
     <groupId>org.apache.poi</groupId>  
     <artifactId>poi-ooxml-schemas</artifactId>  
     <version>3.15</version>  
-</dependency>  
+</dependency> 
+<!-- json --> 
+    <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>fastjson</artifactId>
+            <version>1.2.7</version>
+        </dependency>
 <dependency>  
     <groupId>org.apache.poi</groupId>  
     <artifactId>poi-ooxml</artifactId>  
@@ -138,6 +145,9 @@ http://localhost:8080/webjars/jquery/3.1.0/jquery.js省略版本号 3.2.1
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        <!-- 打包方式 -->
+        <!-- <packaging>war</packaging>
+    	<tomcat.version>9.0.8</tomcat.version> -->
         <java.version>1.8</java.version>
             <webjars-locator>0.32-1</webjars-locator>
     <bootstrap>4.0.0</bootstrap>

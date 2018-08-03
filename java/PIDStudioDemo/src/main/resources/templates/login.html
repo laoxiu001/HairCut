@@ -39,7 +39,7 @@
     <div class="card">
         <div class="card-body login-card-body">
             <p class="login-box-msg">系统登陆页面</p>
-            <samp th:text="${result}"></samp>
+            <samp th:text="${result}" style="color:red"></samp>
             <form action="/login/loginAction" method="post">
                 <div class="form-group has-feedback">
                     <span class="fa fa-user form-control-feedback"></span>
@@ -78,6 +78,7 @@
     <!-- iCheck -->
     <script src="../util/AdminLTE/plugins/iCheck/icheck.min.js"></script>
     <script>
+
         $(function () {
             $('input').iCheck({
                 checkboxClass: 'icheckbox_square-blue',

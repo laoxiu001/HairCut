@@ -16,14 +16,18 @@ public class LoginDaoImp implements LoginDao {
 		EmployeeManage employeeManage = loginRepository.findByStuNumber(number,password);
 	return employeeManage;
 	}
-	@Transactional
-	public int changePassword(String phoneNumber, String password) {
+
+	public int changePassword(String number, String password) {
 		// TODO Auto-generated method stub
-		return loginRepository.update(phoneNumber, password);
+		return loginRepository.updatePassword(number, password);
 	}
-	public EmployeeManage queryNumber(String phoneNumber) {
+	public EmployeeManage queryPhoneNumber(String phoneNumber) {
 		// TODO Auto-generated method stub
 		EmployeeManage em = loginRepository.findByPhone(phoneNumber);
 		return em;
+	}
+	public void forgotPassword(String phoneNumber, String newPassword_1) {
+		// TODO Auto-generated method stub
+		loginRepository.update(phoneNumber, newPassword_1);
 	}
 }

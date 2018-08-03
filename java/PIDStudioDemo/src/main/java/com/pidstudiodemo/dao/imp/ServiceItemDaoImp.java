@@ -3,6 +3,7 @@ package com.pidstudiodemo.dao.imp;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 
 import com.pidstudiodemo.common.jpa.ServiceItemRepositoey;
@@ -28,6 +29,23 @@ public class ServiceItemDaoImp implements ServiceItemDao {
 	public void updateStatus(ServiceItem serviceItem) {
 		// TODO Auto-generated method stub
 		serviceItemRepositoey.saveAndFlush(serviceItem);
+	}
+	public List<ServiceItem> queryServiceItemA() {
+		// TODO Auto-generated method stub
+		return serviceItemRepositoey.findAll();
+	}
+	public int countServiceItem(boolean status) {
+		// TODO Auto-generated method stub
+		return serviceItemRepositoey.findByStatus(true).size();
+	}
+	public List<ServiceItem> queryServiceItemAllF(boolean status, Pageable pageable) {
+		// TODO Auto-generated method stub
+		return serviceItemRepositoey.findByStatus(status,pageable);
+	}
+	public List<ServiceItem> queryConditions(String conditions,String status) {
+		// TODO Auto-generated method stub
+		boolean status1 =Boolean.parseBoolean(status);
+		return serviceItemRepositoey.queryConditions(conditions,status1);
 	}
 
 }

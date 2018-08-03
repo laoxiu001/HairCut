@@ -1,8 +1,6 @@
 package com.pidstudiodemo.Util;
 
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -10,8 +8,6 @@ import org.springframework.stereotype.Service;
 
 import com.aliyuncs.DefaultAcsClient;
 import com.aliyuncs.IAcsClient;
-import com.aliyuncs.dysmsapi.model.v20170525.QuerySendDetailsRequest;
-import com.aliyuncs.dysmsapi.model.v20170525.QuerySendDetailsResponse;
 import com.aliyuncs.dysmsapi.model.v20170525.SendSmsRequest;
 import com.aliyuncs.dysmsapi.model.v20170525.SendSmsResponse;
 import com.aliyuncs.exceptions.ClientException;
@@ -19,11 +15,9 @@ import com.aliyuncs.profile.DefaultProfile;
 import com.aliyuncs.profile.IClientProfile;
 @Service(value="aliyunMessageUtil")
 public class AliyunMessageUtil {
-
     private static final String product = "Dysmsapi";
     //产品域名,开发者无需替换
     private static final String domain = "dysmsapi.aliyuncs.com";
-
     // 此处需要替换成开发者自己的AK(在阿里云访问控制台寻找)
     private static final String accessKeyId = "LTAIM9pGdXPFpw57";
     private static final String accessKeySecret = "8CA0btBRLrmme1UydvKNwTSfRuH4zo";
@@ -49,10 +43,8 @@ public class AliyunMessageUtil {
         request.setTemplateCode(paramMap.get("templateCode"));
         //可选:模板中的变量替换JSON串,如模板内容为"亲爱的${name},您的验证码为${code}"时,此处的值为
         request.setTemplateParam(paramMap.get("jsonContent"));
-
         //选填-上行短信扩展码(无特殊需求用户请忽略此字段)
 //        request.setSmsUpExtendCode(paramMap.get("extendCode"));
-
         //可选:outId为提供给业务方扩展字段,最终在短信回执消息中将此值带回给调用者
 //        request.setOutId(paramMap.get("outId"));
 
@@ -69,17 +61,15 @@ public class AliyunMessageUtil {
         paramMap.put("msgSign", "什么发型工作室");
         paramMap.put("templateCode", "SMS_134165095");
         paramMap.put("jsonContent", jsonContent);
-        /*SendSmsResponse sendSmsResponse = AliyunMessageUtil.sendSms(paramMap);
-
-        if(!(sendSmsResponse.getCode() != null && sendSmsResponse.getCode().equals("OK"))) {
-            if(sendSmsResponse.getCode() == null) {
-                //这里可以抛出自定义异常
-            }
-            if(!sendSmsResponse.getCode().equals("OK")) {
-                 //这里可以抛出自定义异常
-            }
-        }*/
-        System.out.println(randomNum);
+//        SendSmsResponse sendSmsResponse = AliyunMessageUtil.sendSms(paramMap);
+//        if(!(sendSmsResponse.getCode() != null && sendSmsResponse.getCode().equals("OK"))) {
+//            if(sendSmsResponse.getCode() == null) {
+//                //这里可以抛出自定义异常
+//            }
+//            if(!sendSmsResponse.getCode().equals("OK")) {
+//                 //这里可以抛出自定义异常
+//            }
+//        }
 		return randomNum;
     }
     /**

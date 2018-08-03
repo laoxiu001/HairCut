@@ -21,15 +21,16 @@ public class ServiceItemServiceTest {
 	private ServiceItemService serviceItemService;
 	@Test
 	public void test(){
-		ServiceItem serviceItem = new ServiceItem();
+		/*ServiceItem serviceItem = new ServiceItem();
 		serviceItem.setName("何");
-		System.out.println(serviceItemService.insertServiceItem(serviceItem));
+		System.out.println(serviceItemService.insertServiceItem(serviceItem));*/
 		//System.out.println(serviceItemService.updateStatus(serviceItem));
 		/*serviceItemService.deleteServiceItem(4);*/
 		List<ServiceItem> list = serviceItemService.queryServiceItemAll(true);
 		for(ServiceItem s : list){
 			System.out.println(s.getPrice());
-			System.out.println(s.isStatus());
+			System.out.println(s.getStatus());
+			System.out.println(s.getType());
 		}
 	}
 }

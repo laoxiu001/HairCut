@@ -24,4 +24,10 @@ public interface EmployeeManageServic {
 	public int countEmployee();
 	//根据员工编号查询
 	public EmployeeManage queryNumber(String number);
+	//最大页数
+	public int queryMaxPage(int page, int size, String string);
+	//多字段模糊查询
+	public List<EmployeeManage> queryConditions(String conditions, String status);
+	//查询员工类型对应的员工
+	public List<EmployeeManage> queryEmployeeId(int string);
 }

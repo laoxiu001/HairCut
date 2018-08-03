@@ -34,11 +34,11 @@ private String name;//服务项目名称
 private double price;//服务项目价格
 @Column(name ="introduction",columnDefinition="varchar(128)  default null COMMENT '服务项目简介'")
 private String introduction;//服务项目简介
-@Column(name ="type",columnDefinition="int  default null COMMENT '可提供该服务的员工类型'")
-private int type;//可提供该服务的员工类型（可多选）
+@Column(name ="type",columnDefinition="varchar(128) default null COMMENT '可提供该服务的员工类型'")
+private String type;//可提供该服务的员工类型（可多选）
 @Column(name="status",columnDefinition="boolean  default true COMMENT '判断服务是否在使用'")
 private boolean status  ;//判断服务是否在使用
-@OneToMany( mappedBy="serviceItem",cascade=CascadeType.MERGE, fetch = FetchType.EAGER)
+@OneToMany( mappedBy="serviceItem",cascade=CascadeType.MERGE, fetch = FetchType.LAZY)
 private Set<Record> setRecord = new HashSet<Record>();
 public Set<Record> getSetRecord() {
 	return setRecord;
@@ -56,7 +56,7 @@ public String getName() {
 	return name;
 }
 
-public boolean isStatus() {
+public boolean getStatus() {
 	return status;
 }
 public void setStatus(boolean status) {
@@ -77,10 +77,11 @@ public String getIntroduction() {
 public void setIntroduction(String introduction) {
 	this.introduction = introduction;
 }
-public int getType() {
+public String getType() {
 	return type;
 }
-public void setType(int type) {
+public void setType(String type) {
 	this.type = type;
 }
+
 }

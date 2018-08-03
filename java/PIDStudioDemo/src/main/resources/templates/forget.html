@@ -39,21 +39,23 @@
     <div class="card">
         <div class="card-body login-card-body">
             <p class="login-box-msg">密码修改</p>
-			<form action="/login/sendMsg" method="POST" enctype="multipart/form-data">
+			<form id="msg"  method="POST" onkeydown="if(event.keyCode==13){return false;}">
 			<div class="form-group has-feedback">
-                    <span class="fa fa-phone form-control-feedback"></span><samp th:text="${result}"></samp>
+                    <span class="fa fa-phone form-control-feedback"></span><samp th:text="${result}"   class="result"   style="color:red"></samp>
                     <input id="phoneNumber" name="phoneNumber" type="text" class="form-control" placeholder="手机号码" th:value="${phoneNumber}"/>
-                    <input type="submit" class="btn" style="margin-top: 20px;" value="发送验证码"/>
+                    <input  type="button" id="btn" class="btn" style="margin-top: 20px;" value="免费获取验证码"/>
+                    <samp class="result_1" th:text="${result_1}" style="float:right; margin-right: 10px; margin-top: 30px; color:red;" ></samp>
                 </div>
 			</form>
-            <form action="/login/forgotPassword" method="post">
+			<!-- 表单回车不自动提交 -->
+            <form  method="post" id="ForgetPassword" onkeydown="if(event.keyCode==13){return false;}">
 
                 <div class="form-group has-feedback">
                     <span class="fa fa-envelope form-control-feedback"></span>
-                    <input id="msg" name="msg" type="text" class="form-control" placeholder="验证码"/>
+                    <input name="msg" type="text" class="form-control" placeholder="验证码"/>
                 </div>
                 <div class="form-group has-feedback">
-                    <span class="fa fa-lock form-control-feedback"></span><samp th:text="${result_1}"></samp>
+                    <span class="fa fa-lock form-control-feedback"></span>
                     <input id="newPassword_1" name="newPassword_1" type="password" class="form-control" placeholder="新密码"/>
                 </div>
                 <div class="form-group has-feedback">
@@ -63,7 +65,7 @@
                 <div class="row">
                     <!-- /.col -->
                     <div class="col-12">
-                        <button type="submit" class="btn btn-primary btn-block btn-flat">修改密码</button>
+                        <button type="button" class="btn btn-primary btn-block btn-flat" id="btn2">修改密码</button>
                     </div>
                     <!-- /.col -->
                 </div>
@@ -89,6 +91,68 @@
 <!-- iCheck -->
 <script src="../util/AdminLTE/plugins/iCheck/icheck.min.js"></script>
 <script>
+var wait = 60;
+var result;
+document.getElementById("btn").onclick = function() {
+	wait = 60;
+    time(this);
+}
+document.getElementById("btn2").onclick = function() {
+	ForgetPassword();
+}
+ function ForgetPassword(){
+	 $.ajax({      
+     	cache: true,  
+             type: "POST",  
+             url:"/login/forgotPassword",  
+             data:$('#ForgetPassword').serialize(),// 你的formid  
+             async: false,  
+             error: function(request) {  
+                 alert("Connection error:"+request.error);  
+             },  
+             success: function(data) {  
+            	 if(data=="密码修改成功"){
+            		 window.location.replace("/login/loginAction");  
+            	 }else{
+            		 $('.result_1').text(data);}
+             	
+             }  
+         });  
+ }
+function time(o) {
+    if (wait == 0) {
+        o.removeAttribute("disabled");
+        o.value = "免费获取验证码";
+    } else {
+    	if(wait==60){
+            $.ajax({      
+            	cache: true,  
+                    type: "POST",  
+                    url:"/login/sendMsg",  
+                    data:$('#msg').serialize(),// 你的formid  
+                    async: false,  
+                    error: function(request) {  
+                        alert("Connection error:"+request.error);  
+                    },  
+                    success: function(data) {  
+                    	result = data;
+                    	$('.result').text(result);
+                    }  
+                });  
+    	}
+    	if(result=="你的手机号是否已绑定"){
+    		 o.removeAttribute("disabled");
+    	        o.value = "免费获取验证码";
+    	}else{
+        o.setAttribute("disabled", true);
+        o.value = wait + "秒后可以重新发送";
+        wait--;
+        setTimeout(function() {
+            time(o)
+        }, 1000)
+      }
+   }
+}
     $(function () {
         $('input').iCheck({
             checkboxClass: 'icheckbox_square-blue',

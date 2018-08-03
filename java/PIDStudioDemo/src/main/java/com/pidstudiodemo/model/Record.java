@@ -50,17 +50,18 @@ public class Record implements Serializable{
 	@ManyToOne(cascade =CascadeType.MERGE)
 	@JoinColumn(name="userName",referencedColumnName="userName", updatable=false,insertable=false)
 	private Customer customer;//用户表
-	public Customer getCustomer() {
-		return customer;
-	}
-	public void setCustomer(Customer customer) {
-		this.customer = customer;
-	}
+	
 	public String getNumber() {
 		return number;
 	}
 	public void setNumber(String number) {
 		this.number = number;
+	}
+	public Customer getCustomer() {
+		return customer;
+	}
+	public void setCustomer(Customer customer) {
+		this.customer = customer;
 	}
 	public int getService() {
 		return service;

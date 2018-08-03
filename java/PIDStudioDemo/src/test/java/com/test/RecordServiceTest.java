@@ -21,11 +21,12 @@ public class RecordServiceTest {
 	private RecordRepositoey rR;
 	@Test
 	public void test(){
-		int [] serviceIemId = {1,2,4};
-		String [] s = {"0002","0001","0001"};
-		Record record = new Record();
-		record.setName("老胡");
-		record.setUsername("1");
-		System.out.println(rS.insertRecord(record, serviceIemId,s));
+//		int [] serviceIemId = {1,2,4};
+//		String [] s = {"0002","0001","0001"};
+//		Record record = new Record();
+//		record.setName("老胡");
+//		record.setUsername("1");
+//		System.out.println(rS.insertRecord(record, serviceIemId,s, null));
+		rS.queryEmployee(5);
 	}	
 }

@@ -60,17 +60,67 @@
                         <i class="fa fa-sign-out"></i> 用户注销
                     </a>
                     <div class="dropdown-divider"></div>
-                    <a href="/logion/changePassword" class="dropdown-item">
-                        <i class="fa fa-address-card"></i> 修改密码
-                    </a>
-                </div>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" data-widget="control-sidebar" data-slide="true" href="#"><i
-                        class="fa fa-th-large"></i></a>
-            </li>
-        </ul>
-    </nav>
+						<a href="#" class="dropdown-item" data-toggle="modal"
+							data-target="#changePassword"> <i class="fa fa-address-card"></i>
+							修改密码
+						</a>
+					</div></li>
+				<li class="nav-item"><a class="nav-link"
+					data-widget="control-sidebar" data-slide="true" href="#"><i
+						class="fa fa-th-large"></i></a></li>
+			</ul>
+		</nav>
+		<!-- 修改密码遮罩层（模态框） -->
+		<div class="modal fade" id="changePassword" tabindex="-1" role="dialog"
+			aria-labelledby="myModalLabel" aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="card card-primary">
+						<div class="card-header">
+							<h3 class="card-title">修改密码</h3>
+						</div>
+						<!-- /.card-header -->
+						<!-- form start -->
+						<form class="form-horizontal" action="/login/changePassword" method="post" onsubmit="return changePassword()">
+							<div class="card-body">
+								<div class="form-group">
+									<label for="inputPassword_old">旧密码</label>
+
+									<div class="col-sm-10">
+										<input type="password" class="form-control"
+											id="password" name="password" placeholder="请输入当前密码">
+									</div>
+								</div>
+								<div class="form-group">
+									<label for="inputPassword_new">新密码</label>
+
+									<div class="col-sm-10">
+										<input type="password" class="form-control"
+											id="newPassword_1" name="newPassword_1" placeholder="请输入新密码">
+									</div>
+								</div>
+								<div class="form-group">
+									<label for="inputPassword_conf" >确认密码</label>
+
+									<div class="col-sm-10">
+										<input type="password" class="form-control"
+											id="newPassword_2" name="newPassword_2" placeholder="请确认新密码">
+									</div>
+								</div>
+							</div>
+							<!-- /.card-body -->
+							<div class="modal-footer">
+								<button type="button" class="btn btn-default"
+									data-dismiss="modal">关闭</button>
+								<button type="submit" class="btn btn-primary">提交更改</button>
+							</div>
+						</form>
+					</div>
+				</div>
+				<!-- /.modal-content -->
+			</div>
+			<!-- /.modal -->
+		</div>
     <!-- 头部 -->
 
     <!-- 侧边栏 -->
@@ -118,15 +168,15 @@
                             </p>
                         </a>
                     </li>
-                    <li class="nav-item">
-                        <a href="/payList/" class="nav-link">
+                  <li class="nav-item">
+                        <a href="/record/" class="nav-link">
                             <i class="nav-icon fa fa-bars"></i>
                             <p>
                                 客户服务结算
                             </p>
                         </a>
                     </li>
-                    <li class="/record/">员工</li>
+                    <li class="nav-header">员工</li>
                     <li class="nav-item has-treeview menu-open">
                         <a href="#" class="nav-link">
                             <i class="nav-icon fa fa-users"></i>
@@ -161,7 +211,7 @@
                     </li>
                     <li class="nav-header">统计</li>
                     <li class="nav-item">
-                        <a href="salary.html" class="nav-link">
+                        <a href="/count/salary" class="nav-link">
                             <i class="nav-icon fa fa-calendar"></i>
                             <p>
                                 统计工资结算
@@ -169,10 +219,18 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="statistics.html" class="nav-link">
+                        <a href="/count/statistics" class="nav-link">
                             <i class="nav-icon fa fa-usd"></i>
                             <p>
                                 统计盈收
+                            </p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="/expense/" class="nav-link ">
+                            <i class="nav-icon fa fa-usd"></i>
+                            <p>
+                                支出项目统计
                             </p>
                         </a>
                     </li>
@@ -218,37 +276,37 @@
 
                         <!-- 客户头像、余额信息 -->
                         <div class="callout callout-info">
-                            <h5><i class="fa fa-user-circle"></i> 充值：</h5>
-                            <form role="form">
+                            <h5><i class="fa fa-user-circle"></i> 充值：</h5><span th:text="${remind}" style="color:red;"></span>
+                            <form id="payList" action="/payList/insertPayList" method="post" onsubmit="return pay()">
                                 <div class="card-body">
                                     <div class="row">
                                         <div class="col-xs-12 col-sm-6">
                                             <div class="form-group">
                                                 <label>当前管理员账号：</label>
-                                                <input type="email" class="form-control" placeholder="admin" readonly>
+                                                <input id="" name="" type="text" class="form-control" th:value="${managerNumber}" placeholder="admin" readonly>
                                             </div>
                                         </div>
                                         <div class="col-xs-12 col-sm-6">
                                             <div class="form-group">
-                                                <label>客户账户：</label>
-                                                <input type="email" class="form-control" placeholder="请输入要充值的账号">
+                                                <label>客户账户或手机号：</label>
+                                                <input id="userName" name="userName" type=text class="form-control" placeholder="请输入要充值的账号手机号">
                                             </div>
                                         </div>
                                         <div class="col-xs-12 col-sm-6">
                                             <div class="form-group">
                                                 <label>充值类型</label>
-                                                <select class="form-control">
+                                                <select id="type" name="type" class="form-control">
                                                     <option value="现金充值">现金充值</option>
                                                     <option value="微信转账">微信转账</option>
                                                     <option value="支付宝转账">支付宝转账</option>
-                                                    <option value="QQ转账">微信转账</option>
+                                                    <option value="QQ转账">QQ转账</option>
                                                 </select>
                                             </div>
                                         </div>
                                         <div class="col-xs-12 col-sm-6">
                                             <div class="form-group">
                                                 <label>充值金额：</label>
-                                                <input type="email" class="form-control" placeholder="请输入大于1的整数">
+                                                <input id="gold" name ="gold" type="text" class="form-control" placeholder="请输入大于1的整数">
                                             </div>
                                         </div>
                                     </div>
@@ -256,6 +314,8 @@
                                 <!-- /.card-body -->
                                 <div class="card-footer">
                                     <button type="submit" class="btn btn-primary">确认充值</button>
+                                    <span style="color: red;" id="span_pay"></span>
+                                    <span style="float:right; color:red;" th:text="${balance}" th:if="${balance}!='余额：null'"></span>
                                 </div>
                             </form>
                         </div>
@@ -266,8 +326,9 @@
                             <!-- /.card-header -->
                             <div class="card-body">
                                 <div class="table-responsive">
-                                    <table style="min-width:500px;" id="form" class="table table-hover">
+                                    <table style="min-width:500px;" id="form" class="table table-hover" onsubmit="return pay()">
                                         <thead>
+                                        <input id="user" type="text" class="form-control">
                                         <tr>
                                             <th>编号</th>
                                             <th>充值账户</th>
@@ -275,28 +336,27 @@
                                             <th>充值金额</th>
                                             <th>充值时间</th></tr>
                                         </thead>
-                                        <tbody>
-                                        <tr>
-                                            <td>1</td>
-                                            <td>15826244588</td>
-                                            <td>现金充值</td>
-                                            <td>59.00</td>
-                                            <td>2015-01-05</td></tr>
-                                        <tr>
-                                            <td>2</td>
-                                            <td>16488526488</td>
-                                            <td>微信转账</td>
-                                            <td>155.00</td>
-                                            <td>2016-15-05</td></tr>
-                                        <tr>
-                                            <td>3</td>
-                                            <td>156498853265</td>
-                                            <td>支付宝转账</td>
-                                            <td>99.00</td>
-                                            <td>1017-05-11</td></tr>
+                                        <tbody id="myTable">
+                                        <tr th:each="ppl : ${pagePayList}">
+                                        	<td></td>
+                                            <td class="id" th:text="${ppl.id}">1</td>
+                                            <td th:text="${ppl.userName}">15826244588</td>
+                                            <td th:text="${ppl.type}">现金充值</td>
+                                            <td th:text="${ppl.gold}">59.00</td>
+                                            <td th:text="${ppl.date}">2015-01-05</td>
+                                            </tr>
                                         </tbody>
                                     </table>
                                 </div>
+                        <div class="card-footer clearfix" id="myButton">
+                            <ul class="pagination pagination-sm m-0 float-right">
+                                <li class="page-item"><a class="page-link" th:href="@{'/payList/?page=0'}">第一页</a></li>
+                                <li class="page-item"><a class="page-link" th:if="${page}>0" th:href="@{'/payList/?page='+${page-1}}">上一页</a></li>
+                                <li class="page-item"><a class="page-link" style="cursor:default"><span th:text="${page+1}"></span> / <span th:text="${maxPage+1}"></span></a></li>
+                                <li class="page-item"><a class="page-link" th:if="${page}<${maxPage}"  th:href="@{'/payList/?page='+${page+1}}">下一页</a></li>
+                                <li class="page-item"><a class="page-link" th:href="@{'/payList/?page='+${maxPage}}">末页</a></li>
+                            </ul>
+                        </div>
                             </div>
                             <!-- /.card-body -->
                         </div>
@@ -361,7 +421,59 @@
 <!-- AdminLTE for demo purposes -->
 <script src="../util/AdminLTE/dist/js/demo.js"></script>
 <script>
+	function PageNext(a){//定义了2个参数a,b
+		var len = $('table tr').length;
+		var page = len * a;
+        for(var i = 1;i<len;i++){
+            $('table tr:eq('+i+') td:first').text(i+page);
+        }
+	}
     $(function () {
+    	var tableHtml = $("#myTable").html();
+    	var buttonHtml = $("#myButton").html();
+    	$('#user').keyup(function() {  
+           	$("#myTable").html("");
+            var conditions=$(this).val();  
+            if(conditions!=''){  
+                $.ajax({  
+                    type: "post",  
+                    url: "/payList/query",  
+                    data:{conditions:conditions},  
+                    dataType: "json",  
+                    error: function(request) {  
+                        alert("Connection error:"+request.error);  
+                    },  
+                    success: function(data) {  
+                    	var myHtml = "";
+                    	var myhtmltd = "";
+                    	for(var i = 0;i<data.length;i++){
+                       		myhtmltd ="<td></td><td class='id'>"+data[i].id+"</td><td>"+
+                       		data[i].userName+"</td><td>"+
+                       		data[i].type+"</td><td>"+
+                       		data[i].gold+"</td><td>"+
+                       		data[i].date+"</td>"
+                       		myHtml=myHtml+"<tr>"+myhtmltd+"</tr>";
+                        	  //循环数据追加到 myHtml
+                        	}
+                        	myHtml=myHtml;
+                        	 $("#myTable").html(myHtml);
+                        	 $("#myButton").html("");
+                        	 nameId();
+                    }  
+                });   
+            }else{  
+            $("#myTable").html(tableHtml);
+           	$("#myButton").html(buttonHtml);
+           	nameId();
+            }  
+            
+        });  
+    	 //$('table tr:not(:first)').remove();
+        var len = $('table tr').length;
+        for(var i = 1;i<len;i++){
+            $('table tr:eq('+i+') td:first').text(i);
+        }
+    	$(".id").hide();
         $('#form').DataTable({
             "paging": true,
             "lengthChange": false,
@@ -371,6 +483,55 @@
             "autoWidth": false
         });
     });
+  //修改密码表单验证
+    function changePassword() {
+        var oldPassword = document.getElementById('password').value;
+        var newPassword_1 = document.getElementById('newPassword_1').value;
+        var newPassword_2 = document.getElementById('newPassword_2').value;
+        if (oldPassword == ""){
+            document.getElementById("span_password").innerHTML='请输入当前密码';
+            return false;
+        }else if (newPassword_1 == ""){
+            document.getElementById("span_password").innerHTML='请输入新密码';
+            return false;
+        }else if (newPassword_2 == ""){
+            document.getElementById("span_password").innerHTML='请输入确认密码';
+            return false;
+        }else if (newPassword_1 != newPassword_2){
+            document.getElementById("span_password").innerHTML='新密码和确认密码不一致';
+            return false;
+        }
+        return true;
+    }
+    //客户充值表单验证
+    function pay() {
+        var userName = document.getElementById('userName').value;
+        var gold = document.getElementById('gold').value;
+
+        var type = document.getElementById('type');//下拉框值
+        var index=type.selectedIndex ;             // selectedIndex代表的是你所选中项的index
+        var type_value = type.options[index].value;
+
+        if (userName == ""){
+            document.getElementById("span_pay").innerHTML='请输入客户账户';
+            return false;
+        }else if (type_value == ""){
+            document.getElementById("span_pay").innerHTML='请选择充值类型';
+            return false;
+        }else if (gold == ""){
+            document.getElementById("span_pay").innerHTML='请输入充值金额';
+            return false;
+        }
+        return true;
+    }
+    function nameId() {
+		 //$('table tr:not(:first)').remove();
+	    var len = $('table tr').length;
+	    for(var i = 1;i<len;i++){
+	        $('table tr:eq('+i+') td:first').text(i);
+	    }
+		$(".id").hide();
+ }
 </script>
 </body>
 </html>

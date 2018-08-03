@@ -11,7 +11,7 @@ public interface LoginService {
 	//判断是否登录成功
 	public String  loginJudge(String result);
 	//修改密码
-	public String changePassword(String number,String password,String newPassword_1,String newPassword_2);
+	public String changePassword(String number,String password,String newPassword_1,String newPassword_2, HttpSession session);
 	//短信验证修改密码
 	public String sMSVC(String code ,String smg,String phoneNumber,String newPassword_1,String newPassword_2);
 	//发送短信
@@ -19,5 +19,5 @@ public interface LoginService {
 	//注销登录
 	public String cancellation(HttpSession session);
 	//密码修改结果
-	public String forgotPasswordResult(String result);
+	public String forgotPasswordResult(String result,HttpSession session);
 }

@@ -34,6 +34,6 @@ public class PayListServiceTest {
 	payList.setUserName("1");
 	payList.setGold(300);
 	payList.setType("支付宝");
-	System.out.println(payListService.insertPayList(payList));
+	//System.out.println(payListService.insertPayList(payList));
 	}
 }

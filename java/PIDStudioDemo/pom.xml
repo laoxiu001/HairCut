@@ -3,30 +3,30 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>tyc</groupId>
   <artifactId>PIDStudioDemo</artifactId>
-  <packaging>war</packaging>
+  <packaging>jar</packaging>
  <version>0.0.1-SNAPSHOT</version>
   <name>SpringBootDemo1 Maven Webapp</name>
   <url>http://maven.apache.org</url>
 
     <dependencyManagement>
     <dependencies>
-
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-dependencies</artifactId>
-            <version>1.5.6.RELEASE</version>
+            <version>1.5.9.RELEASE</version>
             <type>pom</type>
             <scope>import</scope>
         </dependency>
     </dependencies>
 </dependencyManagement>
+
    <dependencies>
-<!-- 添加 tomcat 的支持 -->  
+
 <!-- <dependency>  
     <groupId>org.springframework.boot</groupId>  
     <artifactId>spring-boot-starter-tomcat</artifactId>  
     <scope>provided</scope>  
-</dependency>   -->
+</dependency> -->
 <!-- 跳转jsp页面必备jar包 -->
 <!--  <dependency>
      <groupId>org.apache.tomcat.embed</groupId>
@@ -102,11 +102,7 @@ http://localhost:8080/webjars/jquery/3.1.0/jquery.js省略版本号 3.2.1
     <artifactId>webjars-locator</artifactId>
     <version>${webjars-locator}</version>
 </dependency>
-    <dependency>
-    <groupId>org.apache.maven.plugins</groupId>
-    <artifactId>maven-resources-plugin</artifactId>
-    <version>2.4.3</version>
-</dependency>
+
 <!-- bootstrap -->
 <dependency>
     <groupId>org.webjars</groupId>
@@ -114,12 +110,14 @@ http://localhost:8080/webjars/jquery/3.1.0/jquery.js省略版本号 3.2.1
     <version>${bootstrap}</version>
 </dependency>
 
-<!-- jquery -->
-<dependency>
-    <groupId>org.webjars</groupId>
-    <artifactId>jquery</artifactId>
-    <version>${jquery}</version>
-</dependency>
+<!-- spring boot devtools 依赖包. 热部署不用重启项目-->
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-devtools</artifactId>
+      <optional>true</optional>
+      <scope>true</scope>
+    </dependency> 
+    <!-- hibernate -->
     <dependency>
         <groupId>org.hibernate</groupId>
         <artifactId>hibernate-core</artifactId>
@@ -133,7 +131,13 @@ http://localhost:8080/webjars/jquery/3.1.0/jquery.js省略版本号 3.2.1
     <groupId>org.apache.poi</groupId>  
     <artifactId>poi-ooxml-schemas</artifactId>  
     <version>3.15</version>  
-</dependency>  
+</dependency> 
+<!-- json --> 
+    <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>fastjson</artifactId>
+            <version>1.2.7</version>
+        </dependency>
 <dependency>  
     <groupId>org.apache.poi</groupId>  
     <artifactId>poi-ooxml</artifactId>  
@@ -143,31 +147,48 @@ http://localhost:8080/webjars/jquery/3.1.0/jquery.js省略版本号 3.2.1
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        <!-- 打包方式 -->
+        <!-- <packaging>war</packaging>
+    	<tomcat.version>9.0.8</tomcat.version> -->
         <java.version>1.8</java.version>
             <webjars-locator>0.32-1</webjars-locator>
     <bootstrap>4.0.0</bootstrap>
     <jquery>3.3.1</jquery>
     </properties>
-
     <build>
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+                <configuration>  
+          <fork>true</fork>  
+         <mainClass>com.pidstudiodemo.PIDApplication</mainClass> 
+		</configuration>  
+ 		<executions>
+                <execution>
+                    <goals>
+                        <goal>repackage</goal>
+                    </goals>
+                </execution>
+            </executions> 
             </plugin>
         </plugins>
             <finalName>PIDSyudioDemo</finalName>
+         <!--     <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+                <targetPath>BOOT-INF/lib/</targetPath>
+                <includes>
+                    <include>**/*.jar</include>
+                </includes>
+            </resource>
+        <resource>
+                <directory>src/main/resources</directory>
+                <targetPath>BOOT-INF/</targetPath>
+                <includes>
+                    <include>**/*.properties</include>
+                </includes>
+            </resource>
+        </resources>  -->
     </build>
-    <repositories>
-        <repository>
-            <id>spring-releases</id>
-            <url>https://repo.spring.io/libs-release</url>
-        </repository>
-    </repositories>
-    <pluginRepositories>
-        <pluginRepository>
-            <id>spring-releases</id>
-            <url>https://repo.spring.io/libs-release</url>
-        </pluginRepository>  
-    </pluginRepositories>
 </project>

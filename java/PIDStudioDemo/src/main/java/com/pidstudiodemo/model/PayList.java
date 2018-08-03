@@ -28,7 +28,7 @@ public class PayList implements Serializable {
 	@Column(name= "id")
 	private int id;//充值记录编号
 	@Column(name= "goid",columnDefinition="double default 0 COMMENT '充值金额'",nullable=false)
-	private double gold;//充值金额
+	private double goid;//充值金额
 	@Column(name= "date",columnDefinition="timestamp NULL default CURRENT_TIMESTAMP COMMENT '充值时间'",nullable=false)
 	private Date date;//充值时间
 	@Column(name="type",columnDefinition="varchar(128) default null COMMENT '充值类型'")
@@ -59,10 +59,10 @@ public class PayList implements Serializable {
 	}
 
 	public double getGold() {
-		return gold;
+		return goid;
 	}
 	public void setGold(double gold) {
-		this.gold = gold;
+		this.goid = gold;
 	}
 	public Date getDate() {
 		return date;

@@ -28,11 +28,14 @@ public class LoginFilter implements Filter {
 	public void init(FilterConfig filterConfig) throws ServletException {
 		// TODO Auto-generated method stub
 		patterns.add(Pattern.compile("login.html"));
-        patterns.add(Pattern.compile("forget.thom"));
+        patterns.add(Pattern.compile("forget.html"));
+        patterns.add(Pattern.compile("error.html"));
         patterns.add(Pattern.compile("login/loginAction"));
         patterns.add(Pattern.compile("login/forgotPassword"));
         patterns.add(Pattern.compile("util/.*"));
+        patterns.add(Pattern.compile("img/.*"));
         patterns.add(Pattern.compile(".idea/.*"));
+        patterns.add(Pattern.compile(System.getProperty("user.dir")+"/.*"));
         patterns.add(Pattern.compile(".*[(\\.js)||(\\.css)||(\\.png)]"));
 		System.out.println("过滤器初始化");
 	}
@@ -56,6 +59,7 @@ public class LoginFilter implements Filter {
 	                return;
 	            } else {
 	                // session不存在 准备跳转失败
+	            	session.setAttribute("result", "请先登录");
 	                httpResponse.sendRedirect("/login/loginAction");
 	            }
 	        }
@@ -83,6 +87,4 @@ public class LoginFilter implements Filter {
 		 System.out.println("过滤器销毁");
 		
 	}
-	 
-
 }

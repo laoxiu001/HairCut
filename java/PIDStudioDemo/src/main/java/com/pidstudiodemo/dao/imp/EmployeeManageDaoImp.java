@@ -31,7 +31,10 @@ public class EmployeeManageDaoImp implements EmployeeManageDao {
 	
 	public void insertEmployee(EmployeeManage em) {
 		// TODO Auto-generated method stub
-		employeeManageRepositoey.save(em);
+		try{
+		employeeManageRepositoey.save(em);}catch (Exception e) {
+			// TODO: handle exception
+		}
 	}
 	
 	public void updateEmployee(EmployeeManage em) {
@@ -45,6 +48,21 @@ public class EmployeeManageDaoImp implements EmployeeManageDao {
 	public EmployeeManage queryNumber(String number) {
 		// TODO Auto-generated method stub
 		return employeeManageRepositoey.findByNumber(number);
+	}
+
+	public int countEmployee(String stasus) {
+		// TODO Auto-generated method stub
+		return employeeManageRepositoey.findByStatus(stasus).size();
+	}
+
+	public List<EmployeeManage> queryConditions(String conditions,String status) {
+		// TODO Auto-generated method stub
+		return employeeManageRepositoey.queryConditions(conditions,status);
+	}
+
+	public List<EmployeeManage> queryEmployeeId(int id) {
+		// TODO Auto-generated method stub
+		return employeeManageRepositoey.findByTypeIdAndStatus(id,"在职");
 	}
 
 

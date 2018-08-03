@@ -59,18 +59,68 @@
                     <a href="/login/cancellation" class="dropdown-item">
                         <i class="fa fa-sign-out"></i> 用户注销
                     </a>
-                    <div class="dropdown-divider"></div>
-                    <a href="/logion/changePassword" class="dropdown-item">
-                        <i class="fa fa-address-card"></i> 修改密码
-                    </a>
-                </div>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" data-widget="control-sidebar" data-slide="true" href="#"><i
-                        class="fa fa-th-large"></i></a>
-            </li>
-        </ul>
-    </nav>
+                   <div class="dropdown-divider"></div>
+						<a href="#" class="dropdown-item" data-toggle="modal"
+							data-target="#changePassword"> <i class="fa fa-address-card"></i>
+							修改密码
+						</a>
+					</div></li>
+				<li class="nav-item"><a class="nav-link"
+					data-widget="control-sidebar" data-slide="true" href="#"><i
+						class="fa fa-th-large"></i></a></li>
+			</ul>
+		</nav>
+		<!-- 修改密码遮罩层（模态框） -->
+		<div class="modal fade" id="changePassword" tabindex="-1" role="dialog"
+			aria-labelledby="myModalLabel" aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="card card-primary">
+						<div class="card-header">
+							<h3 class="card-title">修改密码</h3>
+						</div>
+						<!-- /.card-header -->
+						<!-- form start -->
+						<form class="form-horizontal" action="/login/changePassword" method="post" onsubmit="return changePassword()">
+							<div class="card-body">
+								<div class="form-group">
+									<label for="inputPassword_old">旧密码</label>
+
+									<div class="col-sm-10">
+										<input type="password" class="form-control"
+											id="password" name="password" placeholder="请输入当前密码">
+									</div>
+								</div>
+								<div class="form-group">
+									<label for="inputPassword_new">新密码</label>
+
+									<div class="col-sm-10">
+										<input type="password" class="form-control"
+											id="newPassword_1" name="newPassword_1" placeholder="请输入新密码">
+									</div>
+								</div>
+								<div class="form-group">
+									<label for="inputPassword_conf" >确认密码</label>
+
+									<div class="col-sm-10">
+										<input type="password" class="form-control"
+											id="newPassword_2" name="newPassword_2" placeholder="请确认新密码">
+									</div>
+								</div>
+							</div>
+							<!-- /.card-body -->
+							<div class="modal-footer">
+								<button type="button" class="btn btn-default"
+									data-dismiss="modal">关闭</button>
+								<button type="submit" class="btn btn-primary">提交更改</button>
+							</div>
+						</form>
+					</div>
+				</div>
+				<!-- /.modal-content -->
+			</div>
+			<!-- /.modal -->
+		</div>
     <!-- 头部 -->
 
     <!-- 侧边栏 -->
@@ -119,14 +169,15 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="/payList/" class="nav-link">
+                        <li class="nav-item">
+                        <a href="/record/" class="nav-link">
                             <i class="nav-icon fa fa-bars"></i>
                             <p>
                                 客户服务结算
                             </p>
                         </a>
                     </li>
-                    <li class="/record/">员工</li>
+                    <li class="nav-header">员工</li>
                     <li class="nav-item has-treeview menu-open">
                         <a href="#" class="nav-link">
                             <i class="nav-icon fa fa-users"></i>
@@ -161,7 +212,7 @@
                     </li>
                     <li class="nav-header">统计</li>
                     <li class="nav-item">
-                        <a href="salary.html" class="nav-link">
+                        <a href="/count/salary" class="nav-link">
                             <i class="nav-icon fa fa-calendar"></i>
                             <p>
                                 统计工资结算
@@ -169,10 +220,18 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="statistics.html" class="nav-link">
+                        <a href="/count/statistics" class="nav-link">
                             <i class="nav-icon fa fa-usd"></i>
                             <p>
                                 统计盈收
+                            </p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="/expense/" class="nav-link ">
+                            <i class="nav-icon fa fa-usd"></i>
+                            <p>
+                                支出项目统计
                             </p>
                         </a>
                     </li>
@@ -209,6 +268,7 @@
                     <div class="card">
                         <!-- /.card-header -->
                         <div class="card-header d-flex p-0">
+                         <span style="margin-top: 18px; margin-left: 10px; color:red;" th:text="${remind}"></span>
                             <ul class="nav nav-pills ml-auto p-2">
                                 <li class="nav-item"><a class="nav-link active show" href="#on" data-toggle="tab">可用项目</a></li>
                                 <li class="nav-item"><a class="nav-link" href="#off" data-toggle="tab">停用项目</a></li>
@@ -220,10 +280,11 @@
                                     <div class="table-responsive">
                                         <table style="min-width: 500px" id="form1" class="table table-hover">
                                             <caption>
-                                                <button class="btn btn-info">添加服务项目</button>
+                                                <button class="btn btn-info" data-toggle="modal" data-target="#edit" onclick="lick(this, this.id)">添加服务项目</button>
                                             </caption>
                                             <thead>
                                             <tr>
+                                            <input id="user" type="text" class="form-control">
                                                 <th>编号</th>
                                                 <th>服务项目名称</th>
                                                 <th>服务项目价格</th>
@@ -231,46 +292,39 @@
                                                 <th>是否可用</th>
                                                 <th>操作</th></tr>
                                             </thead>
-                                            <tbody>
-                                            <tr>
-                                                <td>1</td>
-                                                <td>洗头</td>
-                                                <td>15</td>
-                                                <td>洗发技师、发型师</td>
+                                            <tbody id= "myTable">
+                                            <tr th:each="pSIT :${pageServiceItemTrue}">
+                                            <td></td>
+                                                <td class="id"th:text="${pSIT.id}">1</td>
+                                                <td th:text="${pSIT.name}">洗头</td>
+                                                <td th:text="${pSIT.price}">15</td>
+                                                <td th:text="${pSIT.type}">洗发技师、发型师</td>
+                                                <td class="id" th:text="${pSIT.status}"></td>
                                                 <td style="color: green;">可用</td>
                                                 <td>
-                                                    <button class="btn btn-warning btn-sm"><i class="fa fa-pencil"></i>编辑</button>
-                                                    <button class="btn btn-danger btn-sm"><i class="fa fa-trash"></i>停用</button>
-                                                </td></tr>
-                                            <tr>
-                                                <td>2</td>
-                                                <td>理发</td>
-                                                <td>30</td>
-                                                <td>发型师、高级发型师</td>
-                                                <td style="color: green;">可用</td>
-                                                <td>
-                                                    <button class="btn btn-warning btn-sm"><i class="fa fa-pencil"></i>编辑</button>
-                                                    <button class="btn btn-danger btn-sm"><i class="fa fa-trash"></i>停用</button>
-                                                </td></tr>
-                                            <tr>
-                                                <td>3</td>
-                                                <td>染发</td>
-                                                <td>200</td>
-                                                <td>专家发型师</td>
-                                                <td style="color: green;">可用</td>
-                                                <td>
-                                                    <button class="btn btn-warning btn-sm"><i class="fa fa-pencil"></i>编辑</button>
-                                                    <button class="btn btn-danger btn-sm"><i class="fa fa-trash"></i>停用</button>
-                                                </td></tr>
+                                                    <button class="btn btn-warning btn-sm" data-toggle="modal" data-target="#edit" onclick="lick(this, this.id)"><i class="fa fa-pencil"></i>编辑</button>
+                                                    <a class="btn btn-danger btn-sm" th:href="@{'/serviceItem/deleteServiceItem?id='+${pSIT.id}}"><i class="fa fa-trash"></i>停用</a>
+                                                </td>
+                                                <td class="id" th:text="${pSIT.introduction}"></td>
+                                                </tr>
                                             </tbody>
                                         </table>
                                     </div>
+                                     <div class="card-footer clearfix" id="myButtonTwo">
+                            <ul class="pagination pagination-sm m-0 float-right">
+                                <li class="page-item"><a class="page-link" th:href="@{'/eserviceItem/?page=0'}">第一页</a></li>
+                                <li class="page-item"><a class="page-link" th:if="${page}>0" th:href="@{'/serviceItem/page='+${page-1}}">上一页</a></li>
+                                <li class="page-item"><a class="page-link" style="cursor:default"><span th:text="${page+1}"></span> / <span th:text="${maxPageTrue+1}"></span></a></li>
+                                <li class="page-item"><a class="page-link" th:if="${page}<${maxPageTrue}"  th:href="@{'/serviceItem/?page='+${page+1}}">下一页</a></li>
+                                <li class="page-item"><a class="page-link" th:href="@{'/serviceItem/?page='+${maxPageTrue}}">末页</a></li>
+                            </ul>
+                        </div>
                                 </div>
                                 <div class="tab-pane" id="off">
-                                    <div class="table-responsive">
+                                    <div class="table-responsive"><input id="username" type="text" class="form-control">
                                         <table style="min-width: 500px" id="form2" class="table table-hover">
                                             <caption>
-                                                <button class="btn btn-info">添加服务项目</button>
+                                                <button class="btn btn-info" data-toggle="modal" data-target="#edit" onclick="lick(this, this.id)">添加服务项目</button>
                                             </caption>
                                             <thead>
                                             <tr>
@@ -281,42 +335,22 @@
                                                 <th>服务项目简介</th>
                                                 <th>操作</th></tr>
                                             </thead>
-                                            <tbody>
-                                            <tr>
-                                                <td>1</td>
-                                                <td>洗头</td>
-                                                <td>15</td>
-                                                <td>洗发技师、发型师</td>
-                                                <td style="color: red;">不可用</td>
-                                                <td>
-                                                    <button class="btn btn-warning btn-sm"><i class="fa fa-pencil"></i>编辑</button>
-                                                    <button class="btn btn-success btn-sm"><i class="fa fa-trash"></i>启用</button>
-                                                </td></tr>
-                                            <tr>
-                                                <td>2</td>
-                                                <td>理发</td>
-                                                <td>30</td>
-                                                <td>发型师、高级发型师</td>
-                                                <td style="color: red;">不可用</td>
-                                                <td>
-                                                    <button class="btn btn-warning btn-sm"><i class="fa fa-pencil"></i>编辑</button>
-                                                    <button class="btn btn-success btn-sm"><i class="fa fa-trash"></i>启用</button>
-                                                </td></tr>
-                                            <tr>
-                                                <td>3</td>
-                                                <td>染发</td>
-                                                <td>200</td>
-                                                <td>专家发型师</td>
-                                                <td style="color: red;">不可用</td>
-                                                <td>
-                                                    <button class="btn btn-warning btn-sm"><i class="fa fa-pencil"></i>编辑</button>
-                                                    <button class="btn btn-success btn-sm"><i class="fa fa-trash"></i>启用</button>
-                                                </td></tr>
+                                            <tbody id="mytable">
                                             </tbody>
                                         </table>
                                     </div>
+                                     <div class="card-footer clearfix" id="myButton">
+                           <!--  <ul class="pagination pagination-sm m-0 float-right">
+                                <li class="page-item"><a class="page-link" th:href="@{'/eserviceItem/?pageFalse=0'}">第一页</a></li>
+                                <li class="page-item"><a class="page-link" th:if="${pageFalse>0}" th:href="@{'/serviceItem/pageFalse='+${pageFalse-1}}">上一页</a></li>
+                                <li class="page-item"><a class="page-link" style="cursor:default"><span th:text="${pageFalse+1}"></span> / <span th:text="${maxPageFalse+1}"></span></a></li>
+                                <li class="page-item"><a class="page-link" th:if="${pageFalse}<${maxPageFalse}"  th:href="@{'/serviceItem/?pageFalse='+${pageFalse+1}}">下一页</a></li>
+                                <li class="page-item"><a class="page-link" th:href="@{'/serviceItem/?pageFalse='+${maxPageFalse}}">末页</a></li>
+                            </ul> -->
+                        </div>
                                 </div>
                             </div>
+                           
                         </div>
                         <!-- /.card-body -->
                     </div>
@@ -328,8 +362,77 @@
         </section>
         <!-- /.content -->
     </div>
-    <!-- 主体内容 -->
+   <!-- 编辑员工类型（模态框） -->
+    <div class="modal fade" id="edit" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="card card-info">
+                    <div class="card-header">
+                        <h3 class="card-title">修改服务项目</h3>
+                    </div>
+                    <!-- /.card-header -->
+                    <!-- form start -->
+                    <form id="serviceItem" class="form-horizontal" onsubmit="return edit()" action="/serviceItem/insertServiceItem" method="post">
+                        <div class="card-body">
+                        <div class="form-group id">
+                                <label for="" class="">客户id</label>
 
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control id" id="id" name="id" value="">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="" class="">服务项目名称</label>
+
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control" id="name" name="name" value="">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="" class="">服务项目价格</label>
+
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control" id="pay" name="price" value="">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="" class="">服务项目简介</label>
+
+                                <div class="col-sm-10">
+                                    <textarea class="form-control" rows="3" placeholder="" name="introduction" id="content"></textarea>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label>可提供服务员工类型</label>
+
+                                <div class="form-check" th:each="et : ${employeeType}">
+                                    <input class="" name="type" th:class="${et.name}"  type="checkbox"  th:value="${et.id}"  th:text="${et.name}">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label>是否可用</label>
+
+                                <div class="col-sm-10">
+                                    <select class="form-control" name="status" id="status">
+                                        <option value="">请选择项目状态</option>
+                                        <option value="true">可用</option>
+                                        <option value="false">不可用</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- /.card-body -->
+                        <div class="modal-footer">
+                            <span style="color: red;" id="span_edit"></span>
+                            <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                            <button type="submit" class="btn btn-primary">提交更改</button>
+                        </div>
+                    </form>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal -->
+    </div>
+    <!-- 主体内容 -->
     <!--底部版权信息-->
     <footer class="main-footer">
         <strong>Copyright &copy; 2018-05-03 <a href="https://coding.net/u/leige123321/p/HairCut/git?public=true">项目主页</a>.</strong>
@@ -383,7 +486,22 @@
 <!-- AdminLTE for demo purposes -->
 <script src="../util/AdminLTE/dist/js/demo.js"></script>
 <script>
-    $(function () {
+
+function PageNext(a){//定义了2个参数a,b
+	var len = $('table tr').length;
+	var page = len * a;
+    for(var i = 1;i<len;i++){
+        $('table tr:eq('+i+') td:first').text(i+page);
+    }
+}
+$(function () {
+	 //$('table tr:not(:first)').remove();
+	 
+    var len = $('table tr').length;
+    for(var i = 1;i<len;i++){
+        $('table tr:eq('+i+') td:first').text(i);
+    }
+	$(".id").hide();
         $('#form').DataTable({
             "paging": true,
             "lengthChange": false,
@@ -393,6 +511,329 @@
             "autoWidth": false
         });
     });
+    
+//修改密码表单验证
+function changePassword() {
+    var oldPassword = document.getElementById('password').value;
+    var newPassword_1 = document.getElementById('newPassword_1').value;
+    var newPassword_2 = document.getElementById('newPassword_2').value;
+    if (oldPassword == ""){
+        document.getElementById("span_password").innerHTML='请输入当前密码';
+        return false;
+    }else if (newPassword_1 == ""){
+        document.getElementById("span_password").innerHTML='请输入新密码';
+        return false;
+    }else if (newPassword_2 == ""){
+        document.getElementById("span_password").innerHTML='请输入确认密码';
+        return false;
+    }else if (newPassword_1 != newPassword_2){
+        document.getElementById("span_password").innerHTML='新密码和确认密码不一致';
+        return false;
+    }
+    return true;
+}
+//修改服务项目表单验证
+function edit() {
+    var name = document.getElementById('name').value;
+    var pay = document.getElementById('pay').value;
+    var content = document.getElementById('content').value;
+    
+    var status = document.getElementById('status');//下拉框值
+    var index=status.selectedIndex ;             // selectedIndex代表的是你所选中项的index
+    var status_value = status.options[index].value;
+
+    if (name == ""){
+        document.getElementById("span_edit").innerHTML='请输入服务项目名称';
+        return false;
+    }else if (pay == ""){
+        document.getElementById("span_edit").innerHTML='请输入服务项目价格';
+        return false;
+    }else if (content == ""){
+        document.getElementById("span_edit").innerHTML='请输入服务项目简介';
+        return false;
+    }else if (status_value == ""){
+        document.getElementById("span_edit").innerHTML='请选择是否可用';
+        return false;
+    }else{
+        var flag = false
+        var is = 0;
+        //多选框确认
+        $('input:checkbox').each(function() {
+            if ($(this).get(0).checked) {
+                flag = true;
+                is =1;
+            }else{
+            	if(is == 0){
+            	  document.getElementById("span_edit").innerHTML='请至少选择一个员工类型';
+            	  }
+            }
+        });
+      
+        return flag;
+    }
+}
+function lick(obj, id){
+    var td_content = $(obj).parents("tr").children("td");  //获取当前行中的所有td值
+    
+    var id = td_content.eq(1).text();
+    var name = td_content.eq(2).text(); //获取当前行第二个td的值
+    var pay = td_content.eq(3).text(); //获取当前行第二个td的值
+    var type = td_content.eq(4).text(); //获取当前行第二个td的值
+    var status = td_content.eq(5).text(); //获取当前行第二个td的值
+    var content = td_content.eq(8).text(); //获取当前行第二个td的值
+    if(id==""){id = 0;}
+    document.getElementById('id').value = id;
+    document.getElementById('name').value = name;
+    document.getElementById('pay').value = pay;
+    document.getElementById('content').value = content;
+    document.getElementById('status').value = status;
+    //取消多选框选择
+    $("input:checkbox").removeAttr("checked");
+    //字符串分割
+    type = type.split(",");
+    //遍历字符串分割数组
+    for(i=0;i<type.length;i++){
+        var typeValue =type[i];
+        $("input:checkbox[class ='"+typeValue+"']").attr("checked","checked");
+    }
+
+/*        多选框取值
+    var type=document.getElementsByName("type");
+    for(var i=0;i<type.length;i++){
+        if(type[i].checked){
+            //alert(type[i].value+","+type[i].nextSibling.nodeValue);
+        }
+    }*/
+}
+/* ajax分页 */
+var s = 0;
+var maxPage = 3;
+var conditions;
+var conditionsTwo;
+var tableHtml = $("#myTable").html();
+var buttonHtml = $("#myButtonTwo").html();
+$(function(){
+		$('#username').keyup(function() {  
+            conditions=$(this).val();
+            var myData = {
+            		conditions:conditions,
+            		status:"false",
+            }
+            query(myData);
+            });
+    	$('#user').keyup(function() {  
+            conditionsTwo=$(this).val();
+            var myData1= {
+            		conditions:conditionsTwo,
+            		status:"true",
+            }
+            queryTwo(myData1);
+            });
+	function query(myData) {  
+        if(conditions!=''){  
+            $.ajax({  
+                type: "post",  
+                url: "/serviceItem/sIConditions",  
+                data:myData,  
+                dataType: "json",  
+                error: function(request) {  
+                    alert("Connection error:"+request.error);  
+                },  
+                success: function(data) {  
+                	var myHtml = "";
+                	var myhtmltd = "";
+                	for(var i = 0;i<data.length;i++){
+                   		myhtmltd ="<td></td><td class='id'>"+data[i].id+"</td><td>"+
+                   		data[i].name+"</td><td>"+
+                   		data[i].price+"</td><td>"+
+                   		data[i].type+"</td><td class='id'>"+
+                   		data[i].status+"</td><td style='color:red;'>"+
+                   		"不可用</td>"+
+                   		"<td><button class='btn btn-warning btn-sm' data-toggle='modal' data-target='#edit' onclick='lick(this, this.id)'><i class='fa fa-pencil'></i>编辑</button>"+
+                   		"<a class='btn btn-danger btn-sm' href='/serviceItem/deleteServiceItem?id="+data[i].id+"'><i class='fa fa-trash'></i>启用</a></td>"+
+                   		"<td class='id'>"+data[i].introduction+"</td>";
+                    	 myHtml=myHtml+"<tr>"+myhtmltd+"</tr>";
+                    	  //循环数据追加到 myHtml
+                    	}
+                    	myHtml=myHtml;
+                    	 $("#mytable").html(myHtml);
+                    	 $("#myButton").html("");
+                    nameId();
+                }  
+            });   
+        }else{  
+           s = 0 ;
+           btn();
+           name();
+        }  
+    }
+	//初始化页面
+	var userData = {
+    	    page:s,
+    	    size:10,
+    	}
+$.ajax({
+	cache: true,  
+    type : "post",
+    url : "/serviceItem/serviceItem",//不能用ajax命名
+    data :userData,
+    async: true,  
+    error: function(request) {  
+        alert("Connection error:"+request.error);  
+    },  
+    success : function(results){
+    	var data = $.parseJSON(results); 
+    	var myHtml = "";
+    	var myhtmltd = "";
+    	var myhtmltype = "<tr><th>编号</th><th>员工工号</th><th>员工手机号</th><th>员工类型</th><th>员工姓名</th><th>在职状态</th><th>操作</th></tr>";
+    	maxPage = data[data.length-1].maxPage;
+    	for(var i = 0;i<data.length-1;i++){
+   		myhtmltd ="<td></td><td class='id'>"+data[i].id+"</td><td>"+
+   		data[i].name+"</td><td>"+
+   		data[i].price+"</td><td>"+
+   		data[i].type+"</td><td class='id'>"+
+   		data[i].status+"</td><td style='color:red;'>"+
+   		"不可用</td>"+
+   		"<td><button class='btn btn-warning btn-sm' data-toggle='modal' data-target='#edit' onclick='lick(this, this.id)'><i class='fa fa-pencil'></i>编辑</button>"+
+   		"<a class='btn btn-danger btn-sm' href='/serviceItem/deleteServiceItem?id="+data[i].id+"'><i class='fa fa-trash'></i>启用</a></td>"+
+   		"<td class='id'>"+data[i].introduction+"</td>";
+    	 myHtml=myHtml+"<tr>"+myhtmltd+"</tr>";
+    	  //循环数据追加到 myHtml
+    	}
+    	myHtml=myHtml;
+    	 $("#mytable").html(myHtml);
+    	 btn();
+    	 nameId();
+    $("#page").text((s+1));
+        }
+        });
+})
+  function queryTwo(myData1) {
+       	$("#myTable").html("");
+            if(conditionsTwo!=''){ 
+                $.ajax({  
+                    type: "post",  
+                    url: "/serviceItem/sIConditions",  
+                    data:myData1, 
+                    dataType: "json",  
+                    error: function(request) {  
+                        alert("Connection error:"+request.error);  
+                    },  
+                    success: function(data) {  
+                    	var myHtml = "";
+                    	var myhtmltd = "";
+                    	for(var i = 0;i<data.length;i++){
+                           		myhtmltd ="<td></td><td class='id'>"+data[i].id+"</td><td>"+
+                           		data[i].name+"</td><td>"+
+                           		data[i].price+"</td><td>"+
+                           		data[i].type+"</td><td class='id'>"+
+                           		data[i].status+"</td><td style='color:green;'>"+
+                           		"可用</td>"+
+                           		"<td><button class='btn btn-warning btn-sm' data-toggle='modal' data-target='#edit' onclick='lick(this, this.id)'><i class='fa fa-pencil'></i>编辑</button>"+
+                           		"<a class='btn btn-danger btn-sm' href='/serviceItem/deleteServiceItem?id="+data[i].id+"'><i class='fa fa-trash'></i>启用</a></td>"+
+                           		"<td class='id'>"+data[i].introduction+"</td>";
+                           		myHtml=myHtml+"<tr>"+myhtmltd+"</tr>";
+                        	  //循环数据追加到 myHtml
+                        	}
+                        	myHtml=myHtml;
+                        	 $("#myTable").html(myHtml);
+                        	 $("#myButtonTwo").html("");
+                             nameId();
+                    }  
+                });   
+            }else{  
+            	$("#myTable").html(tableHtml);
+               	$("#myButtonTwo").html(buttonHtml);
+               	nameId();
+            }  
+        } 
+    document.getElementById("btn").onclick = function() {
+    	wait = 60;
+    	nextPage();
+    }
+	function first() {
+		s = 0;
+		name();
+	}
+	function last(){
+		s = maxPage;
+		name();
+	}
+    function onPage(){
+    	if(s<=0){
+    		s = 0;
+    	}else{
+    		s=s-1;
+    	}
+    	name();
+    }
+    function nextPage(){
+  	   if(0<=s<maxPage){
+ 		  s = s +1;  
+ 	   }else{
+ 	   		s = maxPage;
+ 	   }
+  	   name();
+    }
+   function name() {
+        var userData = {
+        	    page:s,
+        	    size:10,
+        	}
+    $.ajax({
+    	cache: true,  
+        type : "post",
+        url : "/serviceItem/serviceItem",//不能用ajax命名
+        data :userData,
+        async: true,  
+        error: function(request) {  
+            alert("Connection error:"+request.error);  
+        },  
+        success : function(results){
+        	var data = $.parseJSON(results); 
+        	var myHtml = "";
+        	var myhtmltd = "";
+        	var myhtmltype = "<tr><th>编号</th><th>员工工号</th><th>员工手机号</th><th>员工类型</th><th>员工姓名</th><th>在职状态</th><th>操作</th></tr>";
+        	maxPage = data[data.length-1].maxPage;
+        	for(var i = 0;i<data.length-1;i++){
+        		myhtmltd ="<td></td><td class='id'>"+data[i].id+"</td><td>"+
+           		data[i].name+"</td><td>"+
+           		data[i].price+"</td><td>"+
+           		data[i].type+"</td><td class='id'>"+
+           		data[i].status+"</td><td style='color:red;'>"+
+           		"不可用</td>"+
+           		"<td><button class='btn btn-warning btn-sm' data-toggle='modal' data-target='#edit' onclick='lick(this, this.id)'><i class='fa fa-pencil'></i>编辑</button>"+
+           		"<a class='btn btn-danger btn-sm' href='/serviceItem/deleteServiceItem?id="+data[i].id+"'><i class='fa fa-trash'></i>启用</a></td>"+
+           		"<td class='id'>"+data[i].introduction+"</td>";
+        	  //循环数据追加到 myHtml
+        		 myHtml=myHtml+"<tr>"+myhtmltd+"</tr>";
+        	}
+        	 $("#mytable").html(myHtml);
+        	 $("#page").text((s+1));
+        	 nameId();
+            }
+                });
+		}
+   function btn(){
+   	var myButtonOn = "<ul class='pagination pagination-sm m-0 float-right'>"+
+       "<li class='page-item'><a class='page-link' onclick='first()'>第一页</a></li>"+
+       "<li class='page-item'><a class='page-link' th:if='"+s+">0' onclick='onPage()'>上一页</a></li>"+
+       "<li class='page-item'><a class='page-link' style='cursor:default'><span id='page' ></span>/"+(maxPage+1)+" <span></span></a></li>"+
+       "<li class='page-item'><a class='page-link' th:if='"+s+"<"+maxPage+"' onclick='nextPage()'>下一页</a></li>"+
+       "<li class='page-item'><a class='page-link' onclick='last()'>末页</a></li>"
+       "</ul>";
+
+	$("#myButton").html(myButtonOn);
+   $("#page").text((s+1));
+   }
+   function nameId() {
+		 //$('table tr:not(:first)').remove();
+	    var len = $('table tr').length;
+	    for(var i = 1;i<len;i++){
+	        $('table tr:eq('+i+') td:first').text(i);
+	    }
+		$(".id").hide();
+   }
 </script>
 </body>
 </html>

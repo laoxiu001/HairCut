@@ -1,7 +1,6 @@
 package com.pidstudiodemo.model;
 
 import java.io.Serializable;
-
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -48,13 +47,12 @@ private int typeId;//员工编号
 /*
  * 外键typeId
  * **/
-@ManyToOne(cascade =CascadeType.MERGE)
+@ManyToOne(cascade ={CascadeType.MERGE})
 @JoinColumn(name="typeId",updatable=false,insertable=false)//创建type_id字段与表employee_type主键关联（外键）
 private EmployeeType employeeType;//多对一表：用于多表关联查询查询employee_type
 //@Transient //注释忽略该标注修饰的变量
-/*@OneToMany( mappedBy="employeeManage",cascade=CascadeType.ALL , fetch = FetchType.EAGER)
+/*@OneToMany( mappedBy="employeeManage",cascade={CascadeType.ALL,CascadeType.REMOVE} , fetch = FetchType.EAGER)
 private Set<Record> setRecord = new HashSet<Record>();//一对多：关联查询查询setEmployeeManage
-
 public Set<Record> getSetRecord() {
 	return setRecord;
 }

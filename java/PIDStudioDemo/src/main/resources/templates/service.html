@@ -60,17 +60,67 @@
                         <i class="fa fa-sign-out"></i> 用户注销
                     </a>
                     <div class="dropdown-divider"></div>
-                    <a href="/logion/changePassword" class="dropdown-item">
-                        <i class="fa fa-address-card"></i> 修改密码
-                    </a>
-                </div>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" data-widget="control-sidebar" data-slide="true" href="#"><i
-                        class="fa fa-th-large"></i></a>
-            </li>
-        </ul>
-    </nav>
+						<a href="#" class="dropdown-item" data-toggle="modal"
+							data-target="#changePassword"> <i class="fa fa-address-card"></i>
+							修改密码
+						</a>
+					</div></li>
+				<li class="nav-item"><a class="nav-link"
+					data-widget="control-sidebar" data-slide="true" href="#"><i
+						class="fa fa-th-large"></i></a></li>
+			</ul>
+		</nav>
+		<!-- 修改密码遮罩层（模态框） -->
+		<div class="modal fade" id="changePassword" tabindex="-1" role="dialog"
+			aria-labelledby="myModalLabel" aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="card card-primary">
+						<div class="card-header">
+							<h3 class="card-title">修改密码</h3>
+						</div>
+						<!-- /.card-header -->
+						<!-- form start -->
+						<form class="form-horizontal" action="/login/changePassword" method="post" onsubmit="return changePassword()">
+							<div class="card-body">
+								<div class="form-group">
+									<label for="inputPassword_old">旧密码</label>
+
+									<div class="col-sm-10">
+										<input type="password" class="form-control"
+											id="password" name="password" placeholder="请输入当前密码">
+									</div>
+								</div>
+								<div class="form-group">
+									<label for="inputPassword_new">新密码</label>
+
+									<div class="col-sm-10">
+										<input type="password" class="form-control"
+											id="newPassword_1" name="newPassword_1" placeholder="请输入新密码">
+									</div>
+								</div>
+								<div class="form-group">
+									<label for="inputPassword_conf" >确认密码</label>
+
+									<div class="col-sm-10">
+										<input type="password" class="form-control"
+											id="newPassword_2" name="newPassword_2" placeholder="请确认新密码">
+									</div>
+								</div>
+							</div>
+							<!-- /.card-body -->
+							<div class="modal-footer">
+								<button type="button" class="btn btn-default"
+									data-dismiss="modal">关闭</button>
+								<button type="submit" class="btn btn-primary">提交更改</button>
+							</div>
+						</form>
+					</div>
+				</div>
+				<!-- /.modal-content -->
+			</div>
+			<!-- /.modal -->
+		</div>
     <!-- 头部 -->
 
     <!-- 侧边栏 -->
@@ -119,14 +169,14 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="/payList/" class="nav-link active">
+                        <a href="/record/" class="nav-link active">
                             <i class="nav-icon fa fa-bars"></i>
                             <p>
                                 客户服务结算
                             </p>
                         </a>
                     </li>
-                    <li class="/record/">员工</li>
+                    <li class="nav-header">员工</li>
                     <li class="nav-item has-treeview menu-open">
                         <a href="#" class="nav-link">
                             <i class="nav-icon fa fa-users"></i>
@@ -161,7 +211,7 @@
                     </li>
                     <li class="nav-header">统计</li>
                     <li class="nav-item">
-                        <a href="salary.html" class="nav-link">
+                        <a href="/count/salary" class="nav-link">
                             <i class="nav-icon fa fa-calendar"></i>
                             <p>
                                 统计工资结算
@@ -169,10 +219,18 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="statistics.html" class="nav-link">
+                        <a href="/count/statistics" class="nav-link">
                             <i class="nav-icon fa fa-usd"></i>
                             <p>
                                 统计盈收
+                            </p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="/expense/" class="nav-link ">
+                            <i class="nav-icon fa fa-usd"></i>
+                            <p>
+                                支出项目统计
                             </p>
                         </a>
                     </li>
@@ -213,51 +271,91 @@
                             </div>
                             <!-- /.card-header -->
                             <!-- form start -->
-                            <form role="form">
+                             <form class="form-horizontal" onsubmit="return service()" action="/record/insertRecord" method="post">
                                 <div class="card-body">
                                     <div class="row">
                                         <div class="col-xs-12 col-sm-6">
                                             <div class="form-group">
-                                                <label for="exampleInputEmail1">员工工号</label>
-                                                <input type="email" class="form-control" id="exampleInputEmail1" placeholder="请输入员工工号">
-                                            </div>
-                                        </div>
-                                        <div class="col-xs-12 col-sm-6">
-                                            <div class="form-group">
                                                 <label for="exampleInputPassword1">客户账户</label>
-                                                <input type="password" class="form-control" id="exampleInputPassword1" placeholder="请输入客户账户">
+                                                <input type="text" class="form-control" name="username" id="username" placeholder="请输入客户账户">
                                             </div>
                                         </div>
+                                        <span style="margin-top: 40px;color:red;" id="balance" th:text="${balance}">余额：0.00</span>
                                         <div class="col-12">
-                                            <div class="form-check">
-                                                <label class="checkbox-inline">服务项目选择：</label><br>
-                                                <label class="checkbox-inline">
-                                                    <input type="checkbox" value="option1"> 洗头(基础价格15￥)
-                                                </label>
-                                                <label class="checkbox-inline">
-                                                    <input type="checkbox" value="option1"> 理发(基础价格30￥)
-                                                </label>
-                                                <label class="checkbox-inline">
-                                                    <input type="checkbox" value="option1"> 头部按摩(基础价格10￥)
-                                                </label>
-                                                <label class="checkbox-inline">
-                                                    <input type="checkbox" value="option1"> 染发(基础价格200￥)
-                                                </label>
-                                                <label class="checkbox-inline">
-                                                    <input type="checkbox" value="option1"> 烫发(基础价格300￥)
-                                                </label>
-                                            </div>
-                                        </div>
+                                            <div class="form-group form-inline">
+                                             <div class="col-12">
+                                                <h6>服务项目选择：</h6>
+                                                </div>
+                                                <div class="col-12">
+                                                <div class="row">
+                                                    <div class="col-xs-12 col-sm-4 col-md-3" th:each=" psi : ${pageServiceItem}">
+                                                        <div class="form-inline ">
+                                                            <input name="serviceIemId" th:id="${psi.id}" type="checkbox"  th:value="${psi.id}" th:text="${psi.name}" onclick="check(this)">
+                                                            <label class="form-check-label">(基础价格<span th:text="${psi.price}"></span>)</label>
+                                                            <select  name="number" th:class="@{'select2 select2-hidden-accessible form-control '+${psi.id}}" tabindex="-1" aria-hidden="true" readonly>
+                                                            <option  selected="selected" value=""> 没有该服务  </option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                  </div>
+                                                  </div>
+                                                </div>
+                                           </div>
                                     </div>
                                 </div>
                                 <!-- /.card-body -->
 
                                 <div class="card-footer">
-                                    <button type="submit" class="btn btn-info">提交结算</button>
+                                    <button type="submit" class="btn btn-info">提交结算</button><span th:text="${remind}" id="remind" style=" margin-left:10px; color:red;"></span>
+                                    <span style="font-size: 20px; float: right;">(应付总金额)<span th:text="${sum}"></span>* (折扣)<span th:text="${discount}"></span>= (支付总金额)<span th:text="${sumPayavle}" ></span></span>
                                 </div>
                             </form>
                         </div>
                         <!-- 提交服务项目表单 -->
+                         <!-- 服务记录表单 -->
+                        <div class="card">
+                            <!-- /.card-header -->
+                            <div class="card-body">
+                                <div class="table-responsive">
+                                    <table style="min-width:500px;" id="form" class="table table-hover">
+                                        <thead >
+                                        <tr>
+                                        <input id="user" type="text" class="form-control">
+                                            <th>编号</th>
+                                            <th>消费客户账户</th>
+                                            <th>服务项目</th>
+                                            <th>消费者姓名</th>
+                                            <th>员工工号</th>
+                                            <th>实付金额</th>
+                                            <th>消费时间</th></tr>
+                                        </thead>
+                                        <tbody id = "myTable">
+                                        <tr th:each="pr:${pageRecord}">
+                                        <td></td>
+                                        <td class="id" th:text="${pr.id}">1</td>
+                                        <td th:text="${pr.username}">芬必得</td>
+                                        <td th:text="${pr.serviceItem.name}">62284824886541125</td>
+                                        <td th:text="${pr.customer.name}">王玉坤</td>
+                                        <td th:text="${pr.number}">15724665148</td>
+                                        <td th:text="${pr.payavle}">40</td>
+                                        <td th:text="${pr.date}">2015-08-15</td></tr>
+                                    <tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                         <div class="card-footer clearfix">
+                            <ul class="pagination pagination-sm m-0 float-right" id="myButton">
+                                <li class="page-item"><a class="page-link" th:href="@{'/record/?page=0'}">第一页</a></li>
+                                <li class="page-item"><a class="page-link" th:if="${page}>0" th:href="@{'/record/?page='+${page-1}}">上一页</a></li>
+                                <li class="page-item"><a class="page-link" style="cursor:default"><span th:text="${page+1}"></span> / <span th:text="${maxPage+1}"></span></a></li>
+                                <li class="page-item"><a class="page-link" th:if="${page}<${maxPage}"  th:href="@{'/record/?page='+${page+1}}">下一页</a></li>
+                                <li class="page-item"><a class="page-link" th:href="@{'/record/?page='+${maxPage}}">末页</a></li>
+                            </ul>
+                        </div>
+                            </div>
+                            <!-- /.card-body -->
+                        </div>
+                        <!-- 服务记录表单 -->
                     </div>
                 </div>
             </div>
@@ -283,7 +381,163 @@
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
 <!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
 <script>
+var is = 0 ;
+function check(vi)//当选中时改变样式
+{
+is =1;
+var name_1 = vi.value;
+var conditions = vi.value;
+if($("#"+name_1).is(':checked')){
+	$("."+name_1).removeAttr("readonly");
+}else{
+	$("."+name_1).attr("readonly","readonly");
+	$("."+name_1).val("");
+}
+$.ajax({  
+    type: "post",  
+    url: "/record/queryEmployee",  
+    data:{conditions:conditions},  
+    dataType: "json",  
+    error: function(request) {  
+    	
+    },  
+    success: function(data) {  
+    	var myHtml = "";
+    	for(var i = 0;i<data.length;i++){
+    		if(i==0){myHtml = myHtml + "<option value=''>没有该服务</option>"}
+    		myHtml = myHtml + "<option value='"+data[i].number+"'>"+data[i].number+"("+data[i].name+")"+"系数("+data[i].weighted+")</option>"
+    	}
+    	$("."+name_1).html(myHtml);
+    }  
+});  
+}
+function PageNext(a){//定义了2个参数a,b
+	var len = $('table tr').length;
+	var page = len * a;
+    for(var i = 1;i<len;i++){
+        $('table tr:eq('+i+') td:first').text(i+page);
+    }
+}
+$(function () {
+	var tableHtml = $("#myTable").html();
+	var buttonHtml = $("#myButton").html();
+	$('#username').keyup(function(){
+		 var conditions1=$(this).val(); 
+		 if(conditions1!=''){
+			 $.ajax({  
+	                type: "post",  
+	                url: "/record/balance",  
+	                data:{conditions:conditions1},  
+	                dataType: "json",  
+	                error: function(request) {  
+	                	$('#balance').text("没有该用户");
+	                },  
+	                success: function(data) {  
+	                	$('#balance').text("余额："+ data);
+	                }  
+	            });   
+	        }else{
+	        	$('#balance').text("余额：0.00");
+	        }   
+	})
+	$('#user').keyup(function() {  
+       	$("#myTable").html("");
+        var conditions=$(this).val();  
+        if(conditions!=''){  
+            $.ajax({  
+                type: "post",  
+                url: "/record/query",  
+                data:{conditions:conditions},  
+                dataType: "json",  
+                error: function(request) {  
+                    alert("Connection error:"+request.error);  
+                },  
+                success: function(data) {  
+                	var myHtml = "";
+                	var myhtmltd = "";
+                	for(var i = 0;i<data.length;i++){
+                   		myhtmltd ="<td></td><td class='id'>"+data[i].id+"</td><td>"+
+                   		data[i].userName+"</td><td>"+
+                   		data[i].siName+"</td><td>"+
+                   		data[i].cName+"</td><td>"+
+                   		data[i].number+"</td><td>"+
+                   		data[i].payavle+"</td><td>"+
+                   		data[i].date+"</td>";
+                   		myHtml=myHtml+"<tr>"+myhtmltd+"</tr>";
+                    	  //循环数据追加到 myHtml
+                    	}
+                    	myHtml=myHtml;
+                    	 $("#myTable").html(myHtml);
+                    	 $("#myButton").html("");
+                    	 nameId();
+                }  
+            });   
+        }else{  
+        $("#myTable").html(tableHtml);
+       	$("#myButton").html(buttonHtml);
+       	nameId();
+        }  
+    });  
+	 //$('table tr:not(:first)').remove();
+    var len = $('table tr').length;
+    for(var i = 1;i<len;i++){
+        $('table tr:eq('+i+') td:first').text(i);
+    }
+	$(".id").hide();
+        $('#form').DataTable({
+            "paging": false,
+            "lengthChange": false,
+            "searching": false,
+            "ordering": false,
+            "info": false,
+            "autoWidth": false
+        });
+    });
     $.widget.bridge('uibutton', $.ui.button)
+    //修改密码表单验证
+    function service(){
+    	var flag = false;
+
+        //多选框确认
+        $('input:checkbox').each(function() {
+            if ($(this).get(0).checked) {
+                flag = true;
+            }else{
+            	if( is == 0){
+                $("#remind").text('请至少选择一个服务项目');}
+            } 
+
+        });
+        is=0;
+    	return flag;
+    }
+    function changePassword() {
+        var oldPassword = document.getElementById('password').value;
+        var newPassword_1 = document.getElementById('newPassword_1').value;
+        var newPassword_2 = document.getElementById('newPassword_2').value;
+        if (oldPassword == ""){
+            document.getElementById("span_password").innerHTML='请输入当前密码';
+            return false;
+        }else if (newPassword_1 == ""){
+            document.getElementById("span_password").innerHTML='请输入新密码';
+            return false;
+        }else if (newPassword_2 == ""){
+            document.getElementById("span_password").innerHTML='请输入确认密码';
+            return false;
+        }else if (newPassword_1 != newPassword_2){
+            document.getElementById("span_password").innerHTML='新密码和确认密码不一致';
+            return false;
+        }
+        return true;
+    }
+    function nameId() {
+		 //$('table tr:not(:first)').remove();
+	    var len = $('table tr').length;
+	    for(var i = 1;i<len;i++){
+	        $('table tr:eq('+i+') td:first').text(i);
+	    }
+		$(".id").hide();
+}
 </script>
 <!-- Bootstrap 4 -->
 <script src="../util/AdminLTE/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
